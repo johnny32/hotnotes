@@ -4,10 +4,13 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    #container
-      #header
-        a(href='/')
-          img(id='img_logo', src='/images/hotnotes.png', alt='HotNotes')
-      #content
+    #header(class='arrodonit')
+      a(href='/')
+        img(id='img_logo', src='/images/hotnotes.png', alt='HotNotes')
+    #content
+      #col_l(class='arrodonit')
+        #seccions(class='arrodonit') Stuff
+        #credits(class='arrodonit') Things
+      #col_c(class='arrodonit')
         block content
-      #footer Jonathan
+      #col_r(class='arrodonit') publi aqui

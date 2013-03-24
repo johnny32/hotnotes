@@ -1,34 +1,66 @@
 body {
-  padding: 1%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image:url('/images/background.png');
+  background-color: whitesmoke;
 }
 
 a {
   color: #00B7FF;
 }
 
-#container {
-    position: relative;
-    left: 10%;
-    width: 80%;
-    background-color: black;
-    color: white;
+#header, #col_l, #col_c, #col_r, #footer {
+  background-color: darkslategrey;
+  margin: auto;
+  padding: 1%;
+}
+
+#header {
+  width: 80%;
 }
 
 #footer {
-    width: 100%;
-    background-color: darkslategrey;
-    color: silver;
-    font-size: x-small;
+  width: 80%;
+  color: silver;
+  font-size: x-small;
+  clear: both;
 }
 
-#header #content #footer {
-    padding-left: 2%;
-    padding-right: 2%;
+#content {
+  max-width: 82%;
+  margin: auto;
+  padding: 1%;
+}
+
+#col_l {
+  float: left;
+  width: 12%;
+}
+
+#col_c {
+  float: left;
+  width: 67%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+#col_r {
+  float: left;
+  width: 12%;
 }
 
 #img_logo {
-    position: relative;
-    width: 50%;
-    left: 25%;
+  position: relative;
+  width: 50%;
+  left: 25%;
+}
+
+.arrodonit {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: thin;
+  border-color: silver;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
