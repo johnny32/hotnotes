@@ -120,10 +120,28 @@
   <data name="Apunts" xml:space="preserve">
     <value>Apuntes</value>
   </data>
+  <data name="Drets_reservats" xml:space="preserve">
+    <value>Todos los derechos reservados</value>
+  </data>
   <data name="Examens" xml:space="preserve">
     <value>Exámenes</value>
   </data>
+  <data name="Inicia_sessio" xml:space="preserve">
+    <value>Inicia sesión</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="Registrat" xml:space="preserve">
+    <value>Regístrate</value>
+  </data>
   <data name="Treballs" xml:space="preserve">
     <value>Trabajos</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="Username_password_incorrecte" xml:space="preserve">
+    <value>El nombre de usuario o la contraseña introducidos son incorrectos</value>
   </data>
 </root>
