@@ -1,0 +1,66 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Import Namespace="HotNotes.Helpers" %>
+<% string lang = "ca"; %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+  <meta charset="utf-8" />
+  <title>
+    <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    | HotNotes</title>
+  <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width" />
+  <%: Styles.Render("~/Content/css") %>
+  <%: Styles.Render("~/Content/bootstrap/css/bootstrap.min.css") %>
+  <%: Scripts.Render("~/bundles/modernizr") %>
+  <%: Scripts.Render("~/Content/bootstrap/js/bootstrap.min.js") %>
+</head>
+<body>
+  <header>
+      <div class="content-wrapper">
+          <div class="float-left">
+              <p class="site-title"><%: Html.ActionLink("HotNotes", "Index", "Home") %></p>
+          </div>
+          <div class="float-right">
+              <section id="login">
+                  <%: Html.Partial("_LoginPartial") %>
+              </section>
+              <nav>
+                  <ul id="menu">
+                      <li><%: Html.ActionLink("Home", "Home", "Home") %></li>
+                      <li><%: Html.ActionLink("About", "About", "Home") %></li>
+                      <li><%: Html.ActionLink("Contact", "Contact", "Home") %></li>
+                  </ul>
+              </nav>
+          </div>
+      </div>
+  </header>
+  <div id="body">
+    <div id="leftColumn" class="float-left">
+      <ul id="sections">
+        <li><%: Lang.GetString(lang, "Apunts") %></li>
+        <li><%: Lang.GetString(lang, "Examens") %></li>
+        <li><%: Lang.GetString(lang, "Treballs") %></li>
+      </ul>
+    </div>
+    <div id="rightColumn" class="float-right">
+      Publi
+    </div>
+    <div id="content">
+      <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+      <section class="content-wrapper main-content clear-fix">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </section>
+    </div>
+  </div>
+  <footer>
+            <div class="content-wrapper">
+                <div style="text-align: center; color: #505050;">
+                    <p>&copy; <%: DateTime.Now.Year %> - Jonathan Clara Márquez - Tots els drets reservats.</p>
+                </div>
+            </div>
+        </footer>
+  <%: Scripts.Render("~/bundles/jquery") %>
+  <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
+</body>
+</html>
