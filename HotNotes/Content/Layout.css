@@ -1,6 +1,64 @@
-﻿.header
+﻿body
 {
-    background-color: #323232;
-    border-radius: 5px;
-    width: 100%;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+}
+
+footer
+{
+    background-color: transparent;
+}
+
+.template-block
+{
+    margin: 0.5em;
+    padding: 1em 1em 0.5em 1em;
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    background-color: #6E6E6E;
+}
+
+#left-column-div
+{
+    float: left;
+    width: 13%;
+}
+
+#right-column-div
+{
+    float: right;
+    width: 13%;
+}
+
+#footer-div
+{
+    text-align: center;
+    color: #505050;
+    background-color: Black;
+}
+
+#content
+{
+    width: 70%;
+    float: left;
+}
+
+div#body
+{
+    background-color: transparent;
+}
+
+#content
+{
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#sections
+{
 }
