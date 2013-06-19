@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Introdueix els termes de cerca....
+        /// </summary>
+        internal static string Cercador {
+            get {
+                return ResourceManager.GetString("Cercador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buscar.
+        /// </summary>
+        internal static string Cercar {
+            get {
+                return ResourceManager.GetString("Cercar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tots els drets reservats.
         /// </summary>
         internal static string Drets_reservats {

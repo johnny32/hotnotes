@@ -22,12 +22,18 @@
       <div id="header-div" class="template-block">
         <div style="float: left;">
             <p class="site-title">
-            <img src="<%= Url.Content( "~/content/..." ) %>" alt="HotNotes" />
-            <%= Html.ActionLink("HotNotes", "Index", "Home") %></p>
+                <a href="<%= Url.Action("Index", "Home") %>">
+                    <img src="<%= Url.Content( "~/Content/images/logo.png" ) %>" alt="HotNotes" />
+                </a>
+            </p>
         </div>
         <div style="float: right;">
+            <form id="cercador" action="/search" method="get">
+                <input type="text" style="width: 26em;" placeholder="<%= Lang.GetString(lang, "Cercador") %>" />
+                <input type="submit" class="btn-small" style="margin-top: -0.6em;" value="<%= Lang.GetString(lang, "Cercar") %>" />
+            </form>
             <section id="login">
-                <%: Html.Partial("_LoginPartial") %>
+                <%: Html.Partial("_LoginPartial")%>
             </section>
             <nav>
                 <ul id="menu">
@@ -37,7 +43,9 @@
                 </ul>
             </nav>
         </div>
-        <div style="clear: both"></div>
+        <div style="clear: both; width: 100%; background-color: Yellow;">
+            Barra horitzontal
+        </div>
       </div>
   </header>
     <div id="body">

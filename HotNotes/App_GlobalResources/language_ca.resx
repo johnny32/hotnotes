@@ -120,6 +120,12 @@
   <data name="Apunts" xml:space="preserve">
     <value>Apunts</value>
   </data>
+  <data name="Cercador" xml:space="preserve">
+    <value>Introdueix els termes de cerca...</value>
+  </data>
+  <data name="Cercar" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
   <data name="Drets_reservats" xml:space="preserve">
     <value>Tots els drets reservats</value>
   </data>
