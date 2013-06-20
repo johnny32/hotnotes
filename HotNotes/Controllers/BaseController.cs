@@ -29,7 +29,7 @@ namespace HotNotes.Controllers
             base.OnActionExecuting(filterContext);
         }
 
-        private void SetLangCookie(ActionExecutingContext filterContext, string lang)
+        protected void SetLangCookie(ActionExecutingContext filterContext, string lang)
         {
             HttpCookie newCookie = new HttpCookie("HotNotes_lang", lang);
             newCookie.Expires = DateTime.Now.AddYears(5);

@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Articles.
+        /// </summary>
+        internal static string Articles {
+            get {
+                return ResourceManager.GetString("Articles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Introdueix els termes de cerca....
         /// </summary>
         internal static string Cercador {
@@ -84,6 +93,15 @@ namespace Resources {
         internal static string Cercar {
             get {
                 return ResourceManager.GetString("Cercar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contacta.
+        /// </summary>
+        internal static string Contacta {
+            get {
+                return ResourceManager.GetString("Contacta", resourceCulture);
             }
         }
         
@@ -106,11 +124,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inici.
+        /// </summary>
+        internal static string Inici {
+            get {
+                return ResourceManager.GetString("Inici", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inicia sessió.
         /// </summary>
         internal static string Inicia_sessio {
             get {
                 return ResourceManager.GetString("Inicia_sessio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Papers.
+        /// </summary>
+        internal static string Papers {
+            get {
+                return ResourceManager.GetString("Papers", resourceCulture);
             }
         }
         
@@ -124,11 +160,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PFCs.
+        /// </summary>
+        internal static string PFCs {
+            get {
+                return ResourceManager.GetString("PFCs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pràctiques.
+        /// </summary>
+        internal static string Practiques {
+            get {
+                return ResourceManager.GetString("Practiques", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regístra&apos;t.
         /// </summary>
         internal static string Registrat {
             get {
                 return ResourceManager.GetString("Registrat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sobre HotNotes....
+        /// </summary>
+        internal static string Sobre_HotNotes {
+            get {
+                return ResourceManager.GetString("Sobre_HotNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tanca sessió.
+        /// </summary>
+        internal static string Tanca_sessio {
+            get {
+                return ResourceManager.GetString("Tanca_sessio", resourceCulture);
             }
         }
         

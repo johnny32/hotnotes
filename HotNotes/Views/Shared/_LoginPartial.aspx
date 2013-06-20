@@ -1,9 +1,11 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="HotNotes.Helpers" %>
+<% string lang = ViewBag.Lang; %>
 <% if (Request.IsAuthenticated) { %>
-    Hello, <%: Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" }) %>!
+    <%: Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" }) %>
     <% using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) { %>
         <%: Html.AntiForgeryToken() %>
-        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        <a href="javascript:document.getElementById('logoutForm').submit()"><%: Lang.GetString(lang, "Tanca_sessio") %></a>
     <% } %>
 <% } else { %>
     <ul>

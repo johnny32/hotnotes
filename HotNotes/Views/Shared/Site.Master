@@ -32,30 +32,41 @@
                 <input type="text" style="width: 26em;" placeholder="<%= Lang.GetString(lang, "Cercador") %>" />
                 <input type="submit" class="btn-small" style="margin-top: -0.6em;" value="<%= Lang.GetString(lang, "Cercar") %>" />
             </form>
-            <section id="login">
-                <%: Html.Partial("_LoginPartial")%>
-            </section>
+        </div>
+        <div style="clear: both;"></div>
+        <div id="navigation-div">
             <nav>
                 <ul id="menu">
-                    <li><%: Html.ActionLink("Home", "Home", "Home") %></li>
-                    <li><%: Html.ActionLink("About", "About", "Home") %></li>
-                    <li><%: Html.ActionLink("Contact", "Contact", "Home") %></li>
+                <% Dictionary<string, object> paramsIdioma = new Dictionary<string, object>();
+                   paramsIdioma.Add("codiIdioma", "es");
+                    %>
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Home", "Home") %></li>
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
+                    <li><%: Html.ActionLink("ES", "CanviarIdioma", "Home", paramsIdioma) %></li>
+                    <% paramsIdioma.Clear();
+                       paramsIdioma.Add("codiIdioma", "ca"); %>
+                    <li><%: Html.ActionLink("CA", "CanviarIdioma", "Home", paramsIdioma) %></li>
                 </ul>
             </nav>
+            <section id="login" style="float: right;">
+                <%: Html.Partial("_LoginPartial")%>
+            </section>
         </div>
-        <div style="clear: both; width: 100%; background-color: Yellow;">
-            Barra horitzontal
-        </div>
+        <div style="clear: both;"></div>
       </div>
   </header>
     <div id="body">
         <div id="left-column-div">
             <div class="template-block">
-                <b>TODO: SECCIONS</b>
                 <ul id="sections">
-                    <li><%: Lang.GetString(lang, "Apunts") %></li>
-                    <li><%: Lang.GetString(lang, "Examens") %></li>
-                    <li><%: Lang.GetString(lang, "Treballs") %></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Apunts") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Treballs") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Examens") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Practiques") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Articles") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "PFCs") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Papers") %></a></li>
                 </ul>
             </div>
             <div class="template-block">

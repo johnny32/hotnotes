@@ -120,11 +120,17 @@
   <data name="Apunts" xml:space="preserve">
     <value>Apuntes</value>
   </data>
+  <data name="Articles" xml:space="preserve">
+    <value>Artículos</value>
+  </data>
   <data name="Cercador" xml:space="preserve">
     <value>Introduce los términos de búsqueda...</value>
   </data>
   <data name="Cercar" xml:space="preserve">
     <value>Buscar</value>
+  </data>
+  <data name="Contacta" xml:space="preserve">
+    <value>Contactar</value>
   </data>
   <data name="Drets_reservats" xml:space="preserve">
     <value>Todos los derechos reservados</value>
@@ -132,14 +138,32 @@
   <data name="Examens" xml:space="preserve">
     <value>Exámenes</value>
   </data>
+  <data name="Inici" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
   <data name="Inicia_sessio" xml:space="preserve">
-    <value>Inicia sesión</value>
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="Papers" xml:space="preserve">
+    <value>Papers</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
   </data>
+  <data name="PFCs" xml:space="preserve">
+    <value>PFCs</value>
+  </data>
+  <data name="Practiques" xml:space="preserve">
+    <value>Prácticas</value>
+  </data>
   <data name="Registrat" xml:space="preserve">
     <value>Regístrate</value>
+  </data>
+  <data name="Sobre_HotNotes" xml:space="preserve">
+    <value>Acerca de HotNotes...</value>
+  </data>
+  <data name="Tanca_sessio" xml:space="preserve">
+    <value>Cerrar sesión</value>
   </data>
   <data name="Treballs" xml:space="preserve">
     <value>Trabajos</value>

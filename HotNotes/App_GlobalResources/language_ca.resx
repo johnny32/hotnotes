@@ -120,11 +120,17 @@
   <data name="Apunts" xml:space="preserve">
     <value>Apunts</value>
   </data>
+  <data name="Articles" xml:space="preserve">
+    <value>Articles</value>
+  </data>
   <data name="Cercador" xml:space="preserve">
     <value>Introdueix els termes de cerca...</value>
   </data>
   <data name="Cercar" xml:space="preserve">
     <value>Buscar</value>
+  </data>
+  <data name="Contacta" xml:space="preserve">
+    <value>Contacta</value>
   </data>
   <data name="Drets_reservats" xml:space="preserve">
     <value>Tots els drets reservats</value>
@@ -132,14 +138,32 @@
   <data name="Examens" xml:space="preserve">
     <value>Examens</value>
   </data>
+  <data name="Inici" xml:space="preserve">
+    <value>Inici</value>
+  </data>
   <data name="Inicia_sessio" xml:space="preserve">
     <value>Inicia sessió</value>
+  </data>
+  <data name="Papers" xml:space="preserve">
+    <value>Papers</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contrasenya</value>
   </data>
+  <data name="PFCs" xml:space="preserve">
+    <value>PFCs</value>
+  </data>
+  <data name="Practiques" xml:space="preserve">
+    <value>Pràctiques</value>
+  </data>
   <data name="Registrat" xml:space="preserve">
     <value>Regístra't</value>
+  </data>
+  <data name="Sobre_HotNotes" xml:space="preserve">
+    <value>Sobre HotNotes...</value>
+  </data>
+  <data name="Tanca_sessio" xml:space="preserve">
+    <value>Tanca sessió</value>
   </data>
   <data name="Treballs" xml:space="preserve">
     <value>Treballs</value>
