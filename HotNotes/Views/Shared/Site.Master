@@ -37,16 +37,11 @@
         <div id="navigation-div">
             <nav>
                 <ul id="menu">
-                <% Dictionary<string, object> paramsIdioma = new Dictionary<string, object>();
-                   paramsIdioma.Add("codiIdioma", "es");
-                    %>
                     <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Home", "Home") %></li>
                     <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
                     <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
-                    <li><%: Html.ActionLink("ES", "CanviarIdioma", "Home", paramsIdioma) %></li>
-                    <% paramsIdioma.Clear();
-                       paramsIdioma.Add("codiIdioma", "ca"); %>
-                    <li><%: Html.ActionLink("CA", "CanviarIdioma", "Home", paramsIdioma) %></li>
+                    <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=es">ES</a></li>
+                    <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=ca">CA</a></li>
                 </ul>
             </nav>
             <section id="login" style="float: right;">

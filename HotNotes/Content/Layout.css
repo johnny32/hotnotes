@@ -1,6 +1,6 @@
 ﻿body
 {
-    width: 85%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     border: none;
@@ -24,13 +24,13 @@ footer
 #left-column-div
 {
     float: left;
-    width: 13%;
+    width: 15%;
 }
 
 #right-column-div
 {
     float: right;
-    width: 13%;
+    width: 15%;
 }
 
 #footer-div
@@ -59,7 +59,7 @@ ul#menu
 
 #content
 {
-    width: 70%;
+    width: 66%;
     float: left;
 }
 
@@ -76,6 +76,13 @@ div#body
     padding-right: 0;
 }
 
+#sections
+{
+    list-style: none;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
+}
+
 #sections > li
 {
     margin-bottom: 0.5em;
@@ -89,4 +96,10 @@ div#body
 #sections > li:hover
 {
     background-color: #f0f0f0;
+}
+
+#sections a:hover
+{
+    text-decoration: none;
+    background-color: transparent;
 }
