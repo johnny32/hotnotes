@@ -11,6 +11,8 @@ using WebMatrix.WebData;
 using HotNotes.Filters;
 using HotNotes.Models;
 using HotNotes.Helpers;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace HotNotes.Controllers
 {
@@ -36,13 +38,31 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
             {
-                return RedirectToLocal(returnUrl);
-            }
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Usuaris WHERE Username = '" + model.UserName, connection);
+                SqlDataReader reader = cmd.ExecuteReader();
 
+                if (reader.Read())
+                {
+                    if (model.Password == (string)reader["Password"])
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        //Password incorrecte
+                        ModelState.AddModelError("", Lang.GetString(base.lang, "Username_password_incorrecte"));
+                    }
+                }
+                else
+                {
+                    //Usuari incorrecte
+                    ModelState.AddModelError("", Lang.GetString(base.lang, "Username_password_incorrecte"));
+                }
+            }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", Lang.GetString(base.lang, "Username_password_incorrecte"));
             return View(model);
         }
 
