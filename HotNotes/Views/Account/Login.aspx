@@ -11,8 +11,10 @@
     <meta name="viewport" content="width=device-width" />
     <%: Styles.Render("~/Content/css") %>
     <%: Styles.Render("~/Content/bootstrap/css/bootstrap.min.css") %>
+    <%: Scripts.Render("~/Scripts/jquery-1.7.1.min.js") %>
     <%: Scripts.Render("~/bundles/modernizr") %>
     <%: Scripts.Render("~/Content/bootstrap/js/bootstrap.min.js") %>
+    <%: Scripts.Render("~/Scripts/sha3.js") %>
     <style>
       .login-box
       {
@@ -27,6 +29,14 @@
         border-radius: 30px;
       }
     </style>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function () {
+                var encpassword = CryptoJS.SHA3($('#Password').val());
+                $('#Password').val(encpassword.toString());
+            });
+        });
+    </script>
   </head>
   <body>
     <div id="body">
@@ -71,7 +81,7 @@
     <footer>
       <div class="content-wrapper">
           <div style="text-align: center; color: #505050;">
-              <p>&copy; <%: DateTime.Now.Year %> - Jonathan Clara Márquez - <%: Lang.GetString(lang, "Drets_reservats") %>.</p>
+              <p>&copy; <%: DateTime.Now.Year %> - Jonathan Clara Márquez - &copy; <%: Lang.GetString(lang, "Drets_reservats") %>.</p>
           </div>
       </div>
     </footer>

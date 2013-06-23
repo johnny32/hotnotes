@@ -41,14 +41,32 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Usuaris WHERE Username = '" + model.UserName, connection);
+                SqlCommand cmd = new SqlCommand("SELECT Password FROM Usuaris WHERE Username = '" + model.UserName + "'", connection);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
                     if (model.Password == (string)reader["Password"])
                     {
-                        return RedirectToLocal(returnUrl);
+                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket (1, model.UserName, DateTime.Now, DateTime.Now.AddYears(1), model.RememberMe, null, FormsAuthentication.FormsCookiePath);
+
+                        string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                        HttpCookie cookie = new HttpCookie (FormsAuthentication.FormsCookieName, encryptedTicket);
+                        cookie.Expires = DateTime.Now.AddYears(1);
+
+                        System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+
+                        //return RedirectToLocal(returnUrl);
+                        if (WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+                        {
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "ERROR!");
+                            //ModelState.AddModelError("", Lang.GetString(base.lang, "Login_error_desconegut"));
+                        }
                     }
                     else
                     {
@@ -62,8 +80,17 @@ namespace HotNotes.Controllers
                     ModelState.AddModelError("", Lang.GetString(base.lang, "Username_password_incorrecte"));
                 }
             }
-            // If we got this far, something failed, redisplay form
+            
             return View(model);
+                        
+            /*if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            {
+                return RedirectToLocal(returnUrl);
+            }
+
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            return View(model);*/
         }
 
         //
