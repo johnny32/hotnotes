@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
 <%@ Import Namespace="HotNotes.Helpers" %>
 <% string lang = ViewBag.Lang; %>
+
 <!DOCTYPE html>
 <html lang="<%: lang %>">
 <head id="Head1" runat="server">
