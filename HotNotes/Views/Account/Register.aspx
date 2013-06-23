@@ -1,10 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/SiteNotLogged.Master" Inherits="System.Web.Mvc.ViewPage<HotNotes.Models.RegisterModel>" %>
+<%@ Import Namespace="HotNotes.Helpers" %>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Register
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
+    <% string lang = ViewBag.Lang; %>
     <hgroup class="title">
         <h1>Register.</h1>
         <h2>Create a new account.</h2>
@@ -16,21 +18,41 @@
 
         <fieldset>
             <legend>Registration Form</legend>
-            <ol>
-                <li>
-                    <%: Html.LabelFor(m => m.UserName) %>
+            <ol class="form-input">
+                <li class="form-left-column">
+                    <label for="UserName"><%: Lang.GetString(lang, "Username") %></label>
                     <%: Html.TextBoxFor(m => m.UserName) %>
                 </li>
-                <li>
-                    <%: Html.LabelFor(m => m.Password) %>
+                <li class="form-right-column">
+                    <label for="Name"><%: Lang.GetString(lang, "Nom") %></label>
+                    <%: Html.TextBoxFor(m => m.Name) %>
+                </li>
+                <li class="form-left-column">
+                    <label for="Password"><%: Lang.GetString(lang, "Password") %></label>
                     <%: Html.PasswordFor(m => m.Password) %>
                 </li>
-                <li>
-                    <%: Html.LabelFor(m => m.ConfirmPassword) %>
+                <li class="form-right-column">
+                    <label for="LastName"><%: Lang.GetString(lang, "Cognoms") %></label>
+                    <%: Html.TextBoxFor(m => m.LastName) %>
+                </li>
+                <li class="form-left-column">
+                    <label for="ConfirmPassword"><%: Lang.GetString(lang, "Confirma_password") %></label>
                     <%: Html.PasswordFor(m => m.ConfirmPassword) %>
                 </li>
+                <li class="form-right-column">
+                    <label for="Birthday"><%: Lang.GetString(lang, "Data_naixement") %></label>
+                    <%: Html.TextBoxFor(m => m.Birthday) %>
+                </li>
+                <li class="form-left-column">
+                    <label for="Gender"><%: Lang.GetString(lang, "Sexe") %></label>
+                    <select name="Gender">
+                        <option value="H"><%: Lang.GetString(lang, "Home") %></option>
+                        <option value="D"><%: Lang.GetString(lang, "Dona") %></option>
+                        <option value="-"><%: Lang.GetString(lang, "No_especificat") %></option>
+                    </select>
+                </li>
             </ol>
-            <input type="submit" value="Register" />
+            <input style="clear: both;" type="submit" value="Register" />
         </fieldset>
     <% } %>
 </asp:Content>

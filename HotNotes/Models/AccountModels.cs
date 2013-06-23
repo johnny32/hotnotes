@@ -77,19 +77,31 @@ namespace HotNotes.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [StringLength(100, MinimumLength = 4)]
         public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
         [Compare("Password", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        [ValidDate(ErrorMessage = "You must be 18 or older.")]
+        public DateTime Birthday { get; set; }
+
+        [ValidGender]
+        public char Gender { get; set; }
     }
 
     public class ExternalLogin
@@ -97,5 +109,25 @@ namespace HotNotes.Models
         public string Provider { get; set; }
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
+    }
+
+    public sealed class ValidDateAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            DateTime date = (DateTime)value;
+            DateTime eighteenYearsAgo = DateTime.Now.AddYears(-18);
+            
+            return (eighteenYearsAgo > date);
+        }
+    }
+
+    public sealed class ValidGenderAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            char g = (char)value;
+            return (g == 'H' || g == 'D');
+        }
     }
 }

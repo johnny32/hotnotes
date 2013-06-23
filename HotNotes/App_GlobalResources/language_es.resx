@@ -174,4 +174,28 @@
   <data name="Username_password_incorrecte" xml:space="preserve">
     <value>El nombre de usuario o la contraseña introducidos son incorrectos</value>
   </data>
+  <data name="Cognoms" xml:space="preserve">
+    <value>Apellidos</value>
+  </data>
+  <data name="Confirma_password" xml:space="preserve">
+    <value>Confirmar contraseña</value>
+  </data>
+  <data name="Data_naixement" xml:space="preserve">
+    <value>Fecha de nacimiento</value>
+  </data>
+  <data name="Dona" xml:space="preserve">
+    <value>Mujer</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Hombre</value>
+  </data>
+  <data name="Nom" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="No_especificat" xml:space="preserve">
+    <value>No especificado</value>
+  </data>
+  <data name="Sexe" xml:space="preserve">
+    <value>Sexo</value>
+  </data>
 </root>
