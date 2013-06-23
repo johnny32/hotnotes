@@ -46,27 +46,10 @@ namespace HotNotes.Controllers
 
                 if (reader.Read())
                 {
-                    if (model.Password == (string)reader["Password"])
+                    if (model.PasswordEnc == (string)reader["Password"])
                     {
-                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket (1, model.UserName, DateTime.Now, DateTime.Now.AddYears(1), model.RememberMe, null, FormsAuthentication.FormsCookiePath);
-
-                        string encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-                        HttpCookie cookie = new HttpCookie (FormsAuthentication.FormsCookieName, encryptedTicket);
-                        cookie.Expires = DateTime.Now.AddYears(1);
-
-                        System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
-
-                        //return RedirectToLocal(returnUrl);
-                        if (WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
-                        {
-                            return RedirectToLocal(returnUrl);
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("", "ERROR!");
-                            //ModelState.AddModelError("", Lang.GetString(base.lang, "Login_error_desconegut"));
-                        }
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
                     }
                     else
                     {
@@ -80,17 +63,9 @@ namespace HotNotes.Controllers
                     ModelState.AddModelError("", Lang.GetString(base.lang, "Username_password_incorrecte"));
                 }
             }
-            
-            return View(model);
-                        
-            /*if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
-            {
-                return RedirectToLocal(returnUrl);
-            }
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);*/
+            return View(model);
+
         }
 
         //

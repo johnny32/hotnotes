@@ -62,10 +62,13 @@ namespace HotNotes.Models
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
-        public string Password { get; set; }
+        public string PasswordEnc { get; set; }
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
