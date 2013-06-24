@@ -198,4 +198,10 @@
   <data name="Sexe" xml:space="preserve">
     <value>Sexe</value>
   </data>
+  <data name="Compte_desactivat" xml:space="preserve">
+    <value>Aquest compte d'usuari encara no ha estat activat. Si us plau, revisa la bústia d'entrada i fes clic a l'enllaç que trobaràs al nostre correu.&lt;br /&gt;Si no has rebut cap correu, fes clic &lt;a href="/"&gt;aquí&lt;/a&gt; per a que te'l tornem a enviar.</value>
+  </data>
+  <data name="Usuari_ja_existent" xml:space="preserve">
+    <value>Aquest nom d'usuari ja existeix. Si us plau, tria'n un altre.</value>
+  </data>
 </root>

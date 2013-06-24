@@ -37,7 +37,7 @@
         <div id="navigation-div">
             <nav>
                 <ul id="menu">
-                    <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Home", "Home") %></li>
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Index", "Home") %></li>
                     <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
                     <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
                     <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=es">ES</a></li>

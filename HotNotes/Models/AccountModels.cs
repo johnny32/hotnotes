@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Text.RegularExpressions;
 
 namespace HotNotes.Models
 {
@@ -102,6 +103,10 @@ namespace HotNotes.Models
 
         [ValidGender]
         public char Gender { get; set; }
+
+        [Required]
+        [ValidEmail(ErrorMessage = "The email has a wrong format.")]
+        public string Email { get; set; }
     }
 
     public class ExternalLogin
@@ -128,6 +133,18 @@ namespace HotNotes.Models
         {
             char g = (char)value;
             return (g == 'H' || g == 'D');
+        }
+    }
+
+    public sealed class ValidEmailAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            string email = (string)value;
+
+            return Regex.IsMatch(email,
+              @"^(?("")(""[^""]+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))" +
+              @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$"); 
         }
     }
 }

@@ -41,15 +41,23 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Password FROM Usuaris WHERE Username = '" + model.UserName + "'", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Password, Activat FROM Usuaris WHERE Username = '" + model.UserName + "'", connection);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
                     if (model.PasswordEnc == (string)reader["Password"])
                     {
-                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                        return RedirectToLocal(returnUrl);
+                        if ((bool)reader["Activat"])
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            //Encara no ha activat el compte
+                            ModelState.AddModelError("", Lang.GetString(base.lang, "Compte_desactivat"));
+                        }
                     }
                     else
                     {
@@ -97,7 +105,22 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = '" + model.UserName + "'", connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ModelState.AddModelError("", Lang.GetString(base.lang, "Usuari_ja_existent"));
+                }
+                else
+                {
+                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = '" + model.Email + "'", connection);
+                }
+            }
+            /*if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
@@ -110,7 +133,7 @@ namespace HotNotes.Controllers
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
-            }
+            }*/
 
             // If we got this far, something failed, redisplay form
             return View(model);

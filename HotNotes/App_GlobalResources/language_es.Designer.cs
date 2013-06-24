@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Esta cuenta de usuario aún no ha sido activada. Por favor, revisa la bandeja de entrada y haz click en el enlace que encontrarás en nuestro correo.&lt;br /&gt;Si no has recibido ningún correo, haz click &lt;a href=&quot;/&quot;&gt;aquí&lt;/a&gt; para que te lo volvamos a enviar..
+        /// </summary>
+        internal static string Compte_desactivat {
+            get {
+                return ResourceManager.GetString("Compte_desactivat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmar contraseña.
         /// </summary>
         internal static string Confirma_password {
@@ -300,6 +309,15 @@ namespace Resources {
         internal static string Username_password_incorrecte {
             get {
                 return ResourceManager.GetString("Username_password_incorrecte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Este nombre de usuario ya existe. Por favor, elije otro..
+        /// </summary>
+        internal static string Usuari_ja_existent {
+            get {
+                return ResourceManager.GetString("Usuari_ja_existent", resourceCulture);
             }
         }
     }

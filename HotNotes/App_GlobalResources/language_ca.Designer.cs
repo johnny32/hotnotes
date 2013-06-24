@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aquest compte d&apos;usuari encara no ha estat activat. Si us plau, revisa la bústia d&apos;entrada i fes clic a l&apos;enllaç que trobaràs al nostre correu.&lt;br /&gt;Si no has rebut cap correu, fes clic &lt;a href=&quot;/&quot;&gt;aquí&lt;/a&gt; per a que te&apos;l tornem a enviar..
+        /// </summary>
+        internal static string Compte_desactivat {
+            get {
+                return ResourceManager.GetString("Compte_desactivat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmar contrasenya.
         /// </summary>
         internal static string Confirma_password {
@@ -300,6 +309,15 @@ namespace Resources {
         internal static string Username_password_incorrecte {
             get {
                 return ResourceManager.GetString("Username_password_incorrecte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aquest nom d&apos;usuari ja existeix. Si us plau, tria&apos;n un altre..
+        /// </summary>
+        internal static string Usuari_ja_existent {
+            get {
+                return ResourceManager.GetString("Usuari_ja_existent", resourceCulture);
             }
         }
     }
