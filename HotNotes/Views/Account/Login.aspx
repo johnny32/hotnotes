@@ -48,7 +48,6 @@
 
 <asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Scripts.Render("~/bundles/jqueryval") %>
-    <%: Scripts.Render("~/Scripts/sha3.js") %>
 
     <script type="text/javascript">
         $(document).ready(function () {
