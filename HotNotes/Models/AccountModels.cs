@@ -107,6 +107,7 @@ namespace HotNotes.Models
         [Required]
         [ValidEmail(ErrorMessage = "The email has a wrong format.")]
         public string Email { get; set; }
+
     }
 
     public class ExternalLogin

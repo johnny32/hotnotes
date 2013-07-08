@@ -160,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ja existeix un compte registrat amb aquesta adreça de correu..
+        /// </summary>
+        internal static string Email_ja_existent {
+            get {
+                return ResourceManager.GetString("Email_ja_existent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Examens.
         /// </summary>
         internal static string Examens {

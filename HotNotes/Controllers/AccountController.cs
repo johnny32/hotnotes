@@ -118,6 +118,15 @@ namespace HotNotes.Controllers
                 else
                 {
                     cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = '" + model.Email + "'", connection);
+                    reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        ModelState.AddModelError("", Lang.GetString(base.lang, "Email_ja_existent"));
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
             /*if (ModelState.IsValid)
