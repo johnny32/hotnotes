@@ -7,6 +7,15 @@
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#Birthday')[0].datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
     <hgroup class="title">
         <h1>Register.</h1>
         <h2>Create a new account.</h2>
@@ -44,11 +53,15 @@
                     <%: Html.TextBoxFor(m => m.Birthday) %>
                 </li>
                 <li class="form-left-column">
+                    <label for="Email"><%: Lang.GetString(lang, "Correu_electronic") %></label>
+                    <%: Html.TextBoxFor(m => m.Email) %>
+                </li>
+                <li class="form-right-column">
                     <label for="Gender"><%: Lang.GetString(lang, "Sexe") %></label>
                     <select name="Gender">
+                        <option value="-" selected><%: Lang.GetString(lang, "No_especificat") %></option>
                         <option value="H"><%: Lang.GetString(lang, "Home") %></option>
                         <option value="D"><%: Lang.GetString(lang, "Dona") %></option>
-                        <option value="-"><%: Lang.GetString(lang, "No_especificat") %></option>
                     </select>
                 </li>
             </ol>

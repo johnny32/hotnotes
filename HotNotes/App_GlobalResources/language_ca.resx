@@ -204,7 +204,7 @@
   <data name="Usuari_ja_existent" xml:space="preserve">
     <value>Aquest nom d'usuari ja existeix. Si us plau, tria'n un altre.</value>
   </data>
-  <data name="Email_ja_existent" xml:space="preserve">
-    <value>Ja existeix un compte registrat amb aquesta adreça de correu.</value>
+  <data name="Correu_electronic" xml:space="preserve">
+    <value>Correu electrònic</value>
   </data>
 </root>
