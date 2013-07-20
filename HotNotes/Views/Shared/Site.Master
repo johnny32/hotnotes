@@ -1,0 +1,89 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Import Namespace="HotNotes.Helpers" %>
+<% string lang = ViewBag.Lang; %>
+
+<!DOCTYPE html>
+<html lang="<%: lang %>">
+<head id="Head1" runat="server">
+    <meta charset="utf-8" />
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+        | HotNotes</title>
+    <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <%: Styles.Render("~/Content/Site.css") %>
+    <%: Styles.Render("~/Plugins/bootstrap/css/bootstrap.min.css") %>
+    <%: Styles.Render("~/Content/Layout.css") %>
+    <%: Scripts.Render("~/Scripts/jquery-1.10.2.js") %>
+    <%: Scripts.Render("~/Plugins/jquery-ui-1.10.3/ui/jquery-ui.js") %>
+    <%: Scripts.Render("~/Plugins/bootstrap/js/bootstrap.js") %>
+</head>
+<body>
+    <header>
+      <div id="header-div" class="template-block">
+        <div style="float: left;">
+            <p class="site-title">
+                <a href="<%= Url.Action("Index", "Home") %>">
+                    <img src="<%= Url.Content( "~/Content/images/logo.png" ) %>" alt="HotNotes" />
+                </a>
+            </p>
+        </div>
+        <div style="float: right;">
+            <form id="cercador" action="/search" method="get">
+                <input type="text" style="width: 26em;" placeholder="<%= Lang.GetString(lang, "Cercador") %>" />
+                <input type="submit" class="btn-small" style="margin-top: -0.6em;" value="<%= Lang.GetString(lang, "Cercar") %>" />
+            </form>
+        </div>
+        <div style="clear: both;"></div>
+        <div id="navigation-div">
+            <nav>
+                <ul id="menu">
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Index", "Home") %></li>
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
+                    <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
+                    <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=es">ES</a></li>
+                    <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=ca">CA</a></li>
+                </ul>
+            </nav>
+            <section id="login" style="float: right;">
+                <%: Html.Partial("_LoginPartial")%>
+            </section>
+        </div>
+        <div style="clear: both;"></div>
+      </div>
+  </header>
+    <div id="body">
+        <div id="left-column-div">
+            <div class="template-block">
+                <ul id="sections">
+                    <li><a href="/"><%: Lang.GetString(lang, "Apunts") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Treballs") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Examens") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Practiques") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Articles") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "PFCs") %></a></li>
+                    <li><a href="/"><%: Lang.GetString(lang, "Papers") %></a></li>
+                </ul>
+            </div>
+            <div class="template-block">
+                <b>TODO: CRÈDITS</b>
+            </div>
+        </div>
+        <div id="right-column-div" class="template-block">
+            <b>TODO: PUBLICITAT</b>
+        </div>
+        <div id="content" class="template-block">
+            <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+            <section class="content-wrapper main-content clear-fix">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </section>
+        </div>
+    </div>
+    <footer>
+        <div id="footer-div" class="template-block">
+            <p>&copy; <%: DateTime.Now.Year %> - Jonathan Clara Márquez - <%: Lang.GetString(lang, "Drets_reservats") %>.</p>
+        </div>
+    </footer>
+    <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
+</body>
+</html>
