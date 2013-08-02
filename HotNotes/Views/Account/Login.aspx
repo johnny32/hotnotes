@@ -8,6 +8,14 @@
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
+    <% if (ViewBag.Error != null)
+       { %>
+       <div class="alert alert-block alert-danger" style="margin-right: 0.8em;">
+           <button type="button" class="close" data-dismiss="alert">&times;</button>
+           <h4><%: Lang.GetString(lang, "Error") %></h4>
+           <p><%= ViewBag.Error %></p>
+       </div>
+    <% } %>
     <hgroup class="title">
         <h1><%: Lang.GetString(lang, "Inicia_sessio") %></h1>
     </hgroup>

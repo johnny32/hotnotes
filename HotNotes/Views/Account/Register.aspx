@@ -7,30 +7,26 @@
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
-
     <script type="text/javascript">
-        /*$(function () {
-            $('#Birthday')[0].datepicker({
-                changeMonth: true,
-                changeYear: true
-            });
-        });*/
+        var passwords_no_coincideixen = '<%: Lang.GetString(lang, "Passwords_no_coincideixen") %>';
     </script>
+
     <hgroup class="title">
-        <h1>Register.</h1>
-        <h2>Create a new account.</h2>
+        <h1><%: Lang.GetString(lang, "Registrat") %></h1>
     </hgroup>
 
     <% using (Html.BeginForm()) { %>
         <%: Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary() %>
 
-        <div id="errors" class="alert alert-error" style="width: 80%; margin-left: auto; margin-right: auto;">
-            <% if (ViewBag.Error != null)
-               {
-                   Response.Write(ViewBag.Error);
-               } %>
-        </div>
+        <% if (ViewBag.Error != null)
+           { %>
+           <div class="alert alert-block alert-danger" style="margin-right: 0.8em;">
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <h4><%: Lang.GetString(lang, "Error") %></h4>
+               <p><%= ViewBag.Error %></p>
+           </div>
+        <% } %>
 
         <fieldset>
             <legend>Registration Form</legend>
@@ -64,8 +60,8 @@
                     <input name="Email" type="email" required />
                 </li>
                 <li class="form-right-column">
-                    <label for="Gender"><%: Lang.GetString(lang, "Sexe") %></label>
-                    <select name="Gender">
+                    <label for="Sexe"><%: Lang.GetString(lang, "Sexe") %></label>
+                    <select name="Sexe">
                         <option value="-" selected><%: Lang.GetString(lang, "No_especificat") %></option>
                         <option value="H"><%: Lang.GetString(lang, "Home") %></option>
                         <option value="D"><%: Lang.GetString(lang, "Dona") %></option>
@@ -81,12 +77,20 @@
 <asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            if ($('#errors').html().trim() == '') {
-                $('#errors').hide();
-            }
-
             $('form').submit(function () {
-                
+                var pass1 = $('input[name=Password]').val();
+                var pass2 = $('input[name=ConfirmarPassword]').val();
+
+                if (pass1 != pass2) {
+                    alert(passwords_no_coincideixen);
+                    return false;
+                }
+
+                var passenc = CryptoJS.SHA3(pass1);
+                $('input[name=PasswordEnc]').val(passenc);
+                $('input[name=Password]').val('');
+                $('input[name=ConfirmarPassword]').val('');
+                return true;
             });
         });
     </script>

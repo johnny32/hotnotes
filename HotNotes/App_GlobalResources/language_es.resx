@@ -210,4 +210,13 @@
   <data name="No_tanquis_sessio" xml:space="preserve">
     <value>No cerrar la sesión automáticamente</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error_registre" xml:space="preserve">
+    <value>Ha habido un error durante el proceso de registro. Por favor, pruébalo de nuevo en unos minutos.&lt;br /&gt;Si el problema persiste, contacta con el administrador: &lt;a href="mailto:jonathan.clara.marquez@gmail.com"&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;</value>
+  </data>
+  <data name="Passwords_no_coincideixen" xml:space="preserve">
+    <value>Las contraseñas no coinciden.</value>
+  </data>
 </root>

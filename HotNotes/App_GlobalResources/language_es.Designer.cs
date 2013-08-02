@@ -169,6 +169,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ha habido un error durante el proceso de registro. Por favor, pruébalo de nuevo en unos minutos.&lt;br /&gt;Si el problema persiste, contacta con el administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
+        /// </summary>
+        internal static string Error_registre {
+            get {
+                return ResourceManager.GetString("Error_registre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exámenes.
         /// </summary>
         internal static string Examens {
@@ -246,6 +264,15 @@ namespace Resources {
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Las contraseñas no coinciden..
+        /// </summary>
+        internal static string Passwords_no_coincideixen {
+            get {
+                return ResourceManager.GetString("Passwords_no_coincideixen", resourceCulture);
             }
         }
         

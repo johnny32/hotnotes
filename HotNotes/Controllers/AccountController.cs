@@ -107,7 +107,7 @@ namespace HotNotes.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, Nullable<char> Sexe)
+        public ActionResult Register(string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
@@ -121,6 +121,7 @@ namespace HotNotes.Controllers
                 }
                 else
                 {
+                    reader.Close();
                     cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = '" + Email + "'", connection);
                     reader = cmd.ExecuteReader();
                     if (reader.Read())
@@ -129,7 +130,17 @@ namespace HotNotes.Controllers
                     }
                     else
                     {
-
+                        reader.Close();
+                        string SexeSQL = (Sexe != '-') ? ("'" + Sexe + "'") : "NULL";
+                        cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat) VALUES ('" + Username + "', '" + PasswordEnc + "', '" + Email + "', '" + Nom + "', '" + Cognoms + "', '" + DataNaixement.ToString() + "', " + SexeSQL + ", 'false')", connection);
+                        try
+                        {
+                            cmd.ExecuteReader();
+                        }
+                        catch (SqlException)
+                        {
+                            ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
+                        }
                     }
                 }
             }
