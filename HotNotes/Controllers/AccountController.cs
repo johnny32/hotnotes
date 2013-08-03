@@ -136,6 +136,7 @@ namespace HotNotes.Controllers
                         try
                         {
                             cmd.ExecuteReader();
+                            return View("Register_Complete");
                         }
                         catch (SqlException)
                         {

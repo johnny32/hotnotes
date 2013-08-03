@@ -304,6 +304,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El registro se ha completado satisfactoriamente. Sin embargo, antes de poder entrar, debes revisar tu dirección de correo y hacer click en el enlace que te hemos enviado para activar tu cuenta..
+        /// </summary>
+        internal static string Registre_completat {
+            get {
+                return ResourceManager.GetString("Registre_completat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sexo.
         /// </summary>
         internal static string Sexe {

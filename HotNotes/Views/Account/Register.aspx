@@ -18,15 +18,18 @@
     <% using (Html.BeginForm()) { %>
         <%: Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary() %>
-
-        <% if (ViewBag.Error != null)
-           { %>
-           <div class="alert alert-block alert-danger" style="margin-right: 0.8em;">
-               <button type="button" class="close" data-dismiss="alert">&times;</button>
-               <h4><%: Lang.GetString(lang, "Error") %></h4>
-               <p><%= ViewBag.Error %></p>
-           </div>
-        <% } %>
+        
+        <div id="errors" class="alert alert-block alert-danger hide" style="margin-right: 0.8em;">
+            <% if (ViewBag.Error != null)
+               { %>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4><%: Lang.GetString(lang, "Error") %></h4>
+            <p><%= ViewBag.Error %></p>
+            <script type="text/javascript">
+                $('#errors').removeClass('hide');
+            </script>
+            <% } %>
+        </div>        
 
         <fieldset>
             <legend>Registration Form</legend>
@@ -82,7 +85,10 @@
                 var pass2 = $('input[name=ConfirmarPassword]').val();
 
                 if (pass1 != pass2) {
-                    alert(passwords_no_coincideixen);
+                    $('#errors').html('<button type="button" class="close" data-dismiss="alert">&times;</button>'
+                      + '<h4>Error</h4>'
+                      + '<p>' + passwords_no_coincideixen + '</p>');
+                    $('#errors').removeClass('hide');
                     return false;
                 }
 

@@ -219,4 +219,7 @@
   <data name="Passwords_no_coincideixen" xml:space="preserve">
     <value>Les contrasenyes no coincideixen.</value>
   </data>
+  <data name="Registre_completat" xml:space="preserve">
+    <value>El registre s'ha completat satisfactòriament. No obstant, abans de poder entrar, has de revisar la teva direcció de correu i fer clic a l'enllaç que t'hem enviat per activar el teu compte.</value>
+  </data>
 </root>
