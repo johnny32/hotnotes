@@ -222,4 +222,16 @@
   <data name="Registre_completat" xml:space="preserve">
     <value>El registre s'ha completat satisfactòriament. No obstant, abans de poder entrar, has de revisar la teva direcció de correu i fer clic a l'enllaç que t'hem enviat per activar el teu compte.</value>
   </data>
+  <data name="Password_curta" xml:space="preserve">
+    <value>La contrasenya ha de tenir com a mínim 6 caràcters.</value>
+  </data>
+  <data name="Username_curt" xml:space="preserve">
+    <value>El nom d'usuari ha de tenir com a mínim 6 caràcters.</value>
+  </data>
+  <data name="Major_edat" xml:space="preserve">
+    <value>Has de ser major d'edat per a registrar-te a HotNotes.</value>
+  </data>
+  <data name="Completa_el_registre" xml:space="preserve">
+    <value>Completa el registre a HotNotes</value>
+  </data>
 </root>

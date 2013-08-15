@@ -222,4 +222,16 @@
   <data name="Registre_completat" xml:space="preserve">
     <value>El registro se ha completado satisfactoriamente. Sin embargo, antes de poder entrar, debes revisar tu dirección de correo y hacer click en el enlace que te hemos enviado para activar tu cuenta.</value>
   </data>
+  <data name="Password_curta" xml:space="preserve">
+    <value>La contraseña debe tener como mínimo 6 caracteres.</value>
+  </data>
+  <data name="Username_curt" xml:space="preserve">
+    <value>El nombre de usuario debe tener como mínimo 6 caracteres.</value>
+  </data>
+  <data name="Major_edat" xml:space="preserve">
+    <value>Debes ser mayor de edad para registrarte en HotNotes.</value>
+  </data>
+  <data name="Completa_el_registre" xml:space="preserve">
+    <value>Completa el registro en HotNotes</value>
+  </data>
 </root>

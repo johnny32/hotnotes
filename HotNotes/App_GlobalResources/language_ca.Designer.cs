@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completa el registre a HotNotes.
+        /// </summary>
+        internal static string Completa_el_registre {
+            get {
+                return ResourceManager.GetString("Completa_el_registre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aquest compte d&apos;usuari encara no ha estat activat. Si us plau, revisa la bústia d&apos;entrada i fes clic a l&apos;enllaç que trobaràs al nostre correu.&lt;br /&gt;Si no has rebut cap correu, fes clic &lt;a href=&quot;/&quot;&gt;aquí&lt;/a&gt; per a que te&apos;l tornem a enviar..
         /// </summary>
         internal static string Compte_desactivat {
@@ -223,6 +232,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has de ser major d&apos;edat per a registrar-te a HotNotes..
+        /// </summary>
+        internal static string Major_edat {
+            get {
+                return ResourceManager.GetString("Major_edat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nom.
         /// </summary>
         internal static string Nom {
@@ -273,6 +291,15 @@ namespace Resources {
         internal static string Passwords_no_coincideixen {
             get {
                 return ResourceManager.GetString("Passwords_no_coincideixen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contrasenya ha de tenir com a mínim 6 caràcters..
+        /// </summary>
+        internal static string Password_curta {
+            get {
+                return ResourceManager.GetString("Password_curta", resourceCulture);
             }
         }
         
@@ -354,6 +381,15 @@ namespace Resources {
         internal static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El nom d&apos;usuari ha de tenir com a mínim 6 caràcters..
+        /// </summary>
+        internal static string Username_curt {
+            get {
+                return ResourceManager.GetString("Username_curt", resourceCulture);
             }
         }
         

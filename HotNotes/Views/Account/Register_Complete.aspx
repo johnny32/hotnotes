@@ -12,7 +12,7 @@
         <h1><%: Lang.GetString(lang, "Registrat") %></h1>
     </hgroup>
 
-    <div>
+    <div style="color: white; margin-top: 1em; margin-bottom: 1em;">
         <%: Lang.GetString(lang, "Registre_completat") %>
     </div>
 </asp:Content>

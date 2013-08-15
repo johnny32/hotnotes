@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completa el registro en HotNotes.
+        /// </summary>
+        internal static string Completa_el_registre {
+            get {
+                return ResourceManager.GetString("Completa_el_registre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Esta cuenta de usuario aún no ha sido activada. Por favor, revisa la bandeja de entrada y haz click en el enlace que encontrarás en nuestro correo.&lt;br /&gt;Si no has recibido ningún correo, haz click &lt;a href=&quot;/&quot;&gt;aquí&lt;/a&gt; para que te lo volvamos a enviar..
         /// </summary>
         internal static string Compte_desactivat {
@@ -223,6 +232,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debes ser mayor de edad para registrarte en HotNotes..
+        /// </summary>
+        internal static string Major_edat {
+            get {
+                return ResourceManager.GetString("Major_edat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nombre.
         /// </summary>
         internal static string Nom {
@@ -273,6 +291,15 @@ namespace Resources {
         internal static string Passwords_no_coincideixen {
             get {
                 return ResourceManager.GetString("Passwords_no_coincideixen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña debe tener como mínimo 6 caracteres..
+        /// </summary>
+        internal static string Password_curta {
+            get {
+                return ResourceManager.GetString("Password_curta", resourceCulture);
             }
         }
         
@@ -354,6 +381,15 @@ namespace Resources {
         internal static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El nombre de usuario debe tener como mínimo 6 caracteres..
+        /// </summary>
+        internal static string Username_curt {
+            get {
+                return ResourceManager.GetString("Username_curt", resourceCulture);
             }
         }
         

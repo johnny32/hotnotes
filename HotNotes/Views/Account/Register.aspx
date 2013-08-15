@@ -8,7 +8,10 @@
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
     <script type="text/javascript">
+        var username_curt = '<%: Lang.GetString(lang, "Username_curt") %>';
         var passwords_no_coincideixen = '<%: Lang.GetString(lang, "Passwords_no_coincideixen") %>';
+        var password_curta = '<%: Lang.GetString(lang, "Password_curta") %>';
+        var major_edat = '<%: Lang.GetString(lang, "Major_edat") %>';
     </script>
 
     <hgroup class="title">
@@ -81,13 +84,37 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('form').submit(function () {
+                var username = $('input[name=Username]').val();
                 var pass1 = $('input[name=Password]').val();
                 var pass2 = $('input[name=ConfirmarPassword]').val();
+                var datanaixementstring = $('input[name=DataNaixement]').val();
 
-                if (pass1 != pass2) {
+                var errormsg = '';
+
+                if (username.length < 6) {
+                    errormsg = username_curt;
+                } else if (pass1 != pass2) {
+                    errormsg = passwords_no_coincideixen;
+                } else if (pass1.length < 6 || pass2.length < 6) {
+                    errormsg = password_curta;
+                } else {
+                    datanaixement = new Date(datanaixementstring);
+                    avui = new Date();
+                    avui.setHours(0);
+                    avui.setMinutes(0);
+                    avui.setSeconds(0);
+                    avui.setMilliseconds(0);
+                    fa18anys = new Date(avui.getFullYear() - 18, avui.getMonth(), avui.getDate(), 0, 0, 0, 0);
+                    
+                    if (datanaixement > fa18anys) {
+                        errormsg = major_edat;
+                    }
+                }
+
+                if (errormsg != '') {
                     $('#errors').html('<button type="button" class="close" data-dismiss="alert">&times;</button>'
                       + '<h4>Error</h4>'
-                      + '<p>' + passwords_no_coincideixen + '</p>');
+                      + '<p>' + errormsg + '</p>');
                     $('#errors').removeClass('hide');
                     return false;
                 }

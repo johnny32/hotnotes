@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using HotNotes.Helpers;
 using System.Data.SqlClient;
+using System.Net.Mail;
 
 namespace HotNotes.Controllers
 {
@@ -132,16 +133,35 @@ namespace HotNotes.Controllers
                     {
                         reader.Close();
                         string SexeSQL = (Sexe != '-') ? ("'" + Sexe + "'") : "NULL";
-                        cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat) VALUES ('" + Username + "', '" + PasswordEnc + "', '" + Email + "', '" + Nom + "', '" + Cognoms + "', '" + DataNaixement.ToString() + "', " + SexeSQL + ", 'false')", connection);
+                        Guid g = Guid.NewGuid();
+                        string CodiActivacio = Convert.ToBase64String(g.ToByteArray());
+                        CodiActivacio.Replace("=", "");
+                        CodiActivacio.Replace("+", "");
+                        CodiActivacio.Replace("/", "");
+                        cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat, CodiActivacio) VALUES ('" + Username + "', '" + PasswordEnc + "', '" + Email + "', '" + Nom + "', '" + Cognoms + "', '" + DataNaixement.ToString() + "', " + SexeSQL + ", 'false', '" + CodiActivacio + "')", connection);
                         try
                         {
                             cmd.ExecuteReader();
+
+                            MailMessage msg = new MailMessage();
+                            msg.To.Add(Email);
+                            msg.Subject = Lang.GetString(lang, "Completa_el_registre");
+                            msg.From = new MailAddress("admin@hotnotes.com");
+                            msg.Body = "This is the message body";
+                            SmtpClient smtp = new SmtpClient("yoursmtphost");
+                            smtp.Send(msg);
+
                             return View("Register_Complete");
                         }
                         catch (SqlException)
                         {
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
+                        catch (SmtpException)
+                        {
+                            ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
+                        }
+                        //TODO Substituir els catch's per catch (Exception)
                     }
                 }
             }
