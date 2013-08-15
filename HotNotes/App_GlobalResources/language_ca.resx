@@ -234,4 +234,7 @@
   <data name="Completa_el_registre" xml:space="preserve">
     <value>Completa el registre a HotNotes</value>
   </data>
+  <data name="Email_ja_existent" xml:space="preserve">
+    <value>Ja hi ha un usuari registrat amb aquesta adreça de correu electrònic.</value>
+  </data>
 </root>

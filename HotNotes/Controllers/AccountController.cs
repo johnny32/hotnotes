@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using HotNotes.Helpers;
 using System.Data.SqlClient;
+using System.Net;
 using System.Net.Mail;
 
 namespace HotNotes.Controllers
@@ -135,30 +136,44 @@ namespace HotNotes.Controllers
                         string SexeSQL = (Sexe != '-') ? ("'" + Sexe + "'") : "NULL";
                         Guid g = Guid.NewGuid();
                         string CodiActivacio = Convert.ToBase64String(g.ToByteArray());
-                        CodiActivacio.Replace("=", "");
-                        CodiActivacio.Replace("+", "");
-                        CodiActivacio.Replace("/", "");
+                        CodiActivacio = CodiActivacio.Replace("=", "");
+                        CodiActivacio = CodiActivacio.Replace("+", "");
+                        CodiActivacio = CodiActivacio.Replace("/", "");
                         cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat, CodiActivacio) VALUES ('" + Username + "', '" + PasswordEnc + "', '" + Email + "', '" + Nom + "', '" + Cognoms + "', '" + DataNaixement.ToString() + "', " + SexeSQL + ", 'false', '" + CodiActivacio + "')", connection);
                         try
                         {
-                            cmd.ExecuteReader();
+                            reader = cmd.ExecuteReader();
 
                             MailMessage msg = new MailMessage();
                             msg.To.Add(Email);
                             msg.Subject = Lang.GetString(lang, "Completa_el_registre");
-                            msg.From = new MailAddress("admin@hotnotes.com");
+                            msg.From = new MailAddress("webmasterhotnotes@gmail.com", "HotNotes Admin");
                             msg.Body = "This is the message body";
-                            SmtpClient smtp = new SmtpClient("yoursmtphost");
+
+                            NetworkCredential nwCredential = new NetworkCredential("webmasterhotnotes", "thehotnotespassword");
+
+                            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                            smtp.UseDefaultCredentials = false;
+                            smtp.Credentials = nwCredential;
+                            smtp.EnableSsl = true;
                             smtp.Send(msg);
 
+                            reader.Close();
                             return View("Register_Complete");
                         }
                         catch (SqlException)
                         {
+                            reader.Close();
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
                         catch (SmtpException)
                         {
+                            reader.Close();
+
+                            cmd = new SqlCommand("DELETE FROM Usuaris WHERE Username = '" + Username + "'", connection);
+                            cmd.ExecuteReader();
+                            reader.Close();
+
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
                         //TODO Substituir els catch's per catch (Exception)
