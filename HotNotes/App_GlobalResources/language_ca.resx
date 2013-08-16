@@ -237,4 +237,7 @@
   <data name="Email_ja_existent" xml:space="preserve">
     <value>Ja hi ha un usuari registrat amb aquesta adreça de correu electrònic.</value>
   </data>
+  <data name="Email_registre" xml:space="preserve">
+    <value>Estimat [[NOM]],&lt;br/&gt;&lt;br/&gt;Per a completar el registre a HotNotes, visita el següent enllaç: &lt;a href="[[LINK]]"&gt;[[LINK]]&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Atentament,&lt;br/&gt;&lt;b&gt;L'equip de HotNotes&lt;/b&gt;.</value>
+  </data>
 </root>

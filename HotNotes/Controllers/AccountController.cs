@@ -8,6 +8,7 @@ using HotNotes.Helpers;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
+using System.Web.Routing;
 
 namespace HotNotes.Controllers
 {
@@ -144,11 +145,19 @@ namespace HotNotes.Controllers
                         {
                             reader = cmd.ExecuteReader();
 
+                            var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
+                                {
+                                    Path = Url.Action("Activar", "Account", new RouteValueDictionary(new { id = CodiActivacio }))
+                                };
+
+                            string url = urlBuilder.ToString();
+
                             MailMessage msg = new MailMessage();
                             msg.To.Add(Email);
                             msg.Subject = Lang.GetString(lang, "Completa_el_registre");
                             msg.From = new MailAddress("webmasterhotnotes@gmail.com", "HotNotes Admin");
-                            msg.Body = "This is the message body";
+                            msg.Body = Lang.GetString(base.lang, "Email_registre").Replace("[[NOM]]", Nom).Replace("[[LINK]]", url);
+                            msg.IsBodyHtml = true;
 
                             NetworkCredential nwCredential = new NetworkCredential("webmasterhotnotes", "thehotnotespassword");
 
