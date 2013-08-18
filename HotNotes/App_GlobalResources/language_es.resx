@@ -240,4 +240,13 @@
   <data name="Email_registre" xml:space="preserve">
     <value>Estimado [[NOM]],&lt;br/&gt;&lt;br/&gt;Para completar el registro en HotNotes, visita el siguiente enlace: &lt;a href="[[LINK]]"&gt;[[LINK]]&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Atentamente,&lt;br/&gt;&lt;b&gt;El equipo de HotNotes&lt;/b&gt;.</value>
   </data>
+  <data name="Error_activar" xml:space="preserve">
+    <value>Ha habido un error durante el proceso de activación. Por favor, pruébalo de nuevo en unos minutos.&lt;br /&gt;Si el problema persiste, contacta con el administrador: &lt;a href="mailto:jonathan.clara.marquez@gmail.com"&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;</value>
+  </data>
+  <data name="Activar_correcte" xml:space="preserve">
+    <value>La cuenta se ha activado correctamente. Ahora ya puedes iniciar sesión desde la página principal.</value>
+  </data>
+  <data name="Codi_activar_incorrecte" xml:space="preserve">
+    <value>El código de activación es incorrecto. Si éste es el enlace que te hemos enviado a tu correo, por favor, contacta con el administrador: &lt;a href="mailto:jonathan.clara.marquez@gmail.com"&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;</value>
+  </data>
 </root>

@@ -907,6 +907,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\sha3.js" />
     <Content Include="Views\Account\Account.aspx" />
+    <Content Include="Views\Account\Activate.aspx" />
     <Content Include="Views\Account\Login.aspx" />
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\Register_Complete.aspx" />

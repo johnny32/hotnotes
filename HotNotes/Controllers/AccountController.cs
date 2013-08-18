@@ -147,7 +147,7 @@ namespace HotNotes.Controllers
 
                             var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
                                 {
-                                    Path = Url.Action("Activar", "Account", new RouteValueDictionary(new { id = CodiActivacio }))
+                                    Path = Url.Action("Activate", "Account", new RouteValueDictionary(new { id = CodiActivacio }))
                                 };
 
                             string url = urlBuilder.ToString();
@@ -189,22 +189,43 @@ namespace HotNotes.Controllers
                     }
                 }
             }
-            /*if (ModelState.IsValid)
-            {
-                // Attempt to register the user
-                try
-                {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (MembershipCreateUserException e)
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                }
-            }*/
 
             // If we got this far, something failed, redisplay form
+            return View();
+        }
+
+        //
+        // GET: /Account/Activate
+        [AllowAnonymous]
+        public ActionResult Activate(string id)
+        {
+            using (SqlConnection connection = new SqlConnection(GetConnection()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT Id FROM Usuaris WHERE CodiActivacio = '" + id + "'", connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    int Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    reader.Close();
+
+                    try
+                    {
+                        cmd = new SqlCommand("UPDATE Usuaris SET Activat = 'true', CodiActivacio = NULL WHERE Id = " + Id.ToString(), connection);
+                        cmd.ExecuteReader();
+                        ViewBag.Response = Lang.GetString(base.lang, "Activar_correcte");
+                    }
+                    catch (SqlException)
+                    {
+                        ViewBag.Error = Lang.GetString(base.lang, "Error_activar");
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = Lang.GetString(base.lang, "Codi_activar_incorrecte");
+                }
+            }
             return View();
         }
 

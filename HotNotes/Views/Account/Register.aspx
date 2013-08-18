@@ -22,7 +22,7 @@
         <%: Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary() %>
         
-        <div id="errors" class="alert alert-block alert-danger hide" style="margin-right: 0.8em;">
+        <div id="errors" class="alert alert-block alert-danger hide">
             <% if (ViewBag.Error != null)
                { %>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
