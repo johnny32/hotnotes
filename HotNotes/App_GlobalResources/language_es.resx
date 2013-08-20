@@ -249,4 +249,7 @@
   <data name="Codi_activar_incorrecte" xml:space="preserve">
     <value>El código de activación es incorrecto. Si éste es el enlace que te hemos enviado a tu correo, por favor, contacta con el administrador: &lt;a href="mailto:jonathan.clara.marquez@gmail.com"&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;</value>
   </data>
+  <data name="Usuari_no_existeix" xml:space="preserve">
+    <value>No existe ningún usuario con éste código.</value>
+  </data>
 </root>

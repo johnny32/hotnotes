@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Routing;
+using HotNotes.Models;
 
 namespace HotNotes.Controllers
 {
@@ -36,15 +37,18 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Password, Activat FROM Usuaris WHERE Username = '" + Username + "'", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Id, Password, Activat FROM Usuaris WHERE Username = '" + Username + "'", connection);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    if (PasswordEnc == (string)reader["Password"])
+                    if (PasswordEnc == reader.GetString(reader.GetOrdinal("Password")))
                     {
                         if ((bool)reader["Activat"])
                         {
+                            string id = reader.GetInt32(reader.GetOrdinal("Id")).ToString();
+                            HttpCookie cookie = new HttpCookie("UserID", id);
+                            HttpContext.Response.Cookies.Add(cookie);
                             FormsAuthentication.SetAuthCookie(Username, RememberMe);
                             return RedirectToAction("Index", "Home");
                         }
@@ -227,6 +231,45 @@ namespace HotNotes.Controllers
                 }
             }
             return View();
+        }
+
+        //
+        // GET: /Account/Register
+
+        [AllowAnonymous]
+        public ActionResult Manage()
+        {
+            HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
+            int id = int.Parse(cookie.Value);
+            using (SqlConnection connection = new SqlConnection(GetConnection()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = " + id, connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Usuari u = new Usuari()
+                    {
+                        Id = id,
+                        Username = reader.GetString(reader.GetOrdinal("Username")),
+                        Password = reader.GetString(reader.GetOrdinal("Password")),
+                        Email = reader.GetString(reader.GetOrdinal("Email")),
+                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                        Cognoms = reader.GetString(reader.GetOrdinal("Cognoms")),
+                        DataNaixement = reader.GetDateTime(reader.GetOrdinal("DataNaixement")),
+                        Sexe = reader.GetString(reader.GetOrdinal("Sexe"))[0],
+                        Activat = reader.GetBoolean(reader.GetOrdinal("Activat"))
+                    };
+
+                    return View(u);
+                }
+                else
+                {
+                    ViewBag.Error = Lang.GetString(base.lang, "Usuari_no_existeix");
+                }
+                return View();
+            }
         }
 
     }

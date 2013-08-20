@@ -455,5 +455,14 @@ namespace Resources {
                 return ResourceManager.GetString("Usuari_ja_existent", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No existe ningún usuario con éste código..
+        /// </summary>
+        internal static string Usuari_no_existeix {
+            get {
+                return ResourceManager.GetString("Usuari_no_existeix", resourceCulture);
+            }
+        }
     }
 }
