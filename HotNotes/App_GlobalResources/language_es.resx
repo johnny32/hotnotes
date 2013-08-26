@@ -252,4 +252,10 @@
   <data name="Usuari_no_existeix" xml:space="preserve">
     <value>No existe ningún usuario con éste código.</value>
   </data>
+  <data name="Modificar_dades" xml:space="preserve">
+    <value>Modificar datos</value>
+  </data>
+  <data name="Dades_actualitzades" xml:space="preserve">
+    <value>Los datos se han actualizado correctamente.</value>
+  </data>
 </root>

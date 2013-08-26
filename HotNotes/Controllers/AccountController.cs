@@ -234,9 +234,8 @@ namespace HotNotes.Controllers
         }
 
         //
-        // GET: /Account/Register
+        // GET: /Account/Manage
 
-        [AllowAnonymous]
         public ActionResult Manage()
         {
             HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
@@ -249,6 +248,16 @@ namespace HotNotes.Controllers
 
                 if (reader.Read())
                 {
+                    char sexe;
+                    if (reader.IsDBNull(reader.GetOrdinal("Sexe")))
+                    {
+                        sexe = '-';
+                    }
+                    else
+                    {
+                        sexe = reader.GetString(reader.GetOrdinal("Sexe"))[0];
+                    }
+
                     Usuari u = new Usuari()
                     {
                         Id = id,
@@ -258,7 +267,7 @@ namespace HotNotes.Controllers
                         Nom = reader.GetString(reader.GetOrdinal("Nom")),
                         Cognoms = reader.GetString(reader.GetOrdinal("Cognoms")),
                         DataNaixement = reader.GetDateTime(reader.GetOrdinal("DataNaixement")),
-                        Sexe = reader.GetString(reader.GetOrdinal("Sexe"))[0],
+                        Sexe = sexe,
                         Activat = reader.GetBoolean(reader.GetOrdinal("Activat"))
                     };
 
@@ -270,6 +279,94 @@ namespace HotNotes.Controllers
                 }
                 return View();
             }
+        }
+
+        //
+        // POST: /Account/Manage
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Manage(int Id, string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
+        {
+            Usuari u = new Usuari()
+            {
+                Id = Id,
+                Username = Username,
+                Password = PasswordEnc,
+                Email = Email,
+                Nom = Nom,
+                Cognoms = Cognoms,
+                DataNaixement = DataNaixement,
+                Sexe = Sexe,
+                Activat = true
+            };
+
+            using (SqlConnection connection = new SqlConnection(GetConnection()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = '" + Username + "' AND Id != " + Id, connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ViewBag.Error = Lang.GetString(base.lang, "Usuari_ja_existent");
+                }
+                else
+                {
+                    reader.Close();
+                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = '" + Email + "' AND Id != " + Id, connection);
+                    reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
+                    }
+                    else
+                    {
+                        reader.Close();
+                        string SexeSQL = (Sexe != '-') ? ("'" + Sexe + "'") : "NULL";
+                        Guid g = Guid.NewGuid();
+                        string CodiActivacio = Convert.ToBase64String(g.ToByteArray());
+                        CodiActivacio = CodiActivacio.Replace("=", "");
+                        CodiActivacio = CodiActivacio.Replace("+", "");
+                        CodiActivacio = CodiActivacio.Replace("/", "");
+
+                        string passwordSQL = "";
+                        if (PasswordEnc != "")
+                        {
+                            passwordSQL = ", Password = '" + PasswordEnc + "'";
+                        }
+
+                        cmd = new SqlCommand("UPDATE Usuaris SET Username = '" + Username + "'" + passwordSQL + ", Email = '" + Email + "', Nom = '" + Nom + "', Cognoms = '" + Cognoms + "', DataNaixement = '" + DataNaixement.ToString() + "', Sexe = " + SexeSQL + " WHERE Id = " + Id, connection);
+                        try
+                        {
+                            reader = cmd.ExecuteReader();
+
+                            reader.Close();
+
+                            ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");
+                            return View();
+                        }
+                        catch (SqlException)
+                        {
+                            reader.Close();
+                            ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
+                        }
+                        /*catch (SmtpException)
+                        {
+                            reader.Close();
+
+                            cmd = new SqlCommand("DELETE FROM Usuaris WHERE Username = '" + Username + "'", connection);
+                            cmd.ExecuteReader();
+                            reader.Close();
+
+                            ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
+                        }*/
+                        //TODO Substituir els catch's per catch (Exception)
+                    }
+                }
+            }
+
+            return View();
         }
 
     }

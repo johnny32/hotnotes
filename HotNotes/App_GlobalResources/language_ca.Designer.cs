@@ -169,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Les dades s&apos;han actualitzat correctament..
+        /// </summary>
+        internal static string Dades_actualitzades {
+            get {
+                return ResourceManager.GetString("Dades_actualitzades", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de naixement.
         /// </summary>
         internal static string Data_naixement {
@@ -282,6 +291,15 @@ namespace Resources {
         internal static string Major_edat {
             get {
                 return ResourceManager.GetString("Major_edat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modificar dades.
+        /// </summary>
+        internal static string Modificar_dades {
+            get {
+                return ResourceManager.GetString("Modificar_dades", resourceCulture);
             }
         }
         
