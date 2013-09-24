@@ -71,7 +71,7 @@
                 </li>
                 <li class="form-right-column">
                     <label for="DataNaixement"><%: Lang.GetString(lang, "Data_naixement")%></label>
-                    <input name="DataNaixement" type="date" required value="<%: Model.DataNaixement.ToString("yyyy/MM/dd") %>"/>
+                    <input name="DataNaixement" type="date" required value="<%: Model.DataNaixement.ToString("yyyy-MM-dd") %>"/>
                 </li>
                 <li class="form-left-column">
                     <label for="Email"><%: Lang.GetString(lang, "Correu_electronic")%></label>

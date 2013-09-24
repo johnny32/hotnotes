@@ -344,7 +344,7 @@ namespace HotNotes.Controllers
                             reader.Close();
 
                             ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");
-                            return View();
+                            return View(u);
                         }
                         catch (SqlException)
                         {
@@ -366,7 +366,7 @@ namespace HotNotes.Controllers
                 }
             }
 
-            return View();
+            return View(u);
         }
 
     }
