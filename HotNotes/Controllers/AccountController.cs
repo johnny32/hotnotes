@@ -479,7 +479,7 @@ namespace HotNotes.Controllers
                                 {
                                     ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");                                    
                                 }
-                                return View(u);
+                                return RedirectToAction("Index", "Home");
                             }
                             catch (SqlException)
                             {

@@ -267,4 +267,7 @@
   <data name="Email_modificat" xml:space="preserve">
     <value>Los datos se han actualizado correctamente. Sin embargo, no podrás entrar hasta que hayas activado la nueva dirección de correo electrónico. Comprueba tu bandeja de entrada y haz click en el enlace que te hemos enviado.</value>
   </data>
+  <data name="Document_no_existeix" xml:space="preserve">
+    <value>No existe ningún documento con éste identificador.</value>
+  </data>
 </root>

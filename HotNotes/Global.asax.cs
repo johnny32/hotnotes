@@ -18,7 +18,24 @@ namespace HotNotes
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RegisterRoutes(RouteTable.Routes);
+        }
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.MapRoute(
+                "TipusDocuments",
+                "Document/TipusDocuments",
+                new { controller = "Document", action = "TipusDocuments" }
+            );
+
+            routes.MapRoute(
+                "DocumentGet",
+                "Document/{*Id}",
+                new { controller = "Document", action = "Index" }
+            );
+
+            RouteConfig.RegisterRoutes(routes);
         }
     }
 }

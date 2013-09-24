@@ -11,8 +11,8 @@ namespace HotNotes.Models
         public string Ruta;
         public string Extensio;
         public DateTime DataAfegit;
-        public DateTime DataModificat;
-        public double Versio;
+        public Nullable<DateTime> DataModificat;
+        public Nullable<double> Versio;
     }
 
     public enum TipusDocument

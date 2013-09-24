@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No existe ningún documento con éste identificador..
+        /// </summary>
+        internal static string Document_no_existeix {
+            get {
+                return ResourceManager.GetString("Document_no_existeix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mujer.
         /// </summary>
         internal static string Dona {

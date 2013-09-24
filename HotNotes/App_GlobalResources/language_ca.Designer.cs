@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No existeix cap document amb aquest identificador..
+        /// </summary>
+        internal static string Document_no_existeix {
+            get {
+                return ResourceManager.GetString("Document_no_existeix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dona.
         /// </summary>
         internal static string Dona {

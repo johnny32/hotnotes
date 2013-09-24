@@ -914,6 +914,7 @@
     <Content Include="Views\Account\Login.aspx" />
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\Register_Complete.aspx" />
+    <Content Include="Views\Document\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\_LoginPartial.aspx" />

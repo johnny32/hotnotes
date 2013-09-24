@@ -26,7 +26,7 @@
         </div>
     <% } %>
 
-    <div id="Div1" class="alert alert-block alert-danger hide">
+    <div id="errors" class="alert alert-block alert-danger hide">
         <% if (ViewBag.Error != null)
             { %>
         <button type="button" class="close" data-dismiss="alert">&times;</button>
