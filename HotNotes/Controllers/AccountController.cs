@@ -37,7 +37,8 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Id, Password, Activat FROM Usuaris WHERE Username = '" + Username + "'", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Id, Password, Activat FROM Usuaris WHERE Username = @Username", connection);
+                cmd.Parameters.AddWithValue("@Username", Username);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -119,18 +120,32 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = '" + Username + "'", connection);
+
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username", connection);
+                cmd.Parameters.AddWithValue("@Username", Username);
+                cmd.Transaction = transaction;
+
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
+                    reader.Close();
+                    transaction.Rollback();
+
                     ViewBag.Error = Lang.GetString(base.lang, "Usuari_ja_existent");
                 }
                 else
                 {
                     reader.Close();
-                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = '" + Email + "'", connection);
+
+                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email", connection);
+                    cmd.Parameters.AddWithValue("@Email", Email);
+                    cmd.Transaction = transaction;
+
                     reader = cmd.ExecuteReader();
+
                     if (reader.Read())
                     {
                         ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
@@ -138,13 +153,25 @@ namespace HotNotes.Controllers
                     else
                     {
                         reader.Close();
-                        string SexeSQL = (Sexe != '-') ? ("'" + Sexe + "'") : "NULL";
+                        string SexeSQL = (Sexe != '-') ? Sexe.ToString() : null;
                         Guid g = Guid.NewGuid();
                         string CodiActivacio = Convert.ToBase64String(g.ToByteArray());
                         CodiActivacio = CodiActivacio.Replace("=", "");
                         CodiActivacio = CodiActivacio.Replace("+", "");
                         CodiActivacio = CodiActivacio.Replace("/", "");
-                        cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat, CodiActivacio) VALUES ('" + Username + "', '" + PasswordEnc + "', '" + Email + "', '" + Nom + "', '" + Cognoms + "', '" + DataNaixement.ToString() + "', " + SexeSQL + ", 'false', '" + CodiActivacio + "')", connection);
+
+                        cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat, CodiActivacio) VALUES (@Username, @Password, @Email, @Nom, @Cognoms, @DataNaixement, @Sexe, @Activat, @CodiActivacio)", connection);
+                        cmd.Parameters.AddWithValue("@Username", Username);
+                        cmd.Parameters.AddWithValue("@Password", PasswordEnc);
+                        cmd.Parameters.AddWithValue("@Email", Email);
+                        cmd.Parameters.AddWithValue("@Nom", Nom);
+                        cmd.Parameters.AddWithValue("@Cognoms", Cognoms);
+                        cmd.Parameters.AddWithValue("@DataNaixement", DataNaixement);
+                        cmd.Parameters.AddWithValue("@Sexe", SexeSQL);
+                        cmd.Parameters.AddWithValue("@Activat", false);
+                        cmd.Parameters.AddWithValue("@CodiActivacio", CodiActivacio);
+                        cmd.Transaction = transaction;
+
                         try
                         {
                             reader = cmd.ExecuteReader();
@@ -172,20 +199,21 @@ namespace HotNotes.Controllers
                             smtp.Send(msg);
 
                             reader.Close();
+                            transaction.Commit();
+
                             return View("Register_Complete");
                         }
                         catch (SqlException)
                         {
                             reader.Close();
+                            transaction.Rollback();
+
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
                         catch (SmtpException)
                         {
                             reader.Close();
-
-                            cmd = new SqlCommand("DELETE FROM Usuaris WHERE Username = '" + Username + "'", connection);
-                            cmd.ExecuteReader();
-                            reader.Close();
+                            transaction.Rollback();
 
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
@@ -194,7 +222,6 @@ namespace HotNotes.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View();
         }
 
@@ -206,7 +233,8 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Id FROM Usuaris WHERE CodiActivacio = '" + id + "'", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Id FROM Usuaris WHERE CodiActivacio = @CodiActivacio", connection);
+                cmd.Parameters.AddWithValue("@CodiActivacio", id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -216,7 +244,10 @@ namespace HotNotes.Controllers
 
                     try
                     {
-                        cmd = new SqlCommand("UPDATE Usuaris SET Activat = 'true', CodiActivacio = NULL WHERE Id = " + Id.ToString(), connection);
+                        cmd = new SqlCommand("UPDATE Usuaris SET Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
+                        cmd.Parameters.AddWithValue("@Activat", true);
+                        cmd.Parameters.AddWithValue("@CodiActivacio", null);
+                        cmd.Parameters.AddWithValue("@Id", Id.ToString());
                         cmd.ExecuteReader();
                         ViewBag.Response = Lang.GetString(base.lang, "Activar_correcte");
                     }
@@ -243,7 +274,8 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = " + id, connection);
+                SqlCommand cmd = new SqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = @Id", connection);
+                cmd.Parameters.AddWithValue("@Id", id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -304,26 +336,45 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = '" + Username + "' AND Id != " + Id, connection);
+
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username AND Id != @Id", connection);
+                cmd.Parameters.AddWithValue("@Username", Username);
+                cmd.Parameters.AddWithValue("@Id", Id);
+                cmd.Transaction = transaction;
+
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
+                    reader.Close();
+                    transaction.Rollback();
+
                     ViewBag.Error = Lang.GetString(base.lang, "Usuari_ja_existent");
                 }
                 else
                 {
                     reader.Close();
-                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = '" + Email + "' AND Id != " + Id, connection);
+
+                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email AND Id != @Id", connection);
+                    cmd.Parameters.AddWithValue("@Email", Email);
+                    cmd.Parameters.AddWithValue("@Id", Id);
+                    cmd.Transaction = transaction;
+
                     reader = cmd.ExecuteReader();
+
                     if (reader.Read())
                     {
+                        reader.Close();
+                        transaction.Rollback();
+
                         ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
                     }
                     else
                     {
                         reader.Close();
-                        string SexeSQL = (Sexe != '-') ? ("'" + Sexe + "'") : "NULL";
+                        string SexeSQL = (Sexe != '-') ? Sexe.ToString() : null;
                         Guid g = Guid.NewGuid();
                         string CodiActivacio = Convert.ToBase64String(g.ToByteArray());
                         CodiActivacio = CodiActivacio.Replace("=", "");
@@ -333,15 +384,29 @@ namespace HotNotes.Controllers
                         string passwordSQL = "";
                         if (PasswordEnc != "")
                         {
-                            passwordSQL = ", Password = '" + PasswordEnc + "'";
+                            passwordSQL = ", Password = @Password";
                         }
 
-                        cmd = new SqlCommand("UPDATE Usuaris SET Username = '" + Username + "'" + passwordSQL + ", Email = '" + Email + "', Nom = '" + Nom + "', Cognoms = '" + Cognoms + "', DataNaixement = '" + DataNaixement.ToString() + "', Sexe = " + SexeSQL + " WHERE Id = " + Id, connection);
+                        cmd = new SqlCommand("UPDATE Usuaris SET Username = @Username" + passwordSQL + ", Email = @Email, Nom = @Nom, Cognoms = @Cognoms, DataNaixement = @DataNaixement, Sexe = @Sexe WHERE Id = @Id", connection);
+                        cmd.Parameters.AddWithValue("@Username", Username);
+                        if (PasswordEnc != "")
+                        {
+                            cmd.Parameters.AddWithValue("@Password", PasswordEnc);
+                        }
+                        cmd.Parameters.AddWithValue("@Email", Email);
+                        cmd.Parameters.AddWithValue("@Nom", Nom);
+                        cmd.Parameters.AddWithValue("@Cognoms", Cognoms);
+                        cmd.Parameters.AddWithValue("@DataNaixement", DataNaixement);
+                        cmd.Parameters.AddWithValue("@Sexe", SexeSQL);
+                        cmd.Parameters.AddWithValue("@Id", Id);
+                        cmd.Transaction = transaction;
+
                         try
                         {
                             reader = cmd.ExecuteReader();
 
                             reader.Close();
+                            transaction.Commit();
 
                             ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");
                             return View(u);
@@ -349,6 +414,8 @@ namespace HotNotes.Controllers
                         catch (SqlException)
                         {
                             reader.Close();
+                            transaction.Rollback();
+
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
                         /*catch (SmtpException)
