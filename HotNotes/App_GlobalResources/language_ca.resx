@@ -258,4 +258,10 @@
   <data name="Dades_actualitzades" xml:space="preserve">
     <value>Les dades s'han actualitzat correctament.</value>
   </data>
+  <data name="Modificar" xml:space="preserve">
+    <value>Modificar</value>
+  </data>
+  <data name="Registrarse" xml:space="preserve">
+    <value>Registrar-se</value>
+  </data>
 </root>

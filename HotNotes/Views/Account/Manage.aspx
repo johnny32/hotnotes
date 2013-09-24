@@ -51,35 +51,35 @@
             <ol class="form-input">
                 <li class="form-left-column">
                     <label for="Username"><%: Lang.GetString(lang, "Username")%></label>
-                    <input name="Username" type="text" required value="<%: Model.Username %>"/>
+                    <input name="Username" type="text" tabindex="1" required value="<%: Model.Username %>"/>
                 </li>
                 <li class="form-right-column">
                     <label for="Nom"><%: Lang.GetString(lang, "Nom")%></label>
-                    <input name="Nom" type="text" required value="<%: Model.Nom %>"/>
+                    <input name="Nom" type="text" tabindex="5" required value="<%: Model.Nom %>"/>
                 </li>
                 <li class="form-left-column">
                     <label for="Password"><%: Lang.GetString(lang, "Password")%></label>
-                    <input name="Password" type="password" required value="<%: Model.Password %>"/>
+                    <input name="Password" type="password" tabindex="2" required value="<%: Model.Password %>"/>
                 </li>
                 <li class="form-right-column">
                     <label for="Cognoms"><%: Lang.GetString(lang, "Cognoms")%></label>
-                    <input name="Cognoms" type="text" required value="<%: Model.Cognoms %>"/>
+                    <input name="Cognoms" type="text" tabindex="6" required value="<%: Model.Cognoms %>"/>
                 </li>
                 <li class="form-left-column">
                     <label for="ConfirmarPassword"><%: Lang.GetString(lang, "Confirma_password")%></label>
-                    <input name="ConfirmarPassword" type="password" required value="<%: Model.Password %>" />
+                    <input name="ConfirmarPassword" type="password" tabindex="3" required value="<%: Model.Password %>" />
                 </li>
                 <li class="form-right-column">
                     <label for="DataNaixement"><%: Lang.GetString(lang, "Data_naixement")%></label>
-                    <input name="DataNaixement" type="date" required value="<%: Model.DataNaixement.ToString("yyyy-MM-dd") %>"/>
+                    <input name="DataNaixement" type="date" tabindex="7" required value="<%: Model.DataNaixement.ToString("yyyy-MM-dd") %>"/>
                 </li>
                 <li class="form-left-column">
                     <label for="Email"><%: Lang.GetString(lang, "Correu_electronic")%></label>
-                    <input name="Email" type="email" required value="<%: Model.Email %>"/>
+                    <input name="Email" type="email" tabindex="4" required value="<%: Model.Email %>"/>
                 </li>
                 <li class="form-right-column">
                     <label for="Sexe"><%: Lang.GetString(lang, "Sexe")%></label>
-                    <select name="Sexe">
+                    <select name="Sexe" tabindex="8">
                         <option value="-" <%: (Model.Sexe == '-') ? "selected" : "" %>><%: Lang.GetString(lang, "No_especificat")%></option>
                         <option value="H" <%: (Model.Sexe == 'H') ? "selected" : "" %>><%: Lang.GetString(lang, "Home")%></option>
                         <option value="D" <%: (Model.Sexe == 'D') ? "selected" : "" %>><%: Lang.GetString(lang, "Dona")%></option>
@@ -89,7 +89,9 @@
             <input name="Id" type="hidden" value="<%: Model.Id %>" />
             <input name="PasswordOld" type="hidden" value="<%: Model.Password %>" />
             <input name="PasswordEnc" type="hidden" value=""/>
-            <input style="clear: both;" type="submit" value="Register" />
+            <div style="clear: both; width: 100%; text-align: center;">
+                <input style="clear: both;" type="submit" tabindex="9" value="<%: Lang.GetString(lang, "Modificar") %>" />
+            </div>
         </fieldset>
      <%     }
         } %>
