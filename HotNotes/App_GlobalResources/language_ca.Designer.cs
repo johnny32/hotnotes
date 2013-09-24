@@ -214,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Les dades s&apos;han actualitzat correctament. Tot i així, no podràs entrar fins que hagis activat la nova direcció de correu electrònic. Comprova la teva bústia d&apos;entrada i fes clic a l&apos;enllaç que t&apos;hem enviat..
+        /// </summary>
+        internal static string Email_modificat {
+            get {
+                return ResourceManager.GetString("Email_modificat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estimat [[NOM]],&lt;br/&gt;&lt;br/&gt;Per a completar el registre a HotNotes, visita el següent enllaç: &lt;a href=&quot;[[LINK]]&quot;&gt;[[LINK]]&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Atentament,&lt;br/&gt;&lt;b&gt;L&apos;equip de HotNotes&lt;/b&gt;..
         /// </summary>
         internal static string Email_registre {

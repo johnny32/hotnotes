@@ -2,18 +2,18 @@
 <%@ Import Namespace="HotNotes.Helpers" %>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Register
+    <%: ViewBag.Accio %>
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
 
     <hgroup class="title">
-        <h1><%: Lang.GetString(lang, "Registrat") %></h1>
+        <h1><%: ViewBag.Accio %></h1>
     </hgroup>
 
     <div style="color: white; margin-top: 1em; margin-bottom: 1em;">
-        <%: Lang.GetString(lang, "Registre_completat") %>
+        <%: ViewBag.Message %>
     </div>
 </asp:Content>
 

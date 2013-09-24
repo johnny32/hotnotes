@@ -264,4 +264,7 @@
   <data name="Registrarse" xml:space="preserve">
     <value>Registrar-se</value>
   </data>
+  <data name="Email_modificat" xml:space="preserve">
+    <value>Les dades s'han actualitzat correctament. Tot i així, no podràs entrar fins que hagis activat la nova direcció de correu electrònic. Comprova la teva bústia d'entrada i fes clic a l'enllaç que t'hem enviat.</value>
+  </data>
 </root>

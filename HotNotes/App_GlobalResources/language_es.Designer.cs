@@ -214,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Los datos se han actualizado correctamente. Sin embargo, no podrás entrar hasta que hayas activado la nueva dirección de correo electrónico. Comprueba tu bandeja de entrada y haz click en el enlace que te hemos enviado..
+        /// </summary>
+        internal static string Email_modificat {
+            get {
+                return ResourceManager.GetString("Email_modificat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estimado [[NOM]],&lt;br/&gt;&lt;br/&gt;Para completar el registro en HotNotes, visita el siguiente enlace: &lt;a href=&quot;[[LINK]]&quot;&gt;[[LINK]]&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Atentamente,&lt;br/&gt;&lt;b&gt;El equipo de HotNotes&lt;/b&gt;..
         /// </summary>
         internal static string Email_registre {
