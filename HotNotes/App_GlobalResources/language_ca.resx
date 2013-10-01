@@ -270,4 +270,46 @@
   <data name="Document_no_existeix" xml:space="preserve">
     <value>No existeix cap document amb aquest identificador.</value>
   </data>
+  <data name="Autor" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="Descarregar_document" xml:space="preserve">
+    <value>Descarrega el document</value>
+  </data>
+  <data name="Article" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="Data_creacio" xml:space="preserve">
+    <value>Data de creació</value>
+  </data>
+  <data name="Examen" xml:space="preserve">
+    <value>Exàmen</value>
+  </data>
+  <data name="LinkExtern" xml:space="preserve">
+    <value>Enllaç extern</value>
+  </data>
+  <data name="LinkYoutube" xml:space="preserve">
+    <value>Enllaç a YouTube</value>
+  </data>
+  <data name="Paper" xml:space="preserve">
+    <value>Paper</value>
+  </data>
+  <data name="PFC" xml:space="preserve">
+    <value>Projecte final de carrera</value>
+  </data>
+  <data name="Practica" xml:space="preserve">
+    <value>Pràctica</value>
+  </data>
+  <data name="Tipus" xml:space="preserve">
+    <value>Tipus</value>
+  </data>
+  <data name="Treball" xml:space="preserve">
+    <value>Treball</value>
+  </data>
+  <data name="Data_modificat" xml:space="preserve">
+    <value>Data d'últ. modificació</value>
+  </data>
+  <data name="Versio" xml:space="preserve">
+    <value>Versió</value>
+  </data>
 </root>

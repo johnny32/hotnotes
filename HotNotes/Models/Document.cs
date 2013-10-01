@@ -13,6 +13,8 @@ namespace HotNotes.Models
         public DateTime DataAfegit;
         public Nullable<DateTime> DataModificat;
         public Nullable<double> Versio;
+        public string NomAutor;
+        public string LinkPerfilAutor;
     }
 
     public enum TipusDocument

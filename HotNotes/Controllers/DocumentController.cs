@@ -25,7 +25,7 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, Extensio, DataAfegit, DataModificat, Versio FROM Documents WHERE Id = @Id", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, Extensio, DataAfegit, DataModificat, Versio, IdAutor FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -66,6 +66,18 @@ namespace HotNotes.Controllers
                     {
                         d.Versio = reader.GetDouble(reader.GetOrdinal("Versio"));
                     }
+
+                    int idAutor = reader.GetInt32(reader.GetOrdinal("IdAutor"));
+
+                    reader.Close();
+
+                    cmd = new SqlCommand("SELECT Nom, Cognoms FROM Usuaris WHERE Id = @Id", connection);
+                    cmd.Parameters.AddWithValue("@Id", idAutor);
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+
+                    d.NomAutor = reader.GetString(reader.GetOrdinal("Nom")) + " " + reader.GetString(reader.GetOrdinal("Cognoms"));
+                    d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = idAutor });
 
                     return View(d);
                 }

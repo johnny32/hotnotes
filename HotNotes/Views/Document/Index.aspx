@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<HotNotes.Models.Document>" %>
 <%@ Import Namespace="HotNotes.Helpers" %>
+<%@ Import Namespace="HotNotes.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Index
@@ -14,13 +15,35 @@
 
 <h2><%: Model.Nom%></h2>
 
-<fieldset>
-    <legend>Document</legend>
-</fieldset>
-<p>
-    <%: Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ })%> |
-    <%: Html.ActionLink("Back to List", "Index")%>
-</p>
+<%
+    if (Model.Tipus == TipusDocument.LinkYoutube || Model.Extensio == "pdf")
+    {
+        //Embed
+    }    
+%>
+
+<div id="infoLeft" style="float: left;">
+    <a href="<%: Model.Ruta %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
+    <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span>
+</div>
+
+<div id="infoRight" style="float: right; font-style: italic; text-align: right;">
+    <%: Lang.GetString(ViewBag.Lang, "Tipus") %>: <%: Lang.GetString(ViewBag.Lang, Model.Tipus.ToString()) %><br />
+    <%: Lang.GetString(ViewBag.Lang, "Data_creacio") %>: <%: Model.DataAfegit.ToShortDateString() %><br />
+    <%
+        if (Model.DataModificat.HasValue)
+        { %>
+    <%: Lang.GetString(ViewBag.Lang, "Data_modificat") %>: <%: Model.DataModificat.Value.ToShortDateString() %><br />
+    <%
+        }
+
+        if (Model.Versio.HasValue)
+        { %>
+    <%: Lang.GetString(ViewBag.Lang, "Versio") %>: <%: Model.Versio.Value %><br />
+    <%
+        }
+    %>
+</div>
 
 <%  }
     else
