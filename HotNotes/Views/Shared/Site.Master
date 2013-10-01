@@ -17,6 +17,19 @@
     <%: Scripts.Render("~/Scripts/jquery-1.10.2.js") %>
     <%: Scripts.Render("~/Plugins/jquery-ui-1.10.3/ui/jquery-ui.js") %>
     <%: Scripts.Render("~/Plugins/bootstrap/js/bootstrap.js") %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (typeof (Storage) !== "undefined") {
+                if (localStorage.Seccions) {
+                    //Llegir de local storage
+                } else {
+                    //Crida ajax i guardar a local storage
+                }
+            } else {
+                //Crida ajax. No guardar perque el navegador no ho suporta
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
