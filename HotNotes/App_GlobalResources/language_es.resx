@@ -312,4 +312,22 @@
   <data name="Versio" xml:space="preserve">
     <value>Versión</value>
   </data>
+  <data name="Carregant" xml:space="preserve">
+    <value>Cargando</value>
+  </data>
+  <data name="Carregant_comentaris" xml:space="preserve">
+    <value>Cargando comentarios...</value>
+  </data>
+  <data name="Error_comentaris" xml:space="preserve">
+    <value>Error cargando los comentarios</value>
+  </data>
+  <data name="Escriu_un_comentari" xml:space="preserve">
+    <value>Escribe un comentario.</value>
+  </data>
+  <data name="Enviar" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="No_hi_ha_comentaris" xml:space="preserve">
+    <value>No hay ningún comentario en este documento.</value>
+  </data>
 </root>

@@ -18,12 +18,12 @@ namespace HotNotes.Controllers
         //
         // GET: /Document/
 
-        public ActionResult Index(int Id)
+        public ActionResult GetDocument(int Id)
         {
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, Extensio, DataAfegit, DataModificat, Versio, IdAutor FROM Documents WHERE Id = @Id", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, Extensio, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -62,20 +62,20 @@ namespace HotNotes.Controllers
                     }
                     else
                     {
-                        d.Versio = reader.GetDouble(reader.GetOrdinal("Versio"));
+                        d.Versio = reader.GetFloat(reader.GetOrdinal("Versio"));
                     }
 
-                    int idAutor = reader.GetInt32(reader.GetOrdinal("IdAutor"));
+                    int idUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari"));
 
                     reader.Close();
 
                     cmd = new SqlCommand("SELECT Nom, Cognoms FROM Usuaris WHERE Id = @Id", connection);
-                    cmd.Parameters.AddWithValue("@Id", idAutor);
+                    cmd.Parameters.AddWithValue("@Id", idUsuari);
                     reader = cmd.ExecuteReader();
                     reader.Read();
 
                     d.NomAutor = reader.GetString(reader.GetOrdinal("Nom")) + " " + reader.GetString(reader.GetOrdinal("Cognoms"));
-                    d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = idAutor });
+                    d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = idUsuari });
 
                     return View(d);
                 }
@@ -102,6 +102,35 @@ namespace HotNotes.Controllers
             tipusLinks.Add(TipusDocument.Treball.ToString(), Lang.GetString(base.lang, "Treballs"));
 
             return new ContentResult { Content = JsonConvert.SerializeObject(tipusLinks), ContentType = "application/json" };
+        }
+
+        public ActionResult GetComentaris(int IdDocument)
+        {
+            using (SqlConnection connection = new SqlConnection(GetConnection()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT C.IdUsuari, U.Nom, U.Cognoms, C.Comentari, C.Data FROM Comentaris C, Usuaris U WHERE C.IdDocument = @IdDocument AND C.IdUsuari = U.Id ORDER BY C.Data ASC", connection);
+                cmd.Parameters.AddWithValue("@IdDocument", IdDocument);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Comentari> comentaris = new List<Comentari>();
+
+                while (reader.Read())
+                {
+                    Comentari comentari = new Comentari();
+
+                    comentari.TextComentari = reader.GetString(reader.GetOrdinal("Comentari"));
+                    comentari.Data = reader.GetDateTime(reader.GetOrdinal("Data")).ToShortDateString();
+                    comentari.NomUsuari = reader.GetString(reader.GetOrdinal("Nom")) + " " + reader.GetString(reader.GetOrdinal("Cognoms"));
+                    comentari.LinkUsuari = Url.Action("Index", "Usuari", new { Id = reader.GetInt32(reader.GetOrdinal("IdUsuari")) });
+
+                    comentaris.Add(comentari);
+                }
+
+                reader.Close();
+
+                return Json(comentaris, JsonRequestBehavior.AllowGet);
+            }
         }
         
     }
