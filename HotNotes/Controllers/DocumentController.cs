@@ -1,6 +1,7 @@
 ﻿//System
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
 
@@ -18,7 +19,7 @@ namespace HotNotes.Controllers
         //
         // GET: /Document/
 
-        public ActionResult GetDocument(int Id)
+        public ActionResult Veure(int Id)
         {
             using (SqlConnection connection = new SqlConnection(GetConnection()))
             {
@@ -130,6 +131,36 @@ namespace HotNotes.Controllers
                 reader.Close();
 
                 return Json(comentaris, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Comentar(int IdDocument, string Comentari)
+        {
+            HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
+            int IdUsuari = int.Parse(cookie.Value);
+
+            using (SqlConnection connection = new SqlConnection(GetConnection()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO Comentaris (IdUsuari, IdDocument, Comentari, Data) VALUES (@IdUsuari, @IdDocument, @Comentari, @Data)", connection);
+                cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                cmd.Parameters.AddWithValue("@IdDocument", IdDocument);
+                cmd.Parameters.AddWithValue("@Comentari", Comentari);
+                cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                string resposta = "";
+
+                if (rowsAffected == 1)
+                {
+                    resposta = "OK";
+                }
+                else
+                {
+                    resposta = "Error";
+                }
+                return Json(resposta);
             }
         }
         

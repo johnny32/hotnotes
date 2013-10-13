@@ -99,6 +99,7 @@
                 url: '<%: Url.Action("GetComentaris", "Document") %>',
                 data: params,
                 dataType: 'json',
+                asynch: false,
                 success: function(data, textStatus, jqXHR) {
                     if (data.length == 0) {
                         $('#comentaris').html('<div style="text-align: center;"><%: Lang.GetString(ViewBag.Lang, "No_hi_ha_comentaris") %></div>');
@@ -118,6 +119,31 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     $('#comentaris').html('<div class="alert alert-danger"><%: Lang.GetString(ViewBag.Lang, "Error_comentaris") %>: ' + errorThrown + '</div>');
+                }
+            });
+        }
+
+        function enviarComentari() {
+            var params = {
+                IdDocument: <%: Model.Id %>,
+                Comentari: $('textarea[name=comentari]').val()
+            };
+
+            $.ajax({
+                url: '<%: Url.Action("Comentar", "Document") %>',
+                data: params,
+                dataType: 'json',
+                type: 'post',
+                asynch: false,
+                success: function(data, textStatus, jqXHR) {
+                    if (data == "Error") {
+                        alert('<%: Lang.GetString(ViewBag.Lang, "Error_comentant") %>');
+                    } else {
+                        $('textarea[name=comentari]').val('');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('<%: Lang.GetString(ViewBag.Lang, "Error_comentant") %>: ' + errorThrown);
                 }
             });
         }

@@ -330,4 +330,7 @@
   <data name="No_hi_ha_comentaris" xml:space="preserve">
     <value>No hi ha cap comentari en aquest document.</value>
   </data>
+  <data name="Error_comentant" xml:space="preserve">
+    <value>Hi ha hagut un error enviant el teu comentari. Si us plau, torna-ho a intentar més tard.</value>
+  </data>
 </root>

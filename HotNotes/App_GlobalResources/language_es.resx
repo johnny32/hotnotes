@@ -330,4 +330,7 @@
   <data name="No_hi_ha_comentaris" xml:space="preserve">
     <value>No hay ningún comentario en este documento.</value>
   </data>
+  <data name="Error_comentant" xml:space="preserve">
+    <value>Ha habido un error enviando tu comentario. Por favor, inténtalo de nuevo más tarde.</value>
+  </data>
 </root>
