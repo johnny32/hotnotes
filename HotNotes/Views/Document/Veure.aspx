@@ -99,7 +99,7 @@
                 url: '<%: Url.Action("GetComentaris", "Document") %>',
                 data: params,
                 dataType: 'json',
-                asynch: false,
+                async: false,
                 success: function(data, textStatus, jqXHR) {
                     if (data.length == 0) {
                         $('#comentaris').html('<div style="text-align: center;"><%: Lang.GetString(ViewBag.Lang, "No_hi_ha_comentaris") %></div>');
@@ -134,7 +134,7 @@
                 data: params,
                 dataType: 'json',
                 type: 'post',
-                asynch: false,
+                async: false,
                 success: function(data, textStatus, jqXHR) {
                     if (data == "Error") {
                         alert('<%: Lang.GetString(ViewBag.Lang, "Error_comentant") %>');
