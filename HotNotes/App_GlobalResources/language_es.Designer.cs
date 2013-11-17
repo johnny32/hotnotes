@@ -349,6 +349,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ha habido un error al subir el documento. Por favor, vuelve a intentarlo en unos minutos..
+        /// </summary>
+        internal static string Error_pujar_document {
+            get {
+                return ResourceManager.GetString("Error_pujar_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ha habido un error durante el proceso de registro. Por favor, pruébalo de nuevo en unos minutos.&lt;br /&gt;Si el problema persiste, contacta con el administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
         /// </summary>
         internal static string Error_registre {
@@ -435,6 +444,33 @@ namespace Resources {
         internal static string Major_edat {
             get {
                 return ResourceManager.GetString("Major_edat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .doc, .docx, .ppt, .pptx, .odt, .pdf o .txt..
+        /// </summary>
+        internal static string MimeType_no_practiques {
+            get {
+                return ResourceManager.GetString("MimeType_no_practiques", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tipo de archivo subido no está soportado. Por favor, sube un archivo que tenga uno de los siguientes formatos:.
+        /// </summary>
+        internal static string MimeType_no_suportat {
+            get {
+                return ResourceManager.GetString("MimeType_no_suportat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .doc, .docx, .ppt, .pptx, .odt, .pdf, .txt o .zip..
+        /// </summary>
+        internal static string MimeType_practiques {
+            get {
+                return ResourceManager.GetString("MimeType_practiques", resourceCulture);
             }
         }
         

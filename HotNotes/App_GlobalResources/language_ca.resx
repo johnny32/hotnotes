@@ -333,4 +333,16 @@
   <data name="Error_comentant" xml:space="preserve">
     <value>Hi ha hagut un error enviant el teu comentari. Si us plau, torna-ho a intentar més tard.</value>
   </data>
+  <data name="MimeType_no_practiques" xml:space="preserve">
+    <value>.doc, .docx, .ppt, .pptx, .odt, .pdf o .txt.</value>
+  </data>
+  <data name="MimeType_no_suportat" xml:space="preserve">
+    <value>El tipus d'arxiu pujat no està suportat. Si us plau, puja un arxiu que tingui un dels següents formats:</value>
+  </data>
+  <data name="MimeType_practiques" xml:space="preserve">
+    <value>.doc, .docx, .ppt, .pptx, .odt, .pdf, .txt o .zip.</value>
+  </data>
+  <data name="Error_pujar_document" xml:space="preserve">
+    <value>Hi ha hagut un error al pujar el document. Si us plau, torna-ho a provar en uns minuts.</value>
+  </data>
 </root>

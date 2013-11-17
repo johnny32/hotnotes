@@ -349,6 +349,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hi ha hagut un error al pujar el document. Si us plau, torna-ho a provar en uns minuts..
+        /// </summary>
+        internal static string Error_pujar_document {
+            get {
+                return ResourceManager.GetString("Error_pujar_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hi ha hagut un error durant el procés de registre. Si us plau, torna-ho a provar en uns minuts.&lt;br /&gt;Si el problema persisteix, contacta amb l&apos;administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
         /// </summary>
         internal static string Error_registre {
@@ -435,6 +444,33 @@ namespace Resources {
         internal static string Major_edat {
             get {
                 return ResourceManager.GetString("Major_edat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .doc, .docx, .ppt, .pptx, .odt, .pdf o .txt..
+        /// </summary>
+        internal static string MimeType_no_practiques {
+            get {
+                return ResourceManager.GetString("MimeType_no_practiques", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tipus d&apos;arxiu pujat no està suportat. Si us plau, puja un arxiu que tingui un dels següents formats:.
+        /// </summary>
+        internal static string MimeType_no_suportat {
+            get {
+                return ResourceManager.GetString("MimeType_no_suportat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .doc, .docx, .ppt, .pptx, .odt, .pdf, .txt o .zip..
+        /// </summary>
+        internal static string MimeType_practiques {
+            get {
+                return ResourceManager.GetString("MimeType_practiques", resourceCulture);
             }
         }
         

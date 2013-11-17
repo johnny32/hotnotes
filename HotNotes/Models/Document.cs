@@ -9,7 +9,8 @@ namespace HotNotes.Models
         public string Idioma;
         public TipusDocument Tipus;
         public string Ruta;
-        public string Extensio;
+        public string MimeType;
+        public Nullable<bool> ExamenCorregit;
         public DateTime DataAfegit;
         public Nullable<DateTime> DataModificat;
         public Nullable<double> Versio;

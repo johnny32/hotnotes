@@ -16,7 +16,7 @@
 <h2><%: Model.Nom%></h2>
 
 <%
-    if (Model.Tipus == TipusDocument.LinkYoutube || Model.Extensio == "pdf")
+    if (Model.Tipus == TipusDocument.LinkYoutube || Model.MimeType == "application/pdf")
     {
         //Embed
     }    

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using log4net;
 
 namespace HotNotes.Controllers
 {
     public class BaseController : Controller
     {
         protected string lang;
+        protected ILog Log = LogManager.GetLogger("HotNotes");
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -37,7 +39,7 @@ namespace HotNotes.Controllers
             filterContext.HttpContext.Response.SetCookie(newCookie);
         }
 
-        protected string GetConnection()
+        protected string GetConnectionString()
         {
             return ConfigurationManager.ConnectionStrings["HotNotes"].ConnectionString;
         }
