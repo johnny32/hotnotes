@@ -155,12 +155,11 @@
     <Content Include="Content\images\Loading.gif" />
     <Content Include="Lib\log4net.dll" />
     <Content Include="log4net.xml" />
-    <Content Include="Plugins\bootstrap\css\bootstrap-responsive.css" />
-    <Content Include="Plugins\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Plugins\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Plugins\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Plugins\bootstrap\css\bootstrap.css" />
     <Content Include="Plugins\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Plugins\bootstrap\img\glyphicons-halflings-white.png" />
-    <Content Include="Plugins\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Plugins\bootstrap\js\bootstrap.js" />
     <Content Include="Plugins\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\images\logo.png" />
@@ -721,6 +720,7 @@
     <Content Include="Views\Account\Login.aspx" />
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\Register_Complete.aspx" />
+    <Content Include="Views\Document\Pujar.aspx" />
     <Content Include="Views\Document\Veure.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
@@ -762,6 +762,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Plugins\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Plugins\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Plugins\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Plugins\jquery-ui-1.10.3\package.json" />
     <None Include="Plugins\jquery-ui-1.10.3\README.md" />
     <None Include="Plugins\jquery-ui-1.10.3\ui.accordion.jquery.json" />

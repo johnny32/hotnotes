@@ -92,7 +92,7 @@ namespace HotNotes.Controllers
 
         public ActionResult TipusDocuments()
         {
-            Dictionary<string, string> tipusLinks = new Dictionary<string,string>();
+            Dictionary<string, string> tipusLinks = new Dictionary<string, string>();
             tipusLinks.Add(TipusDocument.Apunts.ToString(), Lang.GetString(base.lang, "Apunts"));
             tipusLinks.Add(TipusDocument.Article.ToString(), Lang.GetString(base.lang, "Articles"));
             tipusLinks.Add(TipusDocument.Examen.ToString(), Lang.GetString(base.lang, "Examens"));
@@ -163,6 +163,12 @@ namespace HotNotes.Controllers
                 }
                 return Json(resposta);
             }
+        }
+
+        [HttpGet]
+        public ActionResult Pujar()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -259,9 +265,9 @@ namespace HotNotes.Controllers
                     correcte = true;
                 }
             }
-            
+
             return correcte;
         }
-        
+
     }
 }

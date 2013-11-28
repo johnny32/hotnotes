@@ -268,11 +268,12 @@ ul#menu li a:hover
 hgroup.title
 {
     margin-bottom: 10px;
+    padding: 0px 0px 20px 20px;
 }
 
 hgroup.title h1, hgroup.title h2
 {
-    display: inline;
+    /*display: inline;*/
 }
 
 hgroup.title h2

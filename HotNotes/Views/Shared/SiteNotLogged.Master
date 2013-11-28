@@ -17,6 +17,7 @@
     <%: Scripts.Render("~/Plugins/jquery-ui-1.10.3/ui/jquery-ui.js") %>
     <%: Scripts.Render("~/Plugins/bootstrap/js/bootstrap.js") %>
     <%: Scripts.Render("~/Scripts/sha3.js") %>
+    <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 </head>
 <body>
     <header>
@@ -39,7 +40,6 @@
   </header>
     <div id="body">
         <div id="content" class="template-block">
-            <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
             <section class="content-wrapper main-content clear-fix">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server" />
             </section>
@@ -50,6 +50,5 @@
             <p>&copy; <%: DateTime.Now.Year %> - Jonathan Clara Márquez - <%: Lang.GetString(lang, "Drets_reservats") %>.</p>
         </div>
     </footer>
-    <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 </body>
 </html>

@@ -17,13 +17,14 @@
        </div>
     <% } %>
     <hgroup class="title">
-        <h1><%: Lang.GetString(lang, "Inicia_sessio") %></h1>
+        <h1>"IMATGE BENVINGUT"</h1>
+        <h2><%: Lang.GetString(lang, "Inicia_sessio") %></h2>
     </hgroup>
 
     <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
         { %>
     <%: Html.AntiForgeryToken() %>
-    <fieldset>
+    <fieldset class="text-center">
         <legend>Log in Form</legend>
         <ol>
             <li>
@@ -41,11 +42,11 @@
         </ol>
         <input name="PasswordEnc" type="hidden" />
         <input name="RememberMe" type="hidden" />
-        <input type="submit" value="<%: Lang.GetString(lang, "Inicia_sessio") %>" />
+        <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Inicia_sessio") %></button> <button type="button" class="btn btn-info" onclick="window.location='<%: Url.Action("Register", "Account") %>'"><%: Lang.GetString(lang, "Registrat") %></button>
     </fieldset>
     <br />
     <p>
-        <%: Html.ActionLink(Lang.GetString(lang, "Registrat"), "Register") %>
+        
     </p>
     <% } %>
 </asp:Content>
