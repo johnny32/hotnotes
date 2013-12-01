@@ -5,85 +5,15 @@
     Register
 </asp:Content>
 
-<asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
     <% string lang = ViewBag.Lang; %>
+
     <script type="text/javascript">
         var username_curt = '<%: Lang.GetString(lang, "Username_curt") %>';
         var passwords_no_coincideixen = '<%: Lang.GetString(lang, "Passwords_no_coincideixen") %>';
         var password_curta = '<%: Lang.GetString(lang, "Password_curta") %>';
         var major_edat = '<%: Lang.GetString(lang, "Major_edat") %>';
-    </script>
 
-    <hgroup class="title">
-        <h1><%: Lang.GetString(lang, "Registrat") %></h1>
-    </hgroup>
-
-    <% using (Html.BeginForm()) { %>
-        <%: Html.AntiForgeryToken() %>
-        <%: Html.ValidationSummary() %>
-        
-        <div id="errors" class="alert alert-block alert-danger hide">
-            <% if (ViewBag.Error != null)
-               { %>
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4><%: Lang.GetString(lang, "Error") %></h4>
-            <p><%= ViewBag.Error %></p>
-            <script type="text/javascript">
-                $('#errors').removeClass('hide');
-            </script>
-            <% } %>
-        </div>        
-
-        <fieldset>
-            <legend>Registration Form</legend>
-            <ol class="form-input">
-                <li class="form-left-column">
-                    <label for="Username"><%: Lang.GetString(lang, "Username") %></label>
-                    <input name="Username" type="text" tabindex="1" required/>
-                </li>
-                <li class="form-right-column">
-                    <label for="Nom"><%: Lang.GetString(lang, "Nom") %></label>
-                    <input name="Nom" type="text" tabindex="5" required/>
-                </li>
-                <li class="form-left-column">
-                    <label for="Password"><%: Lang.GetString(lang, "Password") %></label>
-                    <input name="Password" type="password" tabindex="2" required/>
-                </li>
-                <li class="form-right-column">
-                    <label for="Cognoms"><%: Lang.GetString(lang, "Cognoms") %></label>
-                    <input name="Cognoms" type="text" tabindex="6" required/>
-                </li>
-                <li class="form-left-column">
-                    <label for="ConfirmarPassword"><%: Lang.GetString(lang, "Confirma_password") %></label>
-                    <input name="ConfirmarPassword" type="password" tabindex="3" required />
-                </li>
-                <li class="form-right-column">
-                    <label for="DataNaixement"><%: Lang.GetString(lang, "Data_naixement") %></label>
-                    <input name="DataNaixement" type="date" tabindex="7" required/>
-                </li>
-                <li class="form-left-column">
-                    <label for="Email"><%: Lang.GetString(lang, "Correu_electronic") %></label>
-                    <input name="Email" type="email" tabindex="4" required />
-                </li>
-                <li class="form-right-column">
-                    <label for="Sexe"><%: Lang.GetString(lang, "Sexe") %></label>
-                    <select name="Sexe" tabindex="8">
-                        <option value="-" selected><%: Lang.GetString(lang, "No_especificat") %></option>
-                        <option value="H"><%: Lang.GetString(lang, "Home") %></option>
-                        <option value="D"><%: Lang.GetString(lang, "Dona") %></option>
-                    </select>
-                </li>
-            </ol>
-            <input name="PasswordEnc" type="hidden" />
-            <div style="clear: both; width: 100%; text-align: center;">
-                <input style="clear: both;" type="submit" tabindex="9" value="<%: Lang.GetString(lang, "Registrarse") %>" />
-            </div>
-        </fieldset>
-    <% } %>
-</asp:Content>
-
-<asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <script type="text/javascript">
         $(document).ready(function () {
             $('form').submit(function () {
                 var username = $('input[name=Username]').val();
@@ -107,7 +37,7 @@
                     avui.setSeconds(0);
                     avui.setMilliseconds(0);
                     fa18anys = new Date(avui.getFullYear() - 18, avui.getMonth(), avui.getDate(), 0, 0, 0, 0);
-                    
+
                     if (datanaixement > fa18anys) {
                         errormsg = major_edat;
                     }
@@ -129,4 +59,112 @@
             });
         });
     </script>
+</asp:Content>
+
+<asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
+    <% string lang = ViewBag.Lang; %>
+
+    <style type="text/css">
+        .container input, .container select
+        {
+            width: 100%;
+            height: 2em;
+        }
+        
+        .col-md-3
+        {
+            padding-bottom: 0.25em;
+        }
+    </style>
+
+    <hgroup class="title">
+        <h1><%: Lang.GetString(lang, "Registrat") %></h1>
+    </hgroup>
+
+    <% using (Html.BeginForm()) { %>
+        <%: Html.AntiForgeryToken() %>
+        <%: Html.ValidationSummary() %>
+        
+        <div id="errors" class="alert alert-block alert-danger hide">
+            <% if (ViewBag.Error != null)
+               { %>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4><%: Lang.GetString(lang, "Error") %></h4>
+            <p><%= ViewBag.Error %></p>
+            <script type="text/javascript">
+                $('#errors').removeClass('hide');
+            </script>
+            <% } %>
+        </div>        
+
+        <fieldset>
+            <legend>Registration Form</legend>
+            <div class="container" style="width: 100%;">
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <label for="Username"><%: Lang.GetString(lang, "Username") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="Username" type="text" tabindex="1" required/>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <label for="Nom"><%: Lang.GetString(lang, "Nom") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="Nom" type="text" tabindex="5" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <label for="Password"><%: Lang.GetString(lang, "Password") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="Password" type="password" tabindex="2" required/>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <label for="Cognoms"><%: Lang.GetString(lang, "Cognoms") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="Cognoms" type="text" tabindex="6" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <label for="ConfirmarPassword"><%: Lang.GetString(lang, "Confirma_password") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="ConfirmarPassword" type="password" tabindex="3" required />
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <label for="DataNaixement"><%: Lang.GetString(lang, "Data_naixement") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="DataNaixement" type="date" tabindex="7" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <label for="Email"><%: Lang.GetString(lang, "Correu_electronic") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <input name="Email" type="email" tabindex="4" required />
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <label for="Sexe"><%: Lang.GetString(lang, "Sexe") %></label>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <select name="Sexe" tabindex="8">
+                            <option value="-" selected><%: Lang.GetString(lang, "No_especificat") %></option>
+                            <option value="H"><%: Lang.GetString(lang, "Home") %></option>
+                            <option value="D"><%: Lang.GetString(lang, "Dona") %></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input name="PasswordEnc" type="hidden" />
+            <div class="text-center" style="margin: 2em;">
+                <button type="submit" tabindex="9" class="btn btn-info"><%: Lang.GetString(lang, "Registrarse") %></button>
+            </div>
+        </fieldset>
+    <% } %>
 </asp:Content>

@@ -8,6 +8,9 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <script type="text/javascript">
+        <% if (ViewBag.Error == null)
+           { 
+        %>
         $(document).ready(function () {
             carregarComentaris();
         });
@@ -75,6 +78,9 @@
                 }
             });
         }
+        <%
+        }
+        %>
     </script>
 </asp:Content>
 

@@ -52,10 +52,10 @@
         </div>
         <div style="clear: both;"></div>
       </div>
-  </header>
-    <div id="body">
-        <div id="left-column-div">
-            <div class="template-block">
+    </header>
+    <div id="body" class="row">
+        <div class="col-md-3">
+            <div>
                 <ul id="sections">
                     <li><a href="/"><%: Lang.GetString(lang, "Apunts") %></a></li>
                     <li><a href="/"><%: Lang.GetString(lang, "Treballs") %></a></li>
@@ -66,17 +66,17 @@
                     <li><a href="/"><%: Lang.GetString(lang, "Papers") %></a></li>
                 </ul>
             </div>
-            <div class="template-block">
+            <div>
                 <b>TODO: CRÈDITS</b>
             </div>
         </div>
-        <div id="right-column-div" class="template-block">
-            <b>TODO: PUBLICITAT</b>
-        </div>
-        <div id="content" class="template-block">
+        <div id="content" class="col-md-6">
             <section class="content-wrapper main-content clear-fix">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server" />
             </section>
+        </div>
+        <div id="right-column-div" class="col-md-3">
+            <b>TODO: PUBLICITAT</b>
         </div>
     </div>
     <footer>

@@ -8,7 +8,7 @@
 
 hgroup.title
 {
-    color: #99FFFF;
+    color: black;
 }
 
 footer
@@ -20,22 +20,10 @@ footer
 {
     margin: 0.5em;
     padding: 1em 1em 0.5em 1em;
-    border-radius: 0.5em;
+    /*border-radius: 0.5em;
     -webkit-border-radius: 0.5em;
-    -moz-border-radius: 0.5em;
-    background-color: #808080;
-}
-
-#left-column-div
-{
-    float: left;
-    width: 15%;
-}
-
-#right-column-div
-{
-    float: right;
-    width: 15%;
+    -moz-border-radius: 0.5em;*/
+    background-color: #A0A0A0;
 }
 
 #footer-div

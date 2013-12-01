@@ -1,4 +1,9 @@
-﻿html
+﻿*
+{
+    font-family: "Calibri", "Segoe UI" , Verdana, Helvetica, Sans-Serif !important;
+}
+
+html
 {
     margin: 0;
     padding: 0;
@@ -10,7 +15,6 @@ body
     border-top: solid 10px #000;
     color: #333;
     font-size: .85em;
-    font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
     padding: 0;
 }
 
@@ -116,6 +120,7 @@ h5 a:link, h5 a:visited, h5 a:active
     background-color: #efeeef;
     clear: both;
     padding-bottom: 35px;
+    width: 100%;
 }
 
 .main-content

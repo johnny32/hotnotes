@@ -26,22 +26,42 @@
     <%: Html.AntiForgeryToken() %>
     <fieldset class="text-center">
         <legend>Log in Form</legend>
-        <ol>
-            <li>
-                <label for="UserName"><%: Lang.GetString(lang, "Username") %></label>
-                <input name="Username" type="text" required/>
-            </li>
-            <li>
-                <label for="Password"><%: Lang.GetString(lang, "Password") %></label>
-                <input name="Password" type="password" required/>
-            </li>
-            <li>
-                <label for="RememberMe"><%: Lang.GetString(lang, "No_tanquis_sessio") %></label>
-                <input name="RememberMeCB" type="checkbox" value="dasdasd"/>
-            </li>
-        </ol>
-        <input name="PasswordEnc" type="hidden" />
-        <input name="RememberMe" type="hidden" />
+        <div class="container" style="width: 100%;">
+            <div class="row">
+                <div class="col-md-5 text-right">
+                    <label for="UserName"><%: Lang.GetString(lang, "Username") %></label>
+                </div>
+                <div class="col-md-7 text-left">
+                    <input name="Username" type="text" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 text-right">
+                    <label for="Password"><%: Lang.GetString(lang, "Password") %></label>
+                </div>
+                <div class="col-md-7 text-left">
+                    <input name="Password" type="password" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 text-right">
+                    <label for="RememberMe"><%: Lang.GetString(lang, "No_tanquis_sessio") %></label>
+                </div>
+                <div class="col-md-7 text-left">
+                    <input name="RememberMeCB" type="checkbox" value="dasdasd"/>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6 text-right">
+                    <input name="PasswordEnc" type="hidden" />
+                </div>
+                <div class="col-md-6 text-right">
+                    <input name="RememberMe" type="hidden" />
+                </div>
+            </div>
+        </div>
+        
         <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Inicia_sessio") %></button> <button type="button" class="btn btn-info" onclick="window.location='<%: Url.Action("Register", "Account") %>'"><%: Lang.GetString(lang, "Registrat") %></button>
     </fieldset>
     <br />

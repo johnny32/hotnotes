@@ -25,7 +25,7 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, Extensio, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -37,6 +37,15 @@ namespace HotNotes.Controllers
                     d.Idioma = reader.GetString(reader.GetOrdinal("Idioma"));
                     d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
                     d.Ruta = reader.GetString(reader.GetOrdinal("Ruta"));
+
+                    if (reader.IsDBNull(reader.GetOrdinal("MimeType")))
+                    {
+                        d.MimeType = null;
+                    }
+                    else
+                    {
+                        d.MimeType = reader.GetString(reader.GetOrdinal("MimeType"));
+                    }
 
                     if (reader.IsDBNull(reader.GetOrdinal("ExamenCorregit")))
                     {
