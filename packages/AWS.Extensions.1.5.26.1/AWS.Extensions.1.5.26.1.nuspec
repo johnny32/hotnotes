@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>AWS.Extensions</id>
+    <version>1.5.26.1</version>
+    <title>AWS SDK for .NET: Extensions</title>
+    <authors>Amazon Web Services</authors>
+    <owners>Amazon Web Services</owners>
+    <licenseUrl>http://aws.amazon.com/apache2.0/</licenseUrl>
+    <projectUrl>http://aws.amazon.com/sdkfornet/</projectUrl>
+    <iconUrl>http://media.amazonwebservices.com/aws_singlebox_01.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>OBSOLETE - Extensions for the AWS SDK for .NET.  This contains a session state provider using Amazon DynamoDB. Please use AWS.SessionProvider instead.</description>
+    <releaseNotes />
+    <copyright />
+    <language>en-US</language>
+    <tags>AWS Amazon cloud</tags>
+    <dependencies>
+      <dependency id="AWS.SessionProvider" version="1.5.26.3" />
+    </dependencies>
+  </metadata>
+</package>

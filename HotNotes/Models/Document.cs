@@ -8,7 +8,7 @@ namespace HotNotes.Models
         public string Nom;
         public string Idioma;
         public TipusDocument Tipus;
-        public string Ruta;
+        public string KeyAmazon;
         public string MimeType;
         public Nullable<bool> ExamenCorregit;
         public DateTime DataAfegit;

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using log4net;
+using Amazon;
 
 namespace HotNotes.Controllers
 {
@@ -12,6 +13,7 @@ namespace HotNotes.Controllers
     {
         protected string lang;
         protected ILog Log = LogManager.GetLogger("HotNotes");
+        protected RegionEndpoint AmazonEndPoint = RegionEndpoint.EUWest1;
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

@@ -101,7 +101,7 @@
 %>
 
 <div id="infoLeft" style="float: left;">
-    <a href="<%: Model.Ruta %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
+    <a href="<%: Model.KeyAmazon %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
     <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span>
 </div>
 
@@ -134,8 +134,8 @@
 </div>
 
 <form id="afegirComentari">
-    <textarea name="comentari" rows="5" style="width: 98%;" placeholder="<%: Lang.GetString(ViewBag.Lang, "Escriu_un_comentari") %>"></textarea>
-    <input type="submit" style="float: right;" value="<%: Lang.GetString(ViewBag.Lang, "Enviar") %>" />
+    <textarea name="comentari" rows="5" style="width: 98%; margin-bottom: 1em;" placeholder="<%: Lang.GetString(ViewBag.Lang, "Escriu_un_comentari") %>"></textarea>
+    <button type="submit" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-edit"></span> <%: Lang.GetString(ViewBag.Lang, "Enviar") %></button>
 </form>
 
 <div style="clear: both;"></div>

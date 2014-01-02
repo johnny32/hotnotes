@@ -13,6 +13,10 @@ using HotNotes.Models;
 //Json.NET
 using Newtonsoft.Json;
 
+//AWS
+using Amazon.S3;
+using Amazon.S3.Model;
+
 namespace HotNotes.Controllers
 {
     public class DocumentController : BaseController
@@ -25,7 +29,7 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, Ruta, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, KeyAmazon, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -36,7 +40,7 @@ namespace HotNotes.Controllers
                     d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     d.Idioma = reader.GetString(reader.GetOrdinal("Idioma"));
                     d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
-                    d.Ruta = reader.GetString(reader.GetOrdinal("Ruta"));
+                    d.KeyAmazon = reader.GetString(reader.GetOrdinal("KeyAmazon"));
 
                     if (reader.IsDBNull(reader.GetOrdinal("MimeType")))
                     {
@@ -181,7 +185,7 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, HttpPostedFileBase Fitxer = null, string Ruta = null, Nullable<bool> ExamenCorregit = null)
+        public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, HttpPostedFileBase Fitxer = null, string KeyAmazon = null, Nullable<bool> ExamenCorregit = null)
         {
             HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
             int IdUsuari = int.Parse(cookie.Value);
@@ -208,17 +212,30 @@ namespace HotNotes.Controllers
                     return View();
                 }
 
-                //TODO: Pujar a Amazon S3
-                //Posar la ruta final a la variable Ruta
+                string[] parts = Fitxer.FileName.Split(new char { '.' });
+                string extensio = parts[parts.Length - 1];
+
+                using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
+                {
+                    PutObjectRequest putRequest = new PutObjectRequest();
+                    putRequest.BucketName = "doc_" + IdAssignatura;
+                    putRequest.Key = Path.GetRandomFileName().Replace(".", "") + "." + extensio;
+                    putRequest.FilePath = Fitxer.FileName; //TODO: Comprovar
+                    putRequest.ContentType = MimeType;
+                    putRequest.InputStream = Fitxer.InputStream;
+
+                    PutObjectResponse putResponse = client.PutObject(putRequest);
+                    
+                }                
             }
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, Ruta, MimeType, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @Ruta, @MimeType, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Idioma", Idioma);
                 cmd.Parameters.AddWithValue("@Tipus", TipusDocument.ToString());
-                cmd.Parameters.AddWithValue("@Ruta", Ruta);
+                cmd.Parameters.AddWithValue("@KeyAmazon", KeyAmazon);
                 if (MimeType != "")
                 {
                     cmd.Parameters.AddWithValue("@MimeType", MimeType);
