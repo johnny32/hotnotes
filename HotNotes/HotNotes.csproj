@@ -145,6 +145,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Helpers\Lang.cs" />
+    <Compile Include="Models\Assignatura.cs" />
     <Compile Include="Models\Comentari.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Usuari.cs" />
