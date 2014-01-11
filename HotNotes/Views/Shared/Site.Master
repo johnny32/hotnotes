@@ -17,6 +17,12 @@
     <%: Scripts.Render("~/Scripts/jquery-1.10.2.js") %>
     <%: Scripts.Render("~/Plugins/jquery-ui-1.10.3/ui/jquery-ui.js") %>
     <%: Scripts.Render("~/Plugins/bootstrap/js/bootstrap.js") %>
+    <style>
+        #navigation-div > .nav:after
+        {
+            clear: none;    
+        }
+    </style>
     <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 </head>
 <body>
@@ -37,15 +43,14 @@
         </div>
         <div style="clear: both;"></div>
         <div id="navigation-div">
-            <nav>
-                <ul id="menu">
-                    <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Index", "Home") %></li>
-                    <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
-                    <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
-                    <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=es">ES</a></li>
-                    <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=ca">CA</a></li>
-                </ul>
-            </nav>
+            <ul class="nav nav-pills">
+                <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Index", "Home") %></li>
+                <li><%: Html.ActionLink(Lang.GetString(lang, "Pujar_Document"), "Pujar", "Document") %></li>
+                <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
+                <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
+                <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=es">ES</a></li>
+                <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=ca">CA</a></li>
+            </ul>
             <section id="login" style="float: right;">
                 <%: Html.Partial("_LoginPartial")%>
             </section>

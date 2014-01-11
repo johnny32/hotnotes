@@ -15,6 +15,15 @@ namespace HotNotes.Controllers
         protected ILog Log = LogManager.GetLogger("HotNotes");
         protected RegionEndpoint AmazonEndPoint = RegionEndpoint.EUWest1;
 
+        protected int IdUsuari
+        {
+            get
+            {
+                HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
+                return int.Parse(cookie.Value);
+            }
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //Triem l'idioma segons la cookie (si existeix)

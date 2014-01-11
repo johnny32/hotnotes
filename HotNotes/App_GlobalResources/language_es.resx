@@ -345,4 +345,25 @@
   <data name="Error_pujar_document" xml:space="preserve">
     <value>Ha habido un error al subir el documento. Por favor, vuelve a intentarlo en unos minutos.</value>
   </data>
+  <data name="Altres" xml:space="preserve">
+    <value>Otros...</value>
+  </data>
+  <data name="Angles" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="Castella" xml:space="preserve">
+    <value>Castellano</value>
+  </data>
+  <data name="Catala" xml:space="preserve">
+    <value>Catalán</value>
+  </data>
+  <data name="Idioma" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="Pujar_Document" xml:space="preserve">
+    <value>Subir documento</value>
+  </data>
+  <data name="Assignatura" xml:space="preserve">
+    <value>Asignatura</value>
+  </data>
 </root>

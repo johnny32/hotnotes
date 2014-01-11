@@ -151,9 +151,6 @@ namespace HotNotes.Controllers
         [HttpPost]
         public ActionResult Comentar(int IdDocument, string Comentari)
         {
-            HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
-            int IdUsuari = int.Parse(cookie.Value);
-
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
                 connection.Open();
@@ -181,14 +178,33 @@ namespace HotNotes.Controllers
         [HttpGet]
         public ActionResult Pujar()
         {
-            return View();
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
+                cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Assignatura> l = new List<Assignatura>();
+
+                while (reader.Read())
+                {
+                    Assignatura a = new Assignatura();
+                    a.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    a.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    a.Curs = reader.GetInt32(reader.GetOrdinal("Curs"));
+                    a.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+
+                    l.Add(a);
+                }
+
+                return View(l);
+            }
         }
 
         [HttpPost]
         public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, HttpPostedFileBase Fitxer = null, string KeyAmazon = null, Nullable<bool> ExamenCorregit = null)
         {
-            HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
-            int IdUsuari = int.Parse(cookie.Value);
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
             string MimeType = "";
 
@@ -212,7 +228,9 @@ namespace HotNotes.Controllers
                     return View();
                 }
 
-                string[] parts = Fitxer.FileName.Split(new char { '.' });
+                char[] separator = new char[1];
+                separator[0] = '.';
+                string[] parts = Fitxer.FileName.Split(separator);
                 string extensio = parts[parts.Length - 1];
 
                 using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
