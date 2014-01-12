@@ -421,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ¿Es un examen corregido?.
+        /// </summary>
+        internal static string Es_examen_corregit {
+            get {
+                return ResourceManager.GetString("Es_examen_corregit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Examen.
         /// </summary>
         internal static string Examen {
@@ -435,6 +444,15 @@ namespace Resources {
         internal static string Examens {
             get {
                 return ResourceManager.GetString("Examens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archivo.
+        /// </summary>
+        internal static string Fitxer {
+            get {
+                return ResourceManager.GetString("Fitxer", resourceCulture);
             }
         }
         
@@ -664,6 +682,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subir.
+        /// </summary>
+        internal static string Pujar {
+            get {
+                return ResourceManager.GetString("Pujar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subir documento.
         /// </summary>
         internal static string Pujar_Document {
@@ -696,6 +723,24 @@ namespace Resources {
         internal static string Registre_completat {
             get {
                 return ResourceManager.GetString("Registre_completat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ruta.
+        /// </summary>
+        internal static string Ruta {
+            get {
+                return ResourceManager.GetString("Ruta", resourceCulture);
             }
         }
         

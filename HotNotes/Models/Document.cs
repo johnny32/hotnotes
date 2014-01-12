@@ -10,6 +10,7 @@ namespace HotNotes.Models
         public string Idioma;
         public TipusDocument Tipus;
         public string KeyAmazon;
+        public string Ruta;
         public string MimeType;
         public Nullable<bool> ExamenCorregit;
         public DateTime DataAfegit;

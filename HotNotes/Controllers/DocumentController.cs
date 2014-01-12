@@ -40,7 +40,24 @@ namespace HotNotes.Controllers
                     d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     d.Idioma = reader.GetString(reader.GetOrdinal("Idioma"));
                     d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
-                    d.KeyAmazon = reader.GetString(reader.GetOrdinal("KeyAmazon"));
+
+                    if (reader.IsDBNull(reader.GetOrdinal("KeyAmazon")))
+                    {
+                        d.KeyAmazon = null;
+                    }
+                    else
+                    {
+                        d.KeyAmazon = reader.GetString(reader.GetOrdinal("KeyAmazon"));
+                    }
+
+                    if (reader.IsDBNull(reader.GetOrdinal("Ruta")))
+                    {
+                        d.Ruta = null;
+                    }
+                    else
+                    {
+                        d.Ruta = reader.GetString(reader.GetOrdinal("Ruta"));
+                    }
 
                     if (reader.IsDBNull(reader.GetOrdinal("MimeType")))
                     {
@@ -103,22 +120,6 @@ namespace HotNotes.Controllers
             return View();
         }
 
-        public ActionResult TipusDocuments()
-        {
-            Dictionary<string, string> tipusLinks = new Dictionary<string, string>();
-            tipusLinks.Add(TipusDocument.Apunts.ToString(), Lang.GetString(base.lang, "Apunts"));
-            tipusLinks.Add(TipusDocument.Article.ToString(), Lang.GetString(base.lang, "Articles"));
-            tipusLinks.Add(TipusDocument.Examen.ToString(), Lang.GetString(base.lang, "Examens"));
-            tipusLinks.Add(TipusDocument.LinkExtern.ToString(), Lang.GetString(base.lang, "Links_externs"));
-            tipusLinks.Add(TipusDocument.LinkYoutube.ToString(), Lang.GetString(base.lang, "Links_youtube"));
-            tipusLinks.Add(TipusDocument.Paper.ToString(), Lang.GetString(base.lang, "Paper"));
-            tipusLinks.Add(TipusDocument.PFC.ToString(), Lang.GetString(base.lang, "PFC"));
-            tipusLinks.Add(TipusDocument.Practica.ToString(), Lang.GetString(base.lang, "Practiques"));
-            tipusLinks.Add(TipusDocument.Treball.ToString(), Lang.GetString(base.lang, "Treballs"));
-
-            return new ContentResult { Content = JsonConvert.SerializeObject(tipusLinks), ContentType = "application/json" };
-        }
-
         public ActionResult GetComentaris(int IdDocument)
         {
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
@@ -178,28 +179,7 @@ namespace HotNotes.Controllers
         [HttpGet]
         public ActionResult Pujar()
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
-            {
-                connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
-                cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                List<Assignatura> l = new List<Assignatura>();
-
-                while (reader.Read())
-                {
-                    Assignatura a = new Assignatura();
-                    a.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                    a.Nom = reader.GetString(reader.GetOrdinal("Nom"));
-                    a.Curs = reader.GetInt32(reader.GetOrdinal("Curs"));
-                    a.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
-
-                    l.Add(a);
-                }
-
-                return View(l);
-            }
+            return View(GetLlistaAssignatures());
         }
 
         [HttpPost]
@@ -225,7 +205,7 @@ namespace HotNotes.Controllers
                         ViewBag.Error += Lang.GetString(base.lang, "MimeType_no_practiques");
                     }
 
-                    return View();
+                    return View(GetLlistaAssignatures());
                 }
 
                 char[] separator = new char[1];
@@ -284,7 +264,7 @@ namespace HotNotes.Controllers
                 }
             }
 
-            return View();
+            return View(GetLlistaAssignatures());
         }
 
         private bool MatchMIMETipus(string mimeType, TipusDocument tipusDocument)
@@ -311,6 +291,32 @@ namespace HotNotes.Controllers
             }
 
             return correcte;
+        }
+
+        private List<Assignatura> GetLlistaAssignatures()
+        {
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
+                cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Assignatura> l = new List<Assignatura>();
+
+                while (reader.Read())
+                {
+                    Assignatura a = new Assignatura();
+                    a.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    a.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    a.Curs = reader.GetInt32(reader.GetOrdinal("Curs"));
+                    a.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+
+                    l.Add(a);
+                }
+
+                return l;
+            }
         }
 
     }

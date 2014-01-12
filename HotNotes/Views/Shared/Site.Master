@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 <%@ Import Namespace="HotNotes.Helpers" %>
+<%@ Import Namespace="HotNotes.Models" %>
 <% string lang = ViewBag.Lang; %>
 
 <!DOCTYPE html>
@@ -62,13 +63,14 @@
         <div class="col-md-2">
             <div class="well">
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="/"><%: Lang.GetString(lang, "Apunts") %></a></li>
-                    <li><a href="/"><%: Lang.GetString(lang, "Treballs") %></a></li>
-                    <li><a href="/"><%: Lang.GetString(lang, "Examens") %></a></li>
-                    <li><a href="/"><%: Lang.GetString(lang, "Practiques") %></a></li>
-                    <li><a href="/"><%: Lang.GetString(lang, "Articles") %></a></li>
-                    <li><a href="/"><%: Lang.GetString(lang, "PFCs") %></a></li>
-                    <li><a href="/"><%: Lang.GetString(lang, "Papers") %></a></li>
+                <%
+                    foreach (TipusDocument td in Document.TipusDocuments)
+                    {
+                %>
+                    <li><a href="<%: Url.Action("Filtrar", "Document", new { Tipus = td }) %>"><%: Lang.GetString(lang, td.ToString()) %></a></li>
+                <%
+                    }
+                %>
                 </ul>
             </div>
             <div class="well">

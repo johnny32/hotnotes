@@ -366,4 +366,19 @@
   <data name="Assignatura" xml:space="preserve">
     <value>Assignatura</value>
   </data>
+  <data name="Es_examen_corregit" xml:space="preserve">
+    <value>És un exàmen corregit?</value>
+  </data>
+  <data name="Fitxer" xml:space="preserve">
+    <value>Fitxer</value>
+  </data>
+  <data name="Ruta" xml:space="preserve">
+    <value>Ruta</value>
+  </data>
+  <data name="Pujar" xml:space="preserve">
+    <value>Pujar</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
 </root>
