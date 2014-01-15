@@ -381,4 +381,13 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="Error_desconegut" xml:space="preserve">
+    <value>Hi ha hagut un error desconegut.</value>
+  </data>
+  <data name="Error_Amazon_S3" xml:space="preserve">
+    <value>Hi ha hagut un error pujant el fitxer. Si us plau, torna-ho a intentar en uns minuts.</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documento</value>
+  </data>
 </root>

@@ -3,13 +3,13 @@
 <%@ Import Namespace="HotNotes.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Index
+    <%: Model.Nom %> - <%: Model.NomAutor %>
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <script type="text/javascript">
         <% if (ViewBag.Error == null)
-           { 
+           {
         %>
         $(document).ready(function () {
             carregarComentaris();
@@ -101,7 +101,7 @@
 %>
 
 <div id="infoLeft" style="float: left;">
-    <a href="<%: Model.KeyAmazon %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
+    <a href="<%: Url.Action("Descarregar", "Document", new { Id = Model.Id }) %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
     <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span>
 </div>
 

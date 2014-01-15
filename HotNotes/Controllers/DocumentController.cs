@@ -29,7 +29,7 @@ namespace HotNotes.Controllers
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, KeyAmazon, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
+                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, KeyAmazon, Ruta, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -183,10 +183,11 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, HttpPostedFileBase Fitxer = null, string KeyAmazon = null, Nullable<bool> ExamenCorregit = null)
+        public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, HttpPostedFileBase Fitxer = null, Nullable<bool> ExamenCorregit = null)
         {
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
             string MimeType = "";
+            string KeyAmazon = "";
 
             if (Fitxer != null)
             {
@@ -212,20 +213,37 @@ namespace HotNotes.Controllers
                 separator[0] = '.';
                 string[] parts = Fitxer.FileName.Split(separator);
                 string extensio = parts[parts.Length - 1];
-
+                
+                KeyAmazon = Path.GetRandomFileName().Replace(".", "") + "." + extensio;
                 using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
                 {
-                    PutObjectRequest putRequest = new PutObjectRequest();
-                    putRequest.BucketName = "doc_" + IdAssignatura;
-                    putRequest.Key = Path.GetRandomFileName().Replace(".", "") + "." + extensio;
-                    putRequest.FilePath = Fitxer.FileName; //TODO: Comprovar
-                    putRequest.ContentType = MimeType;
-                    putRequest.InputStream = Fitxer.InputStream;
+                    try
+                    {
+                        PutObjectRequest putRequest = new PutObjectRequest();
+                        putRequest.BucketName = "hotnotes";
+                        putRequest.Key = KeyAmazon;
+                        putRequest.ContentType = MimeType;
+                        putRequest.InputStream = Fitxer.InputStream;
 
-                    PutObjectResponse putResponse = client.PutObject(putRequest);
-                    
+                        PutObjectResponse putResponse = client.PutObject(putRequest);
+
+                        if (putResponse.HttpStatusCode != System.Net.HttpStatusCode.OK)
+                        {
+                            Log.Error("Error pujjant arxiu a S3. HttpStatusCode: " + putResponse.HttpStatusCode.ToString());
+                            ViewBag.Error = Lang.GetString(lang, "Error_Amazon_S3");
+                            return View(GetLlistaAssignatures());
+                        }
+                    }
+                    catch (AmazonS3Exception ex)
+                    {
+                        Log.Error("Error pujant arxiu a S3", ex);
+                        ViewBag.Error = Lang.GetString(lang, "Error_Amazon_S3");
+                        return View(GetLlistaAssignatures());
+                    }
                 }                
             }
+
+            int IdDocument = -1;
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
@@ -233,7 +251,14 @@ namespace HotNotes.Controllers
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Idioma", Idioma);
                 cmd.Parameters.AddWithValue("@Tipus", TipusDocument.ToString());
-                cmd.Parameters.AddWithValue("@KeyAmazon", KeyAmazon);
+                if (KeyAmazon != "")
+                {
+                    cmd.Parameters.AddWithValue("@KeyAmazon", KeyAmazon);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@KeyAmazon", DBNull.Value);
+                }
                 if (MimeType != "")
                 {
                     cmd.Parameters.AddWithValue("@MimeType", MimeType);
@@ -255,16 +280,21 @@ namespace HotNotes.Controllers
 
                 try
                 {
-                    int IdDocument = (int)cmd.ExecuteScalar();
+                    connection.Open();
+                    IdDocument = (int)cmd.ExecuteScalar();
                 }
                 catch (SqlException e)
                 {
-
                     ViewBag.Error = Lang.GetString(base.lang, "Error_pujar_document");
+                    return View(GetLlistaAssignatures());
+                }
+                finally
+                {
+                    connection.Close();
                 }
             }
 
-            return View(GetLlistaAssignatures());
+            return RedirectToAction("Veure", "Document", new { Id = IdDocument });
         }
 
         private bool MatchMIMETipus(string mimeType, TipusDocument tipusDocument)

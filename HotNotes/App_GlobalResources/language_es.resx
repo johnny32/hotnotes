@@ -381,4 +381,13 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="Error_desconegut" xml:space="preserve">
+    <value>Ha habido un error desconocido.</value>
+  </data>
+  <data name="Error_Amazon_S3" xml:space="preserve">
+    <value>Ha habido un error al subir el archivo. Por favor, inténtalo pasados unos minutos.</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documento</value>
+  </data>
 </root>
