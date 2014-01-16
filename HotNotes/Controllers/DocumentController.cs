@@ -283,7 +283,7 @@ namespace HotNotes.Controllers
                     connection.Open();
                     IdDocument = (int)cmd.ExecuteScalar();
                 }
-                catch (SqlException e)
+                catch (Exception e)
                 {
                     ViewBag.Error = Lang.GetString(base.lang, "Error_pujar_document");
                     return View(GetLlistaAssignatures());
@@ -295,6 +295,47 @@ namespace HotNotes.Controllers
             }
 
             return RedirectToAction("Veure", "Document", new { Id = IdDocument });
+        }
+
+        [HttpGet]
+        public ActionResult Descarregar(int Id)
+        {
+            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT Nom, MimeType, KeyAmazon FROM Documents WHERE Id = @Id", connection);
+                cmd.Parameters.AddWithValue("@Id", Id);
+
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    string Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    string MimeType = reader.GetString(reader.GetOrdinal("MimeType"));
+                    string KeyAmazon = reader.GetString(reader.GetOrdinal("KeyAmazon"));
+
+                    using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
+                    {
+                        GetObjectRequest getRequest = new GetObjectRequest();
+                        getRequest.BucketName = "hotnotes";
+                        getRequest.Key = KeyAmazon;
+
+                        using (GetObjectResponse response = client.GetObject(getRequest))
+                        {
+                            MemoryStream ms = new MemoryStream();
+                            response.ResponseStream.CopyTo(ms);
+
+                            char[] separator = new char[1];
+                            separator[0] = '.';
+                            string[] parts = response.Key.Split(separator);
+                            string extensio = parts[parts.Length - 1];
+
+                            return File(ms.ToArray(), MimeType, Nom + "." + extensio);
+                        }
+                    }
+                }
+            }
+            return View();
         }
 
         private bool MatchMIMETipus(string mimeType, TipusDocument tipusDocument)
