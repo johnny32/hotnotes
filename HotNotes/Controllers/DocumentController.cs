@@ -183,11 +183,17 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, HttpPostedFileBase Fitxer = null, Nullable<bool> ExamenCorregit = null)
+        public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, string Ruta = null, HttpPostedFileBase Fitxer = null, Nullable<bool> ExamenCorregit = null)
         {
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
             string MimeType = "";
             string KeyAmazon = "";
+
+            if (Fitxer == null && Ruta == null)
+            {
+                ViewBag.Error = Lang.GetString(base.lang, "Falta_ruta_o_fitxer");
+                return View(GetLlistaAssignatures());
+            }
 
             if (Fitxer != null)
             {

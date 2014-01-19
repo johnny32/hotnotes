@@ -93,15 +93,30 @@
 
 <h2><%: Model.Nom%></h2>
 
-<%
-    if (Model.Tipus == TipusDocument.LinkYoutube || Model.MimeType == "application/pdf")
-    {
-        //Embed
-    }    
-%>
 
+<%
+    if (Model.Tipus == TipusDocument.LinkYoutube)
+    {
+%>
+Ruta: <%: Model.Ruta %>
+<iframe class="youtube-player" type="text/html" width="640" height="385" src="<%: Model.Ruta %>" allowfullscreen frameborder="0">
+</iframe>
+<%
+    }
+    else if (Model.MimeType == "application/pdf")
+    {
+
+    }
+%>
 <div id="infoLeft" style="float: left;">
+<%
+    if (Model.Tipus != TipusDocument.LinkYoutube && Model.MimeType != "application/pdf")
+    { 
+%>
     <a href="<%: Url.Action("Descarregar", "Document", new { Id = Model.Id }) %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
+<%
+    } 
+%>
     <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span>
 </div>
 
@@ -133,7 +148,7 @@
     </div>
 </div>
 
-<form id="afegirComentari">
+<form id="afegirComentari" action="#">
     <textarea name="comentari" rows="5" style="width: 98%; margin-bottom: 1em;" placeholder="<%: Lang.GetString(ViewBag.Lang, "Escriu_un_comentari") %>"></textarea>
     <button type="submit" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-edit"></span> <%: Lang.GetString(ViewBag.Lang, "Enviar") %></button>
 </form>
