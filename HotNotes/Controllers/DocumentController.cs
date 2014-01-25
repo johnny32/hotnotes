@@ -253,7 +253,7 @@ namespace HotNotes.Controllers
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Idioma", Idioma);
                 cmd.Parameters.AddWithValue("@Tipus", TipusDocument.ToString());
@@ -273,6 +273,14 @@ namespace HotNotes.Controllers
                 {
                     cmd.Parameters.AddWithValue("@MimeType", DBNull.Value);
                 }
+                if (Ruta != "")
+                {
+                    cmd.Parameters.AddWithValue("@Ruta", Ruta);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@Ruta", DBNull.Value);
+                }
                 if (ExamenCorregit.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@ExamenCorregit", ExamenCorregit.Value);
@@ -281,6 +289,8 @@ namespace HotNotes.Controllers
                 {
                     cmd.Parameters.AddWithValue("@ExamenCorregit", DBNull.Value);
                 }
+                cmd.Parameters.AddWithValue("@DataAfegit", DateTime.Now);
+                cmd.Parameters.AddWithValue("@Versio", 1.0);
                 cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 cmd.Parameters.AddWithValue("@IdAssignatura", IdAssignatura);
 

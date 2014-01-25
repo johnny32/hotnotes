@@ -15,12 +15,6 @@
             carregarComentaris();
         });
 
-        $("#afegirComentari").submit(function () {
-            enviarComentari();
-            carregarComentaris();
-            return false;
-        });
-
         function carregarComentaris() {
             var params = {
                 IdDocument: <%: Model.Id %>
@@ -150,7 +144,7 @@ Ruta: <%: Model.Ruta %>
 
 <form id="afegirComentari" action="#">
     <textarea name="comentari" rows="5" style="width: 98%; margin-bottom: 1em;" placeholder="<%: Lang.GetString(ViewBag.Lang, "Escriu_un_comentari") %>"></textarea>
-    <button type="submit" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-edit"></span> <%: Lang.GetString(ViewBag.Lang, "Enviar") %></button>
+    <button type="button" onclick="enviarComentari(); carregarComentaris();" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-edit"></span> <%: Lang.GetString(ViewBag.Lang, "Enviar") %></button>
 </form>
 
 <div style="clear: both;"></div>
