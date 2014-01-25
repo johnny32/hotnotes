@@ -113,7 +113,6 @@ h5 a:link, h5 a:visited, h5 a:active
     text-decoration: none;
 }
 
-
 /* main layout
 ----------------------------------------------------------*/
 .content-wrapper
@@ -697,9 +696,28 @@ tr.pager td
     padding: 1em;
 }
 
-#comentari
+.comentari
 {
     margin-bottom: 1em;
+}
+
+.youtubeContainer
+{
+    width: 100%; 
+    text-align: center;
+    margin: 1.5em;
+}
+
+.comentariAutor
+{
+    font-weight: bold;
+}
+
+.comentariData
+{
+    color: lightgray;
+    font-style: italic;
+    font-size: small;
 }
 
 

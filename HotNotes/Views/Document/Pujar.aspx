@@ -122,11 +122,13 @@
                     <div class="col-md-7 text-left">
                         <select name="Tipus" class="form-control">
                         <%
+                            string selected = "selected";
                             foreach (TipusDocument td in Document.TipusDocuments)
                             {
                             %>
-                            <option value="<%: td.ToString() %>"><%: Lang.GetString(lang, td.ToString()) %></option>
+                            <option value="<%: td.ToString() %>" <%: selected %>><%: Lang.GetString(lang, td.ToString()) %></option>
                             <%
+                                selected = "";
                             }
                         %>
                         </select>

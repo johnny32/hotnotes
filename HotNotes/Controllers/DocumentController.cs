@@ -249,11 +249,21 @@ namespace HotNotes.Controllers
                 }                
             }
 
+            if (TipusDocument == Models.TipusDocument.LinkYoutube && Ruta != null)
+            {
+                //Fix per inserir els videos de youtube a la pagina de Veure
+                Ruta = Ruta.Replace("http:", "");
+                if (!Ruta.Contains("embed/"))
+                {
+                    Ruta = Ruta.Replace("youtube.com/", "youtube.com/embed/");
+                }
+            }
+
             int IdDocument = -1;
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @Ruta, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Idioma", Idioma);
                 cmd.Parameters.AddWithValue("@Tipus", TipusDocument.ToString());
@@ -289,8 +299,6 @@ namespace HotNotes.Controllers
                 {
                     cmd.Parameters.AddWithValue("@ExamenCorregit", DBNull.Value);
                 }
-                cmd.Parameters.AddWithValue("@DataAfegit", DateTime.Now);
-                cmd.Parameters.AddWithValue("@Versio", 1.0);
                 cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 cmd.Parameters.AddWithValue("@IdAssignatura", IdAssignatura);
 

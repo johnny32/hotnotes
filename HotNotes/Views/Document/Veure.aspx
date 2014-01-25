@@ -32,10 +32,10 @@
                         var html = '';
                         
                         $.each(data, function(index, value) {
-                            html += '<div id="comentari">';
-                            html += '<span style="font-weight: bold;"><a href="' + value.LinkUsuari + '">' + value.NomUsuari + '</a></span> ';
-                            html += '<span style="color: lightgray; font-style: italic; font-size: small;">(' + value.Data + ')</span><br />';
-                            html += '<span>' + value.TextComentari + '</span>';
+                            html += '<div class="comentari">';
+                            html += '<span class="comentariAutor"><a href="' + value.LinkUsuari + '">' + value.NomUsuari + '</a></span> ';
+                            html += '<span class="comentariData">(' + value.Data + ')</span><br />';
+                            html += '<span class="comentariText">' + value.TextComentari + '</span>';
                             html += '</div>';
                         });
 
@@ -92,9 +92,9 @@
     if (Model.Tipus == TipusDocument.LinkYoutube)
     {
 %>
-Ruta: <%: Model.Ruta %>
-<iframe class="youtube-player" type="text/html" width="640" height="385" src="<%: Model.Ruta %>" allowfullscreen frameborder="0">
-</iframe>
+<div class="youtubeContainer">
+    <iframe width="560" height="315" src="<%: Model.Ruta.Replace("http:", "") %>" frameborder="0" allowfullscreen></iframe>
+</div>
 <%
     }
     else if (Model.MimeType == "application/pdf")
