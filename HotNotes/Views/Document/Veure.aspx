@@ -7,6 +7,7 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
+    <script type="text/javascript" src="<%: Url.Content("~/Scripts/pdf.js") %>"></script>
     <script type="text/javascript">
         <% if (ViewBag.Error == null)
            {
@@ -99,7 +100,9 @@
     }
     else if (Model.MimeType == "application/pdf")
     {
-
+%>
+<iframe src="http://docs.google.com/gview?url=<%: Model.Ruta %>&embedded=true" style="width:718px; height:700px;" frameborder="0"></iframe>
+<%
     }
 %>
 <div id="infoLeft" style="float: left;">

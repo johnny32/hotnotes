@@ -109,6 +109,37 @@ namespace HotNotes.Controllers
                     d.NomAutor = reader.GetString(reader.GetOrdinal("Nom")) + " " + reader.GetString(reader.GetOrdinal("Cognoms"));
                     d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = idUsuari });
 
+                    //Carregar PDFs a la variable Ruta per a poder-los mostrar incrustats
+                    if (d.MimeType == "application/pdf" && d.KeyAmazon != null)
+                    {
+                        using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
+                        {
+                            GetObjectRequest getRequest = new GetObjectRequest();
+                            getRequest.BucketName = "hotnotes";
+                            getRequest.Key = d.KeyAmazon;
+
+                            using (GetObjectResponse response = client.GetObject(getRequest))
+                            {
+                                MemoryStream ms = new MemoryStream();
+                                response.ResponseStream.CopyTo(ms);
+
+                                char[] separator = new char[1];
+                                separator[0] = '.';
+                                string[] parts = response.Key.Split(separator);
+                                string extensio = parts[parts.Length - 1];
+
+                                string tmpPath = Path.Combine(Path.GetTempPath(), d.Nom + "." + extensio);
+
+                                using (FileStream stream = new FileStream(tmpPath, FileMode.Create, FileAccess.Write))
+                                {
+                                    stream.Write(ms.ToArray(), 0, ms.ToArray().Length);
+                                }
+
+                                d.Ruta = tmpPath;
+                            }
+                        }
+                    }
+
                     return View(d);
                 }
                 else
@@ -219,7 +250,7 @@ namespace HotNotes.Controllers
                 separator[0] = '.';
                 string[] parts = Fitxer.FileName.Split(separator);
                 string extensio = parts[parts.Length - 1];
-                
+
                 KeyAmazon = Path.GetRandomFileName().Replace(".", "") + "." + extensio;
                 using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
                 {
@@ -246,7 +277,7 @@ namespace HotNotes.Controllers
                         ViewBag.Error = Lang.GetString(lang, "Error_Amazon_S3");
                         return View(GetLlistaAssignatures());
                     }
-                }                
+                }
             }
 
             if (TipusDocument == Models.TipusDocument.LinkYoutube && Ruta != null)
