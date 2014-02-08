@@ -26,7 +26,7 @@ namespace HotNotes.Controllers
 
         public ActionResult Veure(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, KeyAmazon, Ruta, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
@@ -153,7 +153,7 @@ namespace HotNotes.Controllers
 
         public ActionResult GetComentaris(int IdDocument)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("SELECT C.IdUsuari, U.Nom, U.Cognoms, C.Comentari, C.Data FROM Comentaris C, Usuaris U WHERE C.IdDocument = @IdDocument AND C.IdUsuari = U.Id ORDER BY C.Data ASC", connection);
@@ -183,7 +183,7 @@ namespace HotNotes.Controllers
         [HttpPost]
         public ActionResult Comentar(int IdDocument, string Comentari)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO Comentaris (IdUsuari, IdDocument, Comentari, Data) VALUES (@IdUsuari, @IdDocument, @Comentari, @Data)", connection);
@@ -292,7 +292,7 @@ namespace HotNotes.Controllers
 
             int IdDocument = -1;
 
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @Ruta, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
@@ -355,7 +355,7 @@ namespace HotNotes.Controllers
         [HttpGet]
         public ActionResult Descarregar(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT Nom, MimeType, KeyAmazon FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
@@ -393,6 +393,99 @@ namespace HotNotes.Controllers
             return View();
         }
 
+        //Retorna tots els documents que pertanyen a una assignatura
+        public ActionResult Assignatura(int IdAssignatura)
+        {
+            ViewBag.IdAssignatura = IdAssignatura;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT Nom FROM Assignatures WHERE Id = @Id", connection);
+                command.Parameters.AddWithValue("@Id", IdAssignatura);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ViewBag.NomAssignatura = reader.GetString(reader.GetOrdinal("Nom"));
+
+                    reader.Close();
+
+                    command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdUsuari, u.Username FROM Documents d, Usuaris u WHERE d.IdUsuari = u.Id AND d.IdAssignatura = @IdAssignatura ORDER BY DataAfegit DESC", connection);
+                    command.Parameters.AddWithValue("@IdAssignatura", IdAssignatura);
+                    reader = command.ExecuteReader();
+
+                    List<Document> resultat = new List<Document>();
+
+                    while (reader.Read())
+                    {
+                        Document d = new Document();
+                        d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                        d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                        d.NomAutor = reader.GetString(reader.GetOrdinal("Username"));
+                        d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = reader.GetInt32(reader.GetOrdinal("IdUsuari")) });
+
+                        resultat.Add(d);
+                    }
+
+                    return View(resultat);
+                }
+                else
+                {
+                    ViewBag.Error = Lang.GetString(base.lang, "Error_id_assignatura");
+                    return View();
+                }
+            }
+        }
+
+        //Retorna tots els documents que pertanyen a un usuari
+        public ActionResult Usuari(int IdUsuari)
+        {
+            ViewBag.IdUsuari = IdUsuari;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT Nom FROM Usuaris WHERE Id = @Id", connection);
+                command.Parameters.AddWithValue("@Id", IdUsuari);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ViewBag.NomUsuari = reader.GetString(reader.GetOrdinal("Nom"));
+
+                    reader.Close();
+                    command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera FROM Documents d, Assignatures a, Carreres c WHERE d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari ORDER BY DataAfegit DESC", connection);
+                    command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                    reader = command.ExecuteReader();
+
+                    List<DocumentLlistatUsuari> resultat = new List<DocumentLlistatUsuari>();
+
+                    while (reader.Read())
+                    {
+                        DocumentLlistatUsuari d = new DocumentLlistatUsuari();
+                        d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                        d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                        d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
+                        d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
+                        d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+
+                        resultat.Add(d);
+                    }
+
+                    return View(resultat);
+                }
+                else
+                {
+                    ViewBag.Error = Lang.GetString(base.lang, "Error_id_usuari");
+                    return View();
+                }
+                
+            }
+        }
+
         private bool MatchMIMETipus(string mimeType, TipusDocument tipusDocument)
         {
             bool correcte = false;
@@ -421,7 +514,7 @@ namespace HotNotes.Controllers
 
         private List<Assignatura> GetLlistaAssignatures()
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);

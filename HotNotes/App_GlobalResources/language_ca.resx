@@ -390,4 +390,10 @@
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
   </data>
+  <data name="Error_id_assignatura" xml:space="preserve">
+    <value>No s'ha trobat cap assignatura amb aquest Id.</value>
+  </data>
+  <data name="Documents_assignatura" xml:space="preserve">
+    <value>Documents de l'assignatura</value>
+  </data>
 </root>

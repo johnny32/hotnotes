@@ -304,6 +304,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Documentos de la asignatura.
+        /// </summary>
+        internal static string Documents_assignatura {
+            get {
+                return ResourceManager.GetString("Documents_assignatura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No existe ningún documento con éste identificador..
         /// </summary>
         internal static string Document_no_existeix {
@@ -417,6 +426,15 @@ namespace Resources {
         internal static string Error_desconegut {
             get {
                 return ResourceManager.GetString("Error_desconegut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se ha encontrado ninguna assignatura con este Id..
+        /// </summary>
+        internal static string Error_id_assignatura {
+            get {
+                return ResourceManager.GetString("Error_id_assignatura", resourceCulture);
             }
         }
         

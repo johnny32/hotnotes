@@ -51,4 +51,14 @@ namespace HotNotes.Models
         LinkExtern,
         LinkYoutube
     }
+
+    public class DocumentLlistatUsuari
+    {
+        public int Id;
+        public string Nom;
+        public TipusDocument Tipus;
+        public int IdAssignatura;
+        public string NomAssignatura;
+        public string NomCarrera;
+    }
 }

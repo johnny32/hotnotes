@@ -11,9 +11,31 @@ namespace HotNotes.Controllers
 {
     public class BaseController : Controller
     {
-        protected string lang;
-        protected ILog Log = LogManager.GetLogger("HotNotes");
-        protected RegionEndpoint AmazonEndPoint = RegionEndpoint.EUWest1;
+        protected string lang { get; protected set; }
+
+        protected ILog Log
+        {
+            get
+            {
+                return LogManager.GetLogger("HotNotes");
+            }
+        }
+
+        protected RegionEndpoint AmazonEndPoint
+        {
+            get
+            {
+                return RegionEndpoint.EUWest1;
+            }
+        }
+
+        protected string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["HotNotes"].ConnectionString;
+            }
+        }
 
         protected int IdUsuari
         {
@@ -48,11 +70,6 @@ namespace HotNotes.Controllers
             HttpCookie newCookie = new HttpCookie("HotNotes_lang", lang);
             newCookie.Expires = DateTime.Now.AddYears(5);
             filterContext.HttpContext.Response.SetCookie(newCookie);
-        }
-
-        protected string GetConnectionString()
-        {
-            return ConfigurationManager.ConnectionStrings["HotNotes"].ConnectionString;
         }
 
     }

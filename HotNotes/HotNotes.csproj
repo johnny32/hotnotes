@@ -736,6 +736,7 @@
     <Content Include="Views\Account\Login.aspx" />
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\Register_Complete.aspx" />
+    <Content Include="Views\Document\Assignatura.aspx" />
     <Content Include="Views\Document\Pujar.aspx" />
     <Content Include="Views\Document\Veure.aspx" />
     <Content Include="Views\Home\Index.aspx" />
