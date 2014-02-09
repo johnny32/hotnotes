@@ -15,7 +15,7 @@
     <%: Styles.Render("~/Content/Site.css") %>
     <%: Styles.Render("~/Plugins/bootstrap/css/bootstrap.min.css") %>
     <%: Styles.Render("~/Content/Layout.css") %>
-    <%: Scripts.Render("~/Scripts/jquery-1.10.2.js") %>
+    <%: Scripts.Render("~/Plugins/jquery-1.10.2.js") %>
     <%: Scripts.Render("~/Plugins/jquery-ui-1.10.3/ui/jquery-ui.js") %>
     <%: Scripts.Render("~/Plugins/bootstrap/js/bootstrap.js") %>
     <style>

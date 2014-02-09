@@ -396,4 +396,10 @@
   <data name="Documents_assignatura" xml:space="preserve">
     <value>Documentos de la asignatura</value>
   </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
 </root>

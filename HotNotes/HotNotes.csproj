@@ -728,9 +728,9 @@
     <Content Include="Plugins\jquery-ui-1.10.3\ui\minified\jquery.ui.tabs.min.js" />
     <Content Include="Plugins\jquery-ui-1.10.3\ui\minified\jquery.ui.tooltip.min.js" />
     <Content Include="Plugins\jquery-ui-1.10.3\ui\minified\jquery.ui.widget.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\pdf.js" />
-    <Content Include="Scripts\sha3.js" />
+    <Content Include="Plugins\jquery.bootpag.min.js" />
+    <Content Include="Plugins\jquery-1.10.2.js" />
+    <Content Include="Plugins\sha3.js" />
     <Content Include="Views\Account\Activate.aspx" />
     <Content Include="Views\Account\Manage.aspx" />
     <Content Include="Views\Account\Login.aspx" />
@@ -756,7 +756,9 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

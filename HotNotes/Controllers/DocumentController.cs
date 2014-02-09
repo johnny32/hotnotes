@@ -394,15 +394,15 @@ namespace HotNotes.Controllers
         }
 
         //Retorna tots els documents que pertanyen a una assignatura
-        public ActionResult Assignatura(int IdAssignatura)
+        public ActionResult Assignatura(int Id)
         {
-            ViewBag.IdAssignatura = IdAssignatura;
+            ViewBag.IdAssignatura = Id;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT Nom FROM Assignatures WHERE Id = @Id", connection);
-                command.Parameters.AddWithValue("@Id", IdAssignatura);
+                command.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -411,8 +411,8 @@ namespace HotNotes.Controllers
 
                     reader.Close();
 
-                    command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdUsuari, u.Username FROM Documents d, Usuaris u WHERE d.IdUsuari = u.Id AND d.IdAssignatura = @IdAssignatura ORDER BY DataAfegit DESC", connection);
-                    command.Parameters.AddWithValue("@IdAssignatura", IdAssignatura);
+                    command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdUsuari, d.DataAfegit, u.Username FROM Documents d, Usuaris u WHERE d.IdUsuari = u.Id AND d.IdAssignatura = @IdAssignatura ORDER BY DataAfegit DESC", connection);
+                    command.Parameters.AddWithValue("@IdAssignatura", Id);
                     reader = command.ExecuteReader();
 
                     List<Document> resultat = new List<Document>();
@@ -423,6 +423,7 @@ namespace HotNotes.Controllers
                         d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
                         d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                         d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                        d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
                         d.NomAutor = reader.GetString(reader.GetOrdinal("Username"));
                         d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = reader.GetInt32(reader.GetOrdinal("IdUsuari")) });
 
@@ -440,15 +441,15 @@ namespace HotNotes.Controllers
         }
 
         //Retorna tots els documents que pertanyen a un usuari
-        public ActionResult Usuari(int IdUsuari)
+        public ActionResult Usuari(int Id)
         {
-            ViewBag.IdUsuari = IdUsuari;
+            ViewBag.IdUsuari = Id;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT Nom FROM Usuaris WHERE Id = @Id", connection);
-                command.Parameters.AddWithValue("@Id", IdUsuari);
+                command.Parameters.AddWithValue("@Id", Id);
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -457,7 +458,7 @@ namespace HotNotes.Controllers
 
                     reader.Close();
                     command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera FROM Documents d, Assignatures a, Carreres c WHERE d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari ORDER BY DataAfegit DESC", connection);
-                    command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                    command.Parameters.AddWithValue("@IdUsuari", Id);
                     reader = command.ExecuteReader();
 
                     List<DocumentLlistatUsuari> resultat = new List<DocumentLlistatUsuari>();

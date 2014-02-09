@@ -34,7 +34,7 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string Username, string PasswordEnc, bool RememberMe)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("SELECT Id, Password, Activat FROM Usuaris WHERE Username = @Username", connection);
@@ -117,7 +117,7 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
 
@@ -238,7 +238,7 @@ namespace HotNotes.Controllers
         [AllowAnonymous]
         public ActionResult Activate(string id)
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("SELECT Id FROM Usuaris WHERE CodiActivacio = @CodiActivacio", connection);
@@ -279,7 +279,7 @@ namespace HotNotes.Controllers
         {
             HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
             int id = int.Parse(cookie.Value);
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = @Id", connection);
@@ -341,7 +341,7 @@ namespace HotNotes.Controllers
                 Activat = true
             };
 
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
 

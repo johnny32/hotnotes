@@ -11,7 +11,7 @@ namespace HotNotes.Controllers
 {
     public class BaseController : Controller
     {
-        protected string lang { get; protected set; }
+        protected string lang { get; private set; }
 
         protected ILog Log
         {

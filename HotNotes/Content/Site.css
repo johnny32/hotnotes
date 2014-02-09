@@ -720,6 +720,14 @@ tr.pager td
     font-size: small;
 }
 
+.documentListItem
+{
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    margin: 1em;
+}
+
 
 /********************
 *   Mobile Styles   *
