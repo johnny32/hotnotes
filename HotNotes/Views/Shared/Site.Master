@@ -24,6 +24,13 @@
             clear: none;    
         }
     </style>
+    <script>
+        function NETUrl(url) {
+            //Funcio per a convertir una URL relativa en una URL absoluta de .NET
+            var root = '<%: Url.Action("Index", "Home") %>';
+            return root + url;
+        }
+    </script>
     <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 </head>
 <body>

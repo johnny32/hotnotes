@@ -731,6 +731,7 @@
     <Content Include="Plugins\jquery.bootpag.min.js" />
     <Content Include="Plugins\jquery-1.10.2.js" />
     <Content Include="Plugins\sha3.js" />
+    <Content Include="Scripts\Filtre.js" />
     <Content Include="Views\Account\Activate.aspx" />
     <Content Include="Views\Account\Manage.aspx" />
     <Content Include="Views\Account\Login.aspx" />
@@ -756,9 +757,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

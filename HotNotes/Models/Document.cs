@@ -52,11 +52,14 @@ namespace HotNotes.Models
         LinkYoutube
     }
 
-    public class DocumentLlistatUsuari
+    public class DocumentLlistat
     {
         public int Id;
         public string Nom;
         public TipusDocument Tipus;
+        public DateTime DataAfegit;
+        public int IdUsuari;
+        public string Username;
         public int IdAssignatura;
         public string NomAssignatura;
         public string NomCarrera;

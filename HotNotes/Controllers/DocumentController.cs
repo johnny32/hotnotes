@@ -393,97 +393,118 @@ namespace HotNotes.Controllers
             return View();
         }
 
-        //Retorna tots els documents que pertanyen a una assignatura
         public ActionResult Assignatura(int Id)
         {
-            ViewBag.IdAssignatura = Id;
+            ViewBag.Id = Id;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT Nom FROM Assignatures WHERE Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", Id);
+
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    ViewBag.NomAssignatura = reader.GetString(reader.GetOrdinal("Nom"));
-
+                    ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     reader.Close();
 
-                    command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdUsuari, d.DataAfegit, u.Username FROM Documents d, Usuaris u WHERE d.IdUsuari = u.Id AND d.IdAssignatura = @IdAssignatura ORDER BY DataAfegit DESC", connection);
+                    command = new SqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdAssignatura = @IdAssignatura", connection);
                     command.Parameters.AddWithValue("@IdAssignatura", Id);
+
                     reader = command.ExecuteReader();
 
-                    List<Document> resultat = new List<Document>();
-
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        Document d = new Document();
-                        d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                        d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
-                        d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
-                        d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
-                        d.NomAutor = reader.GetString(reader.GetOrdinal("Username"));
-                        d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = reader.GetInt32(reader.GetOrdinal("IdUsuari")) });
-
-                        resultat.Add(d);
+                        ViewBag.Total = reader.GetInt32(reader.GetOrdinal("Total"));
                     }
-
-                    return View(resultat);
+                    else
+                    {
+                        ViewBag.Total = 0;
+                    }
                 }
                 else
                 {
                     ViewBag.Error = Lang.GetString(base.lang, "Error_id_assignatura");
-                    return View();
                 }
+
+                return View();
             }
         }
-
-        //Retorna tots els documents que pertanyen a un usuari
+        
         public ActionResult Usuari(int Id)
         {
-            ViewBag.IdUsuari = Id;
+            ViewBag.Id = Id;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT Nom FROM Usuaris WHERE Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", Id);
+
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    ViewBag.NomUsuari = reader.GetString(reader.GetOrdinal("Nom"));
-
-                    reader.Close();
-                    command = new SqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera FROM Documents d, Assignatures a, Carreres c WHERE d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari ORDER BY DataAfegit DESC", connection);
-                    command.Parameters.AddWithValue("@IdUsuari", Id);
-                    reader = command.ExecuteReader();
-
-                    List<DocumentLlistatUsuari> resultat = new List<DocumentLlistatUsuari>();
-
-                    while (reader.Read())
-                    {
-                        DocumentLlistatUsuari d = new DocumentLlistatUsuari();
-                        d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                        d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
-                        d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
-                        d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
-                        d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
-                        d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
-
-                        resultat.Add(d);
-                    }
-
-                    return View(resultat);
+                    ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                 }
                 else
                 {
                     ViewBag.Error = Lang.GetString(base.lang, "Error_id_usuari");
-                    return View();
                 }
-                
+
+                return View();
+            }
+        }
+
+        public JsonResult Filtre(string Tipus, int Id, int Offset = 0, int Amount = 20)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = null;
+
+                if (Tipus == "Assignatura")
+                {
+                    command = new SqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
+                                                "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
+                                                "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdAssignatura = @IdAssignatura) " +
+                                                "SELECT * FROM RealQuery WHERE RowNumber BETWEEN @Start AND @End", connection);
+                    command.Parameters.AddWithValue("@IdAssignatura", Id);
+                }
+                else if (Tipus == "Usuari")
+                {
+                    command = new SqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
+                                                "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
+                                                "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari) " +
+                                                "SELECT * FROM RealQuery WHERE RowNumber BETWEEN @Start AND @End", connection);
+                    command.Parameters.AddWithValue("@IdUsuari", Id);
+                }
+
+                command.Parameters.AddWithValue("@Start", Offset);
+                command.Parameters.AddWithValue("@End", Offset + Amount);
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<DocumentLlistat> resultat = new List<DocumentLlistat>();
+
+                while (reader.Read())
+                {
+                    DocumentLlistat d = new DocumentLlistat();
+                    d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                    d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
+                    d.IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari"));
+                    d.Username = reader.GetString(reader.GetOrdinal("Username"));
+                    d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
+                    d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
+                    d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+
+                    resultat.Add(d);
+                }
+
+                return Json(resultat, JsonRequestBehavior.AllowGet);
             }
         }
 
