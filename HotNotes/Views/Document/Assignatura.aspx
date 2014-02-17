@@ -17,6 +17,7 @@
         function Filtre(tipus, id, offset, amount) {
             _offset = offset;
             _amount = amount;
+            _total = <%: ViewBag.Total %>;
 
             $('#documentsContainer').html('');
 
@@ -42,8 +43,33 @@
                     });
 
                     $('#documentsContainer').append(html);
+                    
+                    var currentPage = Math.round(_offset / _amount + 1);
 
-                    $('a[data-page=' + (offset / amount + 1) + ']').parent().addClass('active');
+                    html = '';
+
+                    var j = 1;
+
+                    for (var i = 0; i <= _total; i += _amount) {
+                        if (j == currentPage) {
+                            html += '<li class="active"><a href="#" data-page="' + j + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + (i + 1) + ', _amount);">' + j + '</a></li>';
+                            if (j == 1) {
+                                prevPage = '<li class="disabled"><a href="#">&laquo;</a></li>';
+                            } else {
+                                prevPage = '<li><a href="#" id="prevPage" data-page="' + (j - 1) + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + (i - 19) + ', _amount);">&laquo;</a></li>';
+                            }
+                            if (i < _total - 20) {
+                                nextPage = '<li><a href="#" id="prevPage" data-page="' + (j + 1) + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + (i + 21) + ', _amount);">&laquo;</a></li>';
+                            } else {
+                                nextPage = '<li class="disabled"><a href="#">&raquo;</a></li>';
+                            }
+                        } else {
+                            html += '<li><a href="#" data-page="' + j + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + (i + 1) + ', _amount);">' + j + '</a></li>';
+                        }
+                        j++;
+                    }
+
+                    $('ul.pagination').html(prevPage + html + nextPage);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert(errorThrown);
@@ -76,20 +102,7 @@
             </ul>
         </div>
 
-        <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <%
-                int j = 1;
-                for (int i = 0; i <= ViewBag.Total; i += 20)
-                {
-                %>
-            <li><a href="#" data-page="<%: j %>" onclick="Filtrar('Assignatura', <%: ViewBag.Id %>, <%: i %>, _amount);"><%: j %></a></li>
-                <%
-                    j++;
-                }
-            %>
-            <li><a href="#">&raquo;</a></li>
-        </ul>
+        <ul class="pagination"></ul>
         <br />
         <%: Lang.GetString(lang, "Total") + ": " + ViewBag.Total + " " + Lang.GetString(lang, "Documents").ToLower() %>
     </div>
