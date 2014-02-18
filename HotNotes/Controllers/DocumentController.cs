@@ -284,9 +284,9 @@ namespace HotNotes.Controllers
             {
                 //Fix per inserir els videos de youtube a la pagina de Veure
                 Ruta = Ruta.Replace("http:", "");
-                if (!Ruta.Contains("embed/"))
+                if (!Ruta.Contains("embed"))
                 {
-                    Ruta = Ruta.Replace("youtube.com/", "youtube.com/embed/");
+                    Ruta = Ruta.Replace("watch?v=", "embed/");
                 }
             }
 

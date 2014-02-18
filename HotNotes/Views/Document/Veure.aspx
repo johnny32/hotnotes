@@ -3,7 +3,16 @@
 <%@ Import Namespace="HotNotes.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    <%: Model.Nom %> - <%: Model.NomAutor %>
+    <%
+        if (ViewBag.Error == null)
+        {
+            Response.Write(Model.Nom + " - " + Model.NomAutor);
+        }
+        else
+        {
+            Response.Write(Lang.GetString(ViewBag.Lang, "Error"));
+        }
+    %>
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
@@ -94,7 +103,7 @@
     {
 %>
 <div class="youtubeContainer">
-    <iframe width="560" height="315" src="<%: Model.Ruta.Replace("http:", "") %>" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="<%: Model.Ruta %>" frameborder="0" allowfullscreen></iframe>
 </div>
 <%
     }
