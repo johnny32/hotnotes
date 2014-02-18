@@ -448,6 +448,21 @@ namespace HotNotes.Controllers
                 if (reader.Read())
                 {
                     ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    reader.Close();
+
+                    command = new SqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdUsuari = @IdUsuari", connection);
+                    command.Parameters.AddWithValue("@IdUsuari", Id);
+
+                    reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        ViewBag.Total = reader.GetInt32(reader.GetOrdinal("Total"));
+                    }
+                    else
+                    {
+                        ViewBag.Total = 0;
+                    }
                 }
                 else
                 {

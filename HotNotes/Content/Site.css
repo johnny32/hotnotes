@@ -133,7 +133,6 @@ h5 a:link, h5 a:visited, h5 a:active
 {
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 30px;
 }
 
 .featured + .main-content
@@ -726,6 +725,11 @@ tr.pager td
     border-width: 1px;
     border-color: white;
     margin: 1em;
+}
+
+h3.titolDocument
+{
+    margin-top: 2px;
 }
 
 

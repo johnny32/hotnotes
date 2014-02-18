@@ -402,4 +402,7 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="Documents_usuari" xml:space="preserve">
+    <value>Documentos del usuario</value>
+  </data>
 </root>

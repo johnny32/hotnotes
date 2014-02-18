@@ -4,7 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     <% string lang = ViewBag.Lang; %>
-    <%: Lang.GetString(lang, "Documents_assignatura") %>: <%: ViewBag.Nom %>
+    <%: Lang.GetString(lang, "Documents_usuari") %>: <%: ViewBag.Nom %>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsSection" runat="server">
@@ -52,19 +52,19 @@
 
                     for (var i = 1; i <= _total; i += _amount) {
                         if (j == currentPage) {
-                            html += '<li class="active"><a href="#" data-page="' + j + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + i + ', _amount);">' + j + '</a></li>';
+                            html += '<li class="active"><a href="#" data-page="' + j + '" onclick="Filtre(\'Usuari\', <%: ViewBag.Id %>, ' + i + ', _amount);">' + j + '</a></li>';
                             if (j == 1) {
                                 prevPage = '<li class="disabled"><a href="#">&laquo;</a></li>';
                             } else {
-                                prevPage = '<li><a href="#" id="prevPage" data-page="' + (j - 1) + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + (i - _amount) + ', _amount);">&laquo;</a></li>';
+                                prevPage = '<li><a href="#" id="prevPage" data-page="' + (j - 1) + '" onclick="Filtre(\'Usuari\', <%: ViewBag.Id %>, ' + (i - _amount) + ', _amount);">&laquo;</a></li>';
                             }
                             if (i < _total - _amount) {
-                                nextPage = '<li><a href="#" id="prevPage" data-page="' + (j + 1) + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + (i + _amount) + ', _amount);">&raquo;</a></li>';
+                                nextPage = '<li><a href="#" id="prevPage" data-page="' + (j + 1) + '" onclick="Filtre(\'Usuari\', <%: ViewBag.Id %>, ' + (i + _amount) + ', _amount);">&raquo;</a></li>';
                             } else {
                                 nextPage = '<li class="disabled"><a href="#">&raquo;</a></li>';
                             }
                         } else {
-                            html += '<li><a href="#" data-page="' + j + '" onclick="Filtre(\'Assignatura\', <%: ViewBag.Id %>, ' + i + ', _amount);">' + j + '</a></li>';
+                            html += '<li><a href="#" data-page="' + j + '" onclick="Filtre(\'Usuari\', <%: ViewBag.Id %>, ' + i + ', _amount);">' + j + '</a></li>';
                         }
                         j++;
                     }
@@ -79,14 +79,14 @@
         }
 
         $(document).ready(function () {
-            Filtre('Assignatura', <%: ViewBag.Id %>, _offset, _amount);
+            Filtre('Usuari', <%: ViewBag.Id %>, _offset, _amount);
         });
     </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
-    <h2><%: Lang.GetString(lang, "Documents_assignatura") %>: <%: ViewBag.Nom %></h2>
+    <h2><%: Lang.GetString(lang, "Documents_usuari") %>: <%: ViewBag.Nom %></h2>
 
     <div id="documentsContainer"></div>
 
@@ -96,10 +96,10 @@
                 20 <%: Lang.GetString(lang, "Documents").ToLower() %> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li><a href="#" onclick="Filtre('Assignatura', <%: ViewBag.Id %>, _offset, 10);">10</a></li>
-                <li><a href="#" onclick="Filtre('Assignatura', <%: ViewBag.Id %>, _offset, 20);">20</a></li>
-                <li><a href="#" onclick="Filtre('Assignatura', <%: ViewBag.Id %>, _offset, 50);">50</a></li>
-                <li><a href="#" onclick="Filtre('Assignatura', <%: ViewBag.Id %>, _offset, 100);">100</a></li>
+                <li><a href="#" onclick="Filtre('Usuari', <%: ViewBag.Id %>, _offset, 10);">10</a></li>
+                <li><a href="#" onclick="Filtre('Usuari', <%: ViewBag.Id %>, _offset, 20);">20</a></li>
+                <li><a href="#" onclick="Filtre('Usuari', <%: ViewBag.Id %>, _offset, 50);">50</a></li>
+                <li><a href="#" onclick="Filtre('Usuari', <%: ViewBag.Id %>, _offset, 100);">100</a></li>
             </ul>
         </div>
 
