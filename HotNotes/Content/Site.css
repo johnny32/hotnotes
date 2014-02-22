@@ -692,12 +692,18 @@ tr.pager td
 
 #comentaris
 {
+    margin-top: 2.5em;
     padding: 1em;
 }
 
 .comentari
 {
     margin-bottom: 1em;
+}
+
+#valoracio
+{
+    margin-top: 0.5em;
 }
 
 .youtubeContainer
@@ -710,11 +716,12 @@ tr.pager td
 .comentariAutor
 {
     font-weight: bold;
+    margin-left: -0.25em;
 }
 
 .comentariData
 {
-    color: lightgray;
+    color: gray;
     font-style: italic;
     font-size: small;
 }

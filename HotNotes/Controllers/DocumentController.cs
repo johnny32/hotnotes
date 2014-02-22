@@ -432,7 +432,7 @@ namespace HotNotes.Controllers
                 return View();
             }
         }
-        
+
         public ActionResult Usuari(int Id)
         {
             ViewBag.Id = Id;
@@ -520,6 +520,72 @@ namespace HotNotes.Controllers
                 }
 
                 return Json(resultat, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult Valoracio(int Id)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT SUM(Valoracio) AS Suma, COUNT(*) AS Total FROM Valoracions WHERE IdDocument = @IdDocument", connection);
+                command.Parameters.AddWithValue("@IdDocument", Id);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal("Suma")))
+                    {
+                        double suma = reader.GetDouble(reader.GetOrdinal("Suma"));
+                        double total = (double)reader.GetInt32(reader.GetOrdinal("Total"));
+                        return Json(suma / total, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(0.0, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json(0.0, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public JsonResult Valorar(int Id, double Valoracio)
+        {
+            if (Valoracio >= 0 && Valoracio <= 5)
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Valoracions WHERE IdUsuari = @IdUsuari AND IdDocument = @IdDocument", connection);
+                    command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                    command.Parameters.AddWithValue("@IdDocument", Id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        command = new SqlCommand("UPDATE Valoracions SET Valoracio = @Valoracio WHERE IdUsuari = @IdUsuari AND IdDocument = @IdDocument", connection);
+                    }
+                    else
+                    {
+                        reader.Close();
+                        command = new SqlCommand("INSERT INTO Valoracions (IdUsuari, IdDocument, Valoracio) VALUES (@IdUsuari, @IdDocument, @Valoracio)", connection);
+                    }
+
+                    command.Parameters.AddWithValue("@Valoracio", Valoracio);
+                    command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                    command.Parameters.AddWithValue("@IdDocument", Id);
+                    command.ExecuteScalar();
+
+                    return Json("OK");
+                }
+            }
+            else
+            {
+                return Json("ValoracioIncorrecte");
             }
         }
 

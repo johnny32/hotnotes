@@ -16,13 +16,14 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <script type="text/javascript" src="<%: Url.Content("~/Scripts/pdf.js") %>"></script>
+    <script type="text/javascript" src="<%: Url.Content("~/Scripts/Valoracio.js") %>"></script>
     <script type="text/javascript">
         <% if (ViewBag.Error == null)
            {
         %>
         $(document).ready(function () {
             carregarComentaris();
+            carregarValoracions();
         });
 
         function carregarComentaris() {
@@ -82,6 +83,92 @@
                 }
             });
         }
+
+        var originalSrc;
+
+        function carregarValoracions() {
+            var params = {
+                Id: <%: Model.Id %>
+            };
+
+            $.ajax({
+                url: '<%: Url.Action("Valoracio", "Document") %>',
+                data: params,
+                dataType: 'json',
+                type: 'get',
+                async: false,
+                success: function(data) {
+                    
+                    var estrelles = getEstrelles(data);
+
+                    originalSrc = [];
+                    var html = '';
+                    var i = 0;
+                    while (i < 5 && estrelles[i] == 'full') {
+                        html += '<img src="<%: Url.Content("~/Content/images/star-full.png") %>" id="estrella' + i + '" onmouseover="hover(' + i + ');" onmouseout="restaurarEstrelles();" onclick="valorar(' + i + ');" />';
+                        originalSrc[i] = '<%: Url.Content("~/Content/images/star-full.png") %>';
+                        i++;
+                    }
+
+                    while (i < 5 && estrelles[i] == 'half') {
+                        html += '<img src="<%: Url.Content("~/Content/images/star-half.png") %>" id="estrella' + i + '" onmouseover="hover(' + i + ');" onmouseout="restaurarEstrelles();" onclick="valorar(' + i + ');" />';
+                        originalSrc[i] = '<%: Url.Content("~/Content/images/star-half.png") %>';
+                        i++;
+                    }
+
+                    while (i < 5) {
+                        html += '<img src="<%: Url.Content("~/Content/images/star-empty.png") %>" id="estrella' + i + '" onmouseover="hover(' + i + ');" onmouseout="restaurarEstrelles();" onclick="valorar(' + i + ');" />';
+                        originalSrc[i] = '<%: Url.Content("~/Content/images/star-empty.png") %>';
+                        i++;
+                    }
+
+                    $('#valoracio').html(html);
+                }
+            });
+        }
+
+        function hover(numEstrella) {
+            originalSrc = [];
+
+            for (var i = 0; i <= numEstrella; i++) {
+                originalSrc[i] = $('#estrella' + i).attr('src');
+                $('#estrella' + i).attr('src', '<%: Url.Content("~/Content/images/star-full.png") %>');
+            }
+
+            for (var i = numEstrella + 1; i < 5; i++) {
+                originalSrc[i] = $('#estrella' + i).attr('src');
+                $('#estrella' + i).attr('src', '<%: Url.Content("~/Content/images/star-empty.png") %>');
+            }
+        }
+
+        function restaurarEstrelles() {
+            for (var i = 0; i < 5; i++) {
+                $('#estrella' + i).attr('src', originalSrc[i]);
+            }
+        }
+
+        function valorar(valoracio) {
+            var params = {
+                Id: <%: Model.Id %>,
+                Valoracio: valoracio + 1
+            };
+
+            $.ajax({
+                url: '<%: Url.Action("Valorar", "Document") %>',
+                data: params,
+                dataType: 'json',
+                type: 'post',
+                async: false,
+                success: function(data) {
+                    if (data != 'OK') {
+                        alert('<%: Lang.GetString(ViewBag.Lang, "Error_valoracio") %>');
+                    } else {
+                        carregarValoracions();
+                    }
+                }
+            });
+        }
+
         <%
         }
         %>
@@ -123,7 +210,8 @@
 <%
     } 
 %>
-    <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span>
+    <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span><br />
+    <div id="valoracio"></div>
 </div>
 
 <div id="infoRight" style="float: right; font-style: italic; text-align: right;">

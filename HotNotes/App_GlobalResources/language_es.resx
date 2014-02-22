@@ -405,4 +405,10 @@
   <data name="Documents_usuari" xml:space="preserve">
     <value>Documentos del usuario</value>
   </data>
+  <data name="Valoracio" xml:space="preserve">
+    <value>Valoración</value>
+  </data>
+  <data name="Error_valoracio" xml:space="preserve">
+    <value>Ha habido un error al valorar este documento. Por favor, vuelve a intentarlo más tarde.</value>
+  </data>
 </root>

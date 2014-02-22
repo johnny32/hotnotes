@@ -168,6 +168,9 @@
       <DependentUpon>HotNotes.mdf</DependentUpon>
     </Content>
     <Content Include="Content\images\Loading.gif" />
+    <Content Include="Content\images\star-empty.png" />
+    <Content Include="Content\images\star-full.png" />
+    <Content Include="Content\images\star-half.png" />
     <Content Include="Lib\log4net.dll" />
     <Content Include="log4net.xml" />
     <Content Include="Plugins\bootstrap\css\bootstrap-theme.css" />
@@ -731,6 +734,7 @@
     <Content Include="Plugins\jquery.bootpag.min.js" />
     <Content Include="Plugins\jquery-1.10.2.js" />
     <Content Include="Plugins\sha3.js" />
+    <Content Include="Scripts\Valoracio.js" />
     <Content Include="Views\Account\Activate.aspx" />
     <Content Include="Views\Account\Manage.aspx" />
     <Content Include="Views\Account\Login.aspx" />
@@ -757,9 +761,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
