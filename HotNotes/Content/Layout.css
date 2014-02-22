@@ -1,9 +1,13 @@
 ﻿body
 {
+    border: none;
+}
+
+#container
+{
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    border: none;
 }
 
 hgroup.title
@@ -29,8 +33,8 @@ footer
 #footer-div
 {
     text-align: center;
-    color: #505050;
-    background-color: Black;
+    /*color: #505050;
+    background-color: Black;*/
 }
 
 #navigation-div

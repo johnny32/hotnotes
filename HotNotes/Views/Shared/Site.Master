@@ -35,63 +35,61 @@
 </head>
 <body>
     <header>
-      <div id="header-div" class="template-block">
-        <div style="float: left;">
-            <p class="site-title">
-                <a href="<%= Url.Action("Index", "Home") %>">
-                    <img src="<%= Url.Content( "~/Content/images/logo.png" ) %>" alt="HotNotes" />
-                </a>
-            </p>
-        </div>
-        <div style="float: right;">
-            <form id="cercador" action="/search" method="get">
-                <input type="text" style="width: 26em;" placeholder="<%= Lang.GetString(lang, "Cercador") %>" />
-                <input type="submit" class="btn-small" style="margin-top: -0.6em;" value="<%= Lang.GetString(lang, "Cercar") %>" />
-            </form>
-        </div>
-        <div style="clear: both;"></div>
-        <div id="navigation-div">
-            <ul class="nav nav-pills">
-                <li><%: Html.ActionLink(Lang.GetString(lang, "Inici"), "Index", "Home") %></li>
-                <li><%: Html.ActionLink(Lang.GetString(lang, "Pujar_Document"), "Pujar", "Document") %></li>
-                <li><%: Html.ActionLink(Lang.GetString(lang, "Sobre_HotNotes"), "About", "Home") %></li>
-                <li><%: Html.ActionLink(Lang.GetString(lang, "Contacta"), "Contact", "Home") %></li>
-                <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=es">ES</a></li>
-                <li><a href="<%: Url.Action("CanviarIdioma", "Home") %>?codiIdioma=ca">CA</a></li>
-            </ul>
-            <section id="login" style="float: right;">
-                <%: Html.Partial("_LoginPartial")%>
-            </section>
-        </div>
-        <div style="clear: both;"></div>
-      </div>
-    </header>
-    <div class="row">
-        <div class="col-md-2">
-            <div class="well">
-                <ul class="nav nav-pills nav-stacked">
-                <%
-                    foreach (TipusDocument td in Document.TipusDocuments)
-                    {
-                %>
-                    <li><a href="<%: Url.Action("Filtrar", "Document", new { Tipus = td }) %>"><%: Lang.GetString(lang, td.ToString()) %></a></li>
-                <%
-                    }
-                %>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-top">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">HotNotes</a>
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-top">
+                <ul class="nav navbar-nav">
+                    <li><a href="<%: Url.Action("Index", "Home") %>"><%: Lang.GetString(lang, "Inici") %></a></li>
+                    <li><a href="<%: Url.Action("Pujar", "Document") %>"><%: Lang.GetString(lang, "Pujar_Document") %></a></li>
+                    <li><a href="<%: Url.Action("About", "Home") %>"><%: Lang.GetString(lang, "Sobre_HotNotes") %></a></li>
+                    <li><a href="<%: Url.Action("Contact", "Home") %>"><%: Lang.GetString(lang, "Contacta") %></a></li>
                 </ul>
+                <form class="navbar-form navbar-left" role="search" style="margin-left: 1.5em;">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="<%= Lang.GetString(lang, "Cercador") %>" />
+                    </div>
+                    <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Cercar") %></button>
+                </form>
+                <%: Html.Partial("_LoginPartial") %>
             </div>
-            <div class="well">
-                <b>TODO: CRÈDITS</b>
+        </nav>
+    </header>
+    <div id="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="well">
+                    <ul class="nav nav-pills nav-stacked">
+                    <%
+                        foreach (TipusDocument td in Document.TipusDocuments)
+                        {
+                    %>
+                        <li><a href="<%: Url.Action("Filtrar", "Document", new { Tipus = td }) %>"><%: Lang.GetString(lang, td.ToString()) %></a></li>
+                    <%
+                        }
+                    %>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-md-8 well">
-            <section class="content-wrapper main-content clear-fix">
-                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-            </section>
-        </div>
-        <div class="col-md-2">
-            <div class="well" style="font-weight: bold;">
-                TODO: PUBLICITAT
+            <div class="col-md-8 well">
+                <section class="content-wrapper main-content clear-fix">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                </section>
+            </div>
+            <div class="col-md-2">
+                <div class="well" style="font-weight: bold;">
+                    TODO: PUBLICITAT
+                </div>
             </div>
         </div>
     </div>

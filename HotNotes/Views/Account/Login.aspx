@@ -17,8 +17,8 @@
        </div>
     <% } %>
     <hgroup class="title">
-        <h1>"IMATGE BENVINGUT"</h1>
-        <h2><%: Lang.GetString(lang, "Inicia_sessio") %></h2>
+        <img src="<%: Url.Content("~/Content/images/logo.png") %>" alt="HotNotes" />
+        <h2><%: Lang.GetString(lang, "Benvingut") %></h2>
     </hgroup>
 
     <% using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))

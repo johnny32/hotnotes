@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Bienvenido.
+        /// </summary>
+        internal static string Benvingut {
+            get {
+                return ResourceManager.GetString("Benvingut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cargando.
         /// </summary>
         internal static string Carregant {

@@ -21,25 +21,26 @@
 </head>
 <body>
     <header>
-      <div id="header-div" class="template-block">
-        <div style="float: left;">
-            <p class="site-title">
-                <a href="<%= Url.Action("Index", "Home") %>">
-                    <img src="<%= Url.Content( "~/Content/images/logo.png" ) %>" alt="HotNotes" />
-                </a>
-            </p>
-        </div>
-        <div style="clear: both;"></div>
-        <div id="navigation-div">
-            <section id="login" style="float: right;">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-top">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">HotNotes</a>
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-top">
                 <%: Html.Partial("_LoginPartial")%>
-            </section>
-        </div>
-        <div style="clear: both;"></div>
-      </div>
+            </div>
+        </nav>
     </header>
-    <div id="body">
-        <div id="content" class="template-block">
+    <div id="container">
+        <div id="content" class="well">
             <section class="content-wrapper main-content clear-fix">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server" />
             </section>
