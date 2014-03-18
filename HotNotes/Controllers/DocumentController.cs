@@ -1,21 +1,20 @@
 ﻿//System
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.SqlClient;
-using System.IO;
+
+//AWS
+using Amazon.S3;
+using Amazon.S3.Model;
 
 //HotNotes
 using HotNotes.Helpers;
 using HotNotes.Models;
 
-//Json.NET
-using Newtonsoft.Json;
-
-//AWS
-using Amazon.S3;
-using Amazon.S3.Model;
+//MySQL
+using MySql.Data.MySqlClient;
 
 namespace HotNotes.Controllers
 {
@@ -26,12 +25,12 @@ namespace HotNotes.Controllers
 
         public ActionResult Veure(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Nom, Idioma, Tipus, KeyAmazon, Ruta, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Idioma, Tipus, KeyAmazon, Ruta, MimeType, ExamenCorregit, DataAfegit, DataModificat, Versio, IdUsuari FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -101,7 +100,7 @@ namespace HotNotes.Controllers
 
                     reader.Close();
 
-                    cmd = new SqlCommand("SELECT Nom, Cognoms FROM Usuaris WHERE Id = @Id", connection);
+                    cmd = new MySqlCommand("SELECT Nom, Cognoms FROM Usuaris WHERE Id = @Id", connection);
                     cmd.Parameters.AddWithValue("@Id", idUsuari);
                     reader = cmd.ExecuteReader();
                     reader.Read();
@@ -153,12 +152,12 @@ namespace HotNotes.Controllers
 
         public ActionResult GetComentaris(int IdDocument)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT C.IdUsuari, U.Nom, U.Cognoms, C.Comentari, C.Data FROM Comentaris C, Usuaris U WHERE C.IdDocument = @IdDocument AND C.IdUsuari = U.Id ORDER BY C.Data ASC", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT C.IdUsuari, U.Nom, U.Cognoms, C.Comentari, C.Data FROM Comentaris C, Usuaris U WHERE C.IdDocument = @IdDocument AND C.IdUsuari = U.Id ORDER BY C.Data ASC", connection);
                 cmd.Parameters.AddWithValue("@IdDocument", IdDocument);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 List<Comentari> comentaris = new List<Comentari>();
 
@@ -183,10 +182,10 @@ namespace HotNotes.Controllers
         [HttpPost]
         public ActionResult Comentar(int IdDocument, string Comentari)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Comentaris (IdUsuari, IdDocument, Comentari, Data) VALUES (@IdUsuari, @IdDocument, @Comentari, @Data)", connection);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO Comentaris (IdUsuari, IdDocument, Comentari, Data) VALUES (@IdUsuari, @IdDocument, @Comentari, @Data)", connection);
                 cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 cmd.Parameters.AddWithValue("@IdDocument", IdDocument);
                 cmd.Parameters.AddWithValue("@Comentari", Comentari);
@@ -292,9 +291,9 @@ namespace HotNotes.Controllers
 
             int IdDocument = -1;
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @Ruta, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @Ruta, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Idioma", Idioma);
                 cmd.Parameters.AddWithValue("@Tipus", TipusDocument.ToString());
@@ -355,13 +354,13 @@ namespace HotNotes.Controllers
         [HttpGet]
         public ActionResult Descarregar(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT Nom, MimeType, KeyAmazon FROM Documents WHERE Id = @Id", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Nom, MimeType, KeyAmazon FROM Documents WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
 
                 connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -397,20 +396,20 @@ namespace HotNotes.Controllers
         {
             ViewBag.Id = Id;
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT Nom FROM Assignatures WHERE Id = @Id", connection);
+                MySqlCommand command = new MySqlCommand("SELECT Nom FROM Assignatures WHERE Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", Id);
 
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     reader.Close();
 
-                    command = new SqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdAssignatura = @IdAssignatura", connection);
+                    command = new MySqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdAssignatura = @IdAssignatura", connection);
                     command.Parameters.AddWithValue("@IdAssignatura", Id);
 
                     reader = command.ExecuteReader();
@@ -437,20 +436,20 @@ namespace HotNotes.Controllers
         {
             ViewBag.Id = Id;
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT Nom FROM Usuaris WHERE Id = @Id", connection);
+                MySqlCommand command = new MySqlCommand("SELECT Nom FROM Usuaris WHERE Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", Id);
 
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     reader.Close();
 
-                    command = new SqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdUsuari = @IdUsuari", connection);
+                    command = new MySqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdUsuari = @IdUsuari", connection);
                     command.Parameters.AddWithValue("@IdUsuari", Id);
 
                     reader = command.ExecuteReader();
@@ -475,14 +474,14 @@ namespace HotNotes.Controllers
 
         public JsonResult Filtre(string Tipus, int Id, int Offset = 0, int Amount = 20)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand command = null;
+                MySqlCommand command = null;
 
                 if (Tipus == "Assignatura")
                 {
-                    command = new SqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
+                    command = new MySqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
                                                 "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
                                                 "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdAssignatura = @IdAssignatura) " +
                                                 "SELECT * FROM RealQuery WHERE RowNumber BETWEEN @Start AND @End", connection);
@@ -490,7 +489,7 @@ namespace HotNotes.Controllers
                 }
                 else if (Tipus == "Usuari")
                 {
-                    command = new SqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
+                    command = new MySqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
                                                 "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
                                                 "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari) " +
                                                 "SELECT * FROM RealQuery WHERE RowNumber BETWEEN @Start AND @End", connection);
@@ -499,7 +498,7 @@ namespace HotNotes.Controllers
 
                 command.Parameters.AddWithValue("@Start", Offset);
                 command.Parameters.AddWithValue("@End", Offset + Amount);
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
 
                 List<DocumentLlistat> resultat = new List<DocumentLlistat>();
 
@@ -525,12 +524,12 @@ namespace HotNotes.Controllers
 
         public JsonResult Valoracio(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT SUM(Valoracio) AS Suma, COUNT(*) AS Total FROM Valoracions WHERE IdDocument = @IdDocument", connection);
+                MySqlCommand command = new MySqlCommand("SELECT SUM(Valoracio) AS Suma, COUNT(*) AS Total FROM Valoracions WHERE IdDocument = @IdDocument", connection);
                 command.Parameters.AddWithValue("@IdDocument", Id);
-                SqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -552,27 +551,27 @@ namespace HotNotes.Controllers
             }
         }
 
-        public JsonResult Valorar(int Id, double Valoracio)
+        public JsonResult Valorar(int Id, int Valoracio)
         {
-            if (Valoracio >= 0 && Valoracio <= 5)
+            if (Valoracio >= 0 && Valoracio <= 10)
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (MySqlConnection connection = new MySqlConnection(ConnectionString))
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT * FROM Valoracions WHERE IdUsuari = @IdUsuari AND IdDocument = @IdDocument", connection);
+                    MySqlCommand command = new MySqlCommand("SELECT * FROM Valoracions WHERE IdUsuari = @IdUsuari AND IdDocument = @IdDocument", connection);
                     command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                     command.Parameters.AddWithValue("@IdDocument", Id);
-                    SqlDataReader reader = command.ExecuteReader();
+                    MySqlDataReader reader = command.ExecuteReader();
 
                     if (reader.Read())
                     {
                         reader.Close();
-                        command = new SqlCommand("UPDATE Valoracions SET Valoracio = @Valoracio WHERE IdUsuari = @IdUsuari AND IdDocument = @IdDocument", connection);
+                        command = new MySqlCommand("UPDATE Valoracions SET Valoracio = @Valoracio WHERE IdUsuari = @IdUsuari AND IdDocument = @IdDocument", connection);
                     }
                     else
                     {
                         reader.Close();
-                        command = new SqlCommand("INSERT INTO Valoracions (IdUsuari, IdDocument, Valoracio) VALUES (@IdUsuari, @IdDocument, @Valoracio)", connection);
+                        command = new MySqlCommand("INSERT INTO Valoracions (IdUsuari, IdDocument, Valoracio) VALUES (@IdUsuari, @IdDocument, @Valoracio)", connection);
                     }
 
                     command.Parameters.AddWithValue("@Valoracio", Valoracio);
@@ -617,12 +616,12 @@ namespace HotNotes.Controllers
 
         private List<Assignatura> GetLlistaAssignatures()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
                 cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 List<Assignatura> l = new List<Assignatura>();
 

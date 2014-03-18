@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using HotNotes.Helpers;
+﻿//System
+using System;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
+
+//HotNotes
+using HotNotes.Helpers;
 using HotNotes.Models;
+
+//MySQL
+using MySql.Data.MySqlClient;
 
 namespace HotNotes.Controllers
 {
@@ -34,12 +38,12 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string Username, string PasswordEnc, bool RememberMe)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Id, Password, Activat FROM Usuaris WHERE Username = @Username", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Id, Password, Activat FROM Usuaris WHERE Username = @Username", connection);
                 cmd.Parameters.AddWithValue("@Username", Username);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -117,17 +121,17 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
 
-                SqlTransaction transaction = connection.BeginTransaction();
+                MySqlTransaction transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username", connection);
                 cmd.Parameters.AddWithValue("@Username", Username);
                 cmd.Transaction = transaction;
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -140,7 +144,7 @@ namespace HotNotes.Controllers
                 {
                     reader.Close();
 
-                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email", connection);
+                    cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email", connection);
                     cmd.Parameters.AddWithValue("@Email", Email);
                     cmd.Transaction = transaction;
 
@@ -165,7 +169,7 @@ namespace HotNotes.Controllers
                         CodiActivacio = CodiActivacio.Replace("+", "");
                         CodiActivacio = CodiActivacio.Replace("/", "");
 
-                        cmd = new SqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat, CodiActivacio) VALUES (@Username, @Password, @Email, @Nom, @Cognoms, @DataNaixement, @Sexe, @Activat, @CodiActivacio)", connection);
+                        cmd = new MySqlCommand("INSERT INTO Usuaris (Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat, CodiActivacio) VALUES (@Username, @Password, @Email, @Nom, @Cognoms, @DataNaixement, @Sexe, @Activat, @CodiActivacio)", connection);
                         cmd.Parameters.AddWithValue("@Username", Username);
                         cmd.Parameters.AddWithValue("@Password", PasswordEnc);
                         cmd.Parameters.AddWithValue("@Email", Email);
@@ -238,12 +242,12 @@ namespace HotNotes.Controllers
         [AllowAnonymous]
         public ActionResult Activate(string id)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Id FROM Usuaris WHERE CodiActivacio = @CodiActivacio", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Id FROM Usuaris WHERE CodiActivacio = @CodiActivacio", connection);
                 cmd.Parameters.AddWithValue("@CodiActivacio", id);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -252,7 +256,7 @@ namespace HotNotes.Controllers
 
                     try
                     {
-                        cmd = new SqlCommand("UPDATE Usuaris SET Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
+                        cmd = new MySqlCommand("UPDATE Usuaris SET Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
                         cmd.Parameters.AddWithValue("@Activat", true);
                         cmd.Parameters.AddWithValue("@CodiActivacio", DBNull.Value);
                         cmd.Parameters.AddWithValue("@Id", Id.ToString());
@@ -279,12 +283,12 @@ namespace HotNotes.Controllers
         {
             HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
             int id = int.Parse(cookie.Value);
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = @Id", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = @Id", connection);
                 cmd.Parameters.AddWithValue("@Id", id);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -341,18 +345,18 @@ namespace HotNotes.Controllers
                 Activat = true
             };
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
 
-                SqlTransaction transaction = connection.BeginTransaction();
+                MySqlTransaction transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username AND Id != @Id", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username AND Id != @Id", connection);
                 cmd.Parameters.AddWithValue("@Username", Username);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.Transaction = transaction;
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -365,7 +369,7 @@ namespace HotNotes.Controllers
                 {
                     reader.Close();
 
-                    cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email AND Id != @Id", connection);
+                    cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email AND Id != @Id", connection);
                     cmd.Parameters.AddWithValue("@Email", Email);
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.Transaction = transaction;
@@ -383,7 +387,7 @@ namespace HotNotes.Controllers
                     {
                         reader.Close();
 
-                        cmd = new SqlCommand("SELECT Email FROM Usuaris WHERE Id = @Id", connection);
+                        cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Id = @Id", connection);
                         cmd.Parameters.AddWithValue("@Id", Id);
                         cmd.Transaction = transaction;
 
@@ -422,7 +426,7 @@ namespace HotNotes.Controllers
                                 passwordSQL = ", Password = @Password";
                             }
 
-                            cmd = new SqlCommand("UPDATE Usuaris SET Username = @Username" + passwordSQL + ", Email = @Email, Nom = @Nom, Cognoms = @Cognoms, DataNaixement = @DataNaixement, Sexe = @Sexe, Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
+                            cmd = new MySqlCommand("UPDATE Usuaris SET Username = @Username" + passwordSQL + ", Email = @Email, Nom = @Nom, Cognoms = @Cognoms, DataNaixement = @DataNaixement, Sexe = @Sexe, Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
                             cmd.Parameters.AddWithValue("@Username", Username);
                             if (PasswordEnc != "")
                             {
@@ -481,7 +485,7 @@ namespace HotNotes.Controllers
                                 }
                                 return RedirectToAction("Index", "Home");
                             }
-                            catch (SqlException)
+                            catch (MySqlException)
                             {
                                 reader.Close();
                                 transaction.Rollback();
