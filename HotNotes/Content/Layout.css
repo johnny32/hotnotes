@@ -100,3 +100,8 @@ div#body
     text-decoration: none;
     background-color: transparent;
 }
+
+#menuLang
+{
+    margin-top: 0.5em;
+}

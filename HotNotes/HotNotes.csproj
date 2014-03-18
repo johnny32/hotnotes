@@ -167,6 +167,8 @@
     <Content Include="App_Data\HotNotes_log.ldf">
       <DependentUpon>HotNotes.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\images\ca-flag.png" />
+    <Content Include="Content\images\es-flag.png" />
     <Content Include="Content\images\Loading.gif" />
     <Content Include="Content\images\star-empty.png" />
     <Content Include="Content\images\star-full.png" />
@@ -746,6 +748,7 @@
     <Content Include="Views\Document\Veure.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Shared\_LangPartial.ascx" />
     <Content Include="Views\Shared\_LoginPartial.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

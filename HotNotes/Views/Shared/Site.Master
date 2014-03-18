@@ -44,7 +44,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">HotNotes</a>
+                    <a class="navbar-brand" href="<%: Url.Action("Index", "Home") %>">HotNotes</a>
                 </div>
             </div>
 
@@ -61,6 +61,7 @@
                     </div>
                     <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Cercar") %></button>
                 </form>
+                <%: Html.Partial("_LangPartial") %>
                 <%: Html.Partial("_LoginPartial") %>
             </div>
         </nav>

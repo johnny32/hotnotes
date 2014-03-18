@@ -30,11 +30,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">HotNotes</a>
+                    <a class="navbar-brand" href="<%: Url.Action("Index", "Home") %>">HotNotes</a>
                 </div>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-top">
+                <%: Html.Partial("_LangPartial") %>
                 <%: Html.Partial("_LoginPartial")%>
             </div>
         </nav>
