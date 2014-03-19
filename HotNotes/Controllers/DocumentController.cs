@@ -293,7 +293,7 @@ namespace HotNotes.Controllers
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) OUTPUT INSERTED.ID VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @Ruta, @ExamenCorregit, GETDATE(), 1.0, @IdUsuari, @IdAssignatura)", connection);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO Documents (Nom, Idioma, Tipus, KeyAmazon, MimeType, Ruta, ExamenCorregit, DataAfegit, Versio, IdUsuari, IdAssignatura) VALUES (@Nom, @Idioma, @Tipus, @KeyAmazon, @MimeType, @Ruta, @ExamenCorregit, NOW(), 1.0, @IdUsuari, @IdAssignatura)", connection);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Idioma", Idioma);
                 cmd.Parameters.AddWithValue("@Tipus", TipusDocument.ToString());
@@ -335,7 +335,12 @@ namespace HotNotes.Controllers
                 try
                 {
                     connection.Open();
-                    IdDocument = (int)cmd.ExecuteScalar();
+                    cmd.ExecuteScalar();
+
+                    cmd = new MySqlCommand("SELECT LAST_INSERT_ID()", connection);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                    IdDocument = reader.GetInt32(0);
                 }
                 catch (Exception e)
                 {
@@ -439,29 +444,41 @@ namespace HotNotes.Controllers
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                MySqlCommand command = new MySqlCommand("SELECT Nom FROM Usuaris WHERE Id = @Id", connection);
+                MySqlCommand command = new MySqlCommand("SELECT Username FROM Usuaris WHERE Id = @Id", connection);
                 command.Parameters.AddWithValue("@Id", Id);
 
                 MySqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    ViewBag.Username = reader.GetString(reader.GetOrdinal("Username"));
                     reader.Close();
 
-                    command = new MySqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdUsuari = @IdUsuari", connection);
+                    command = new MySqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera " +
+                                                "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
+                                                "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari", connection);
                     command.Parameters.AddWithValue("@IdUsuari", Id);
 
+                    List<DocumentLlistat> resultats = new List<DocumentLlistat>();
                     reader = command.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        ViewBag.Total = reader.GetInt32(reader.GetOrdinal("Total"));
+                        DocumentLlistat d = new DocumentLlistat();
+                        d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                        d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                        d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
+                        d.IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari"));
+                        d.Username = reader.GetString(reader.GetOrdinal("Username"));
+                        d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
+                        d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
+                        d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+
+                        resultats.Add(d);
                     }
-                    else
-                    {
-                        ViewBag.Total = 0;
-                    }
+
+                    return View(resultats);
                 }
                 else
                 {

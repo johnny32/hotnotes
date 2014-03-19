@@ -206,7 +206,7 @@
     if (Model.Tipus != TipusDocument.LinkYoutube && Model.MimeType != "application/pdf")
     { 
 %>
-    <a href="<%: Url.Action("Descarregar", "Document", new { Id = Model.Id }) %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
+    <span class="glyphicon glyphicon-search"></span> <a href="<%: Url.Action("Descarregar", "Document", new { Id = Model.Id }) %>" target="_blank" style="font-size: medium;"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
 <%
     } 
 %>

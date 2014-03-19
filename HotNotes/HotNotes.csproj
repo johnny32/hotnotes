@@ -239,6 +239,22 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Plugins\DataTables\css\dataTables.bootstrap.css" />
+    <Content Include="Plugins\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Plugins\DataTables\images\back_disabled.png" />
+    <Content Include="Plugins\DataTables\images\back_enabled.png" />
+    <Content Include="Plugins\DataTables\images\back_enabled_hover.png" />
+    <Content Include="Plugins\DataTables\images\favicon.ico" />
+    <Content Include="Plugins\DataTables\images\forward_disabled.png" />
+    <Content Include="Plugins\DataTables\images\forward_enabled.png" />
+    <Content Include="Plugins\DataTables\images\forward_enabled_hover.png" />
+    <Content Include="Plugins\DataTables\images\sort_asc.png" />
+    <Content Include="Plugins\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Plugins\DataTables\images\sort_both.png" />
+    <Content Include="Plugins\DataTables\images\sort_desc.png" />
+    <Content Include="Plugins\DataTables\images\sort_desc_disabled.png" />
+    <Content Include="Plugins\DataTables\js\dataTables.bootstrap.js" />
+    <Content Include="Plugins\DataTables\js\jquery.dataTables.min.js" />
     <Content Include="Plugins\jquery-ui-1.10.3\AUTHORS.txt" />
     <Content Include="Plugins\jquery-ui-1.10.3\external\globalize.culture.de-DE.js" />
     <Content Include="Plugins\jquery-ui-1.10.3\external\globalize.culture.ja-JP.js" />
@@ -797,6 +813,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="aws-sessionprovider-sample.config" />
+    <Content Include="Plugins\DataTables\images\Sorting icons.psd" />
     <None Include="Plugins\jquery-ui-1.10.3\package.json" />
     <None Include="Plugins\jquery-ui-1.10.3\README.md" />
     <None Include="Plugins\jquery-ui-1.10.3\ui.accordion.jquery.json" />

@@ -1,4 +1,11 @@
-﻿body
+﻿@font-face 
+{
+    font-family: 'Glyphicons Halflings';
+    src: url('../Plugins/bootstrap/fonts/glyphicons-halflings-regular.eot');
+    src: url('../Plugins/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../Plugins/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../Plugins/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../Plugins/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+body
 {
     border: none;
 }
