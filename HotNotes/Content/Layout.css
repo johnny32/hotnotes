@@ -112,3 +112,8 @@ div#body
 {
     margin-top: 0.5em;
 }
+
+.dataTables_length
+{
+    float: right !important;
+}

@@ -150,7 +150,7 @@
         function valorar(valoracio) {
             var params = {
                 Id: <%: Model.Id %>,
-                Valoracio: valoracio + 1
+                Valoracio: (valoracio + 1) * 2
             };
 
             $.ajax({

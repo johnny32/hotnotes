@@ -1,4 +1,5 @@
 ﻿function getEstrelles(valoracio) {
+    valoracio /= 2;
     var estrelles = [];
     var partEntera = Math.floor(valoracio);
     var partDecimal = valoracio - partEntera;

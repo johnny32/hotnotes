@@ -63,5 +63,6 @@ namespace HotNotes.Models
         public int IdAssignatura;
         public string NomAssignatura;
         public string NomCarrera;
+        public double Valoracio;
     }
 }

@@ -414,19 +414,33 @@ namespace HotNotes.Controllers
                     ViewBag.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     reader.Close();
 
-                    command = new MySqlCommand("SELECT COUNT(*) AS Total FROM Documents WHERE IdAssignatura = @IdAssignatura", connection);
+                    command = new MySqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, " +
+                                                "IF(EXISTS(SELECT v.IdDocument FROM Valoracions v WHERE v.IdDocument = d.Id), (SELECT AVG(v.Valoracio) FROM Valoracions v WHERE v.IdDocument = d.Id), 0) AS Valoracio " +
+                                                "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
+                                                "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdAssignatura = @IdAssignatura", connection);
                     command.Parameters.AddWithValue("@IdAssignatura", Id);
 
+                    List<DocumentLlistat> resultats = new List<DocumentLlistat>();
                     reader = command.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        ViewBag.Total = reader.GetInt32(reader.GetOrdinal("Total"));
+                        DocumentLlistat d = new DocumentLlistat();
+                        d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                        d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                        d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
+                        d.IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari"));
+                        d.Username = reader.GetString(reader.GetOrdinal("Username"));
+                        d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
+                        d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
+                        d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+                        d.Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio"));
+
+                        resultats.Add(d);
                     }
-                    else
-                    {
-                        ViewBag.Total = 0;
-                    }
+
+                    return View(resultats);
                 }
                 else
                 {
@@ -454,7 +468,8 @@ namespace HotNotes.Controllers
                     ViewBag.Username = reader.GetString(reader.GetOrdinal("Username"));
                     reader.Close();
 
-                    command = new MySqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera " +
+                    command = new MySqlCommand("SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, " +
+                                                "IF(EXISTS(SELECT v.IdDocument FROM Valoracions v WHERE v.IdDocument = d.Id), (SELECT AVG(v.Valoracio) FROM Valoracions v WHERE v.IdDocument = d.Id), 0) AS Valoracio " +
                                                 "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
                                                 "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari", connection);
                     command.Parameters.AddWithValue("@IdUsuari", Id);
@@ -474,6 +489,7 @@ namespace HotNotes.Controllers
                         d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
                         d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
                         d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+                        d.Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio"));
 
                         resultats.Add(d);
                     }
@@ -489,83 +505,42 @@ namespace HotNotes.Controllers
             }
         }
 
-        public JsonResult Filtre(string Tipus, int Id, int Offset = 0, int Amount = 20)
-        {
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-            {
-                connection.Open();
-                MySqlCommand command = null;
-
-                if (Tipus == "Assignatura")
-                {
-                    command = new MySqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
-                                                "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
-                                                "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdAssignatura = @IdAssignatura) " +
-                                                "SELECT * FROM RealQuery WHERE RowNumber BETWEEN @Start AND @End", connection);
-                    command.Parameters.AddWithValue("@IdAssignatura", Id);
-                }
-                else if (Tipus == "Usuari")
-                {
-                    command = new MySqlCommand("WITH RealQuery AS (SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera, ROW_NUMBER() OVER (ORDER BY DataAfegit DESC) AS RowNumber " +
-                                                "FROM Documents d, Usuaris u, Assignatures a, Carreres c " +
-                                                "WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id AND d.IdUsuari = @IdUsuari) " +
-                                                "SELECT * FROM RealQuery WHERE RowNumber BETWEEN @Start AND @End", connection);
-                    command.Parameters.AddWithValue("@IdUsuari", Id);
-                }
-
-                command.Parameters.AddWithValue("@Start", Offset);
-                command.Parameters.AddWithValue("@End", Offset + Amount);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                List<DocumentLlistat> resultat = new List<DocumentLlistat>();
-
-                while (reader.Read())
-                {
-                    DocumentLlistat d = new DocumentLlistat();
-                    d.Id = reader.GetInt32(reader.GetOrdinal("Id"));
-                    d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
-                    d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
-                    d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
-                    d.IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari"));
-                    d.Username = reader.GetString(reader.GetOrdinal("Username"));
-                    d.IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura"));
-                    d.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
-                    d.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
-
-                    resultat.Add(d);
-                }
-
-                return Json(resultat, JsonRequestBehavior.AllowGet);
-            }
-        }
-
         public JsonResult Valoracio(int Id)
         {
+            //Si l'usuari no ha valorat encara el document, retornem la puntuacio mitja. Si ja l'ha valorat, mostrem la seva puntuacio.
+
+            double valoracio = 0.0;
+
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                MySqlCommand command = new MySqlCommand("SELECT SUM(Valoracio) AS Suma, COUNT(*) AS Total FROM Valoracions WHERE IdDocument = @IdDocument", connection);
+                MySqlCommand command = new MySqlCommand("SELECT Valoracio FROM Valoracions WHERE IdDocument = @IdDocument AND IdUsuari = @IdUsuari", connection);
                 command.Parameters.AddWithValue("@IdDocument", Id);
+                command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 MySqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    if (!reader.IsDBNull(reader.GetOrdinal("Suma")))
-                    {
-                        double suma = reader.GetDouble(reader.GetOrdinal("Suma"));
-                        double total = (double)reader.GetInt32(reader.GetOrdinal("Total"));
-                        return Json(suma / total, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        return Json(0.0, JsonRequestBehavior.AllowGet);
-                    }
+                    valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio"));
                 }
                 else
                 {
-                    return Json(0.0, JsonRequestBehavior.AllowGet);
+                    reader.Close();
+                    command = new MySqlCommand("SELECT AVG(Valoracio) AS Valoracio FROM Valoracions WHERE IdDocument = @IdDocument", connection);
+                    command.Parameters.AddWithValue("@IdDocument", Id);
+                    reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        if (!reader.IsDBNull(reader.GetOrdinal("Valoracio")))
+                        {
+                            valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")); 
+                        }
+                    }
                 }
             }
+
+            return Json(valoracio, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Valorar(int Id, int Valoracio)

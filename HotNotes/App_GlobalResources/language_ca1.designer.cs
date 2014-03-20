@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "12.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class language_es {
+    internal class language_ca {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal language_es() {
+        internal language_ca() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.language_es", global::System.Reflection.Assembly.Load("App_GlobalResources"));
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.language_ca", global::System.Reflection.Assembly.Load("App_GlobalResources"));
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La cuenta se ha activado correctamente. Ahora ya puedes iniciar sesión desde la página principal..
+        ///   Busca una cadena traducida similar a El compte s&apos;ha activat correctament. Ara ja pots iniciar sessió des de la pàgina principal..
         /// </summary>
         internal static string Activar_correcte {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Otros....
+        ///   Busca una cadena traducida similar a Altres....
         /// </summary>
         internal static string Altres {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Inglés.
+        ///   Busca una cadena traducida similar a Anglés.
         /// </summary>
         internal static string Angles {
             get {
@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Apuntes.
+        ///   Busca una cadena traducida similar a Apunts.
         /// </summary>
         internal static string Apunts {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Artículo.
+        ///   Busca una cadena traducida similar a Article.
         /// </summary>
         internal static string Article {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Artículos.
+        ///   Busca una cadena traducida similar a Articles.
         /// </summary>
         internal static string Articles {
             get {
@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Asignatura.
+        ///   Busca una cadena traducida similar a Assignatura.
         /// </summary>
         internal static string Assignatura {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Bienvenido.
+        ///   Busca una cadena traducida similar a Benvingut.
         /// </summary>
         internal static string Benvingut {
             get {
@@ -142,7 +142,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cargando.
+        ///   Busca una cadena traducida similar a Carregant.
         /// </summary>
         internal static string Carregant {
             get {
@@ -151,7 +151,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cargando comentarios....
+        ///   Busca una cadena traducida similar a Carregant comentaris....
         /// </summary>
         internal static string Carregant_comentaris {
             get {
@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Castellano.
+        ///   Busca una cadena traducida similar a Castellà.
         /// </summary>
         internal static string Castella {
             get {
@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Catalán.
+        ///   Busca una cadena traducida similar a Català.
         /// </summary>
         internal static string Catala {
             get {
@@ -178,7 +178,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Introduce los términos de búsqueda....
+        ///   Busca una cadena traducida similar a Introdueix els termes de cerca....
         /// </summary>
         internal static string Cercador {
             get {
@@ -196,7 +196,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El código de activación es incorrecto. Si éste es el enlace que te hemos enviado a tu correo, por favor, contacta con el administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
+        ///   Busca una cadena traducida similar a El codi d&apos;activació és incorrecte. Si aquest és l&apos;enllaç que t&apos;hem enviat al teu correu, si us plau, contacta amb l&apos;administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
         /// </summary>
         internal static string Codi_activar_incorrecte {
             get {
@@ -205,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Apellidos.
+        ///   Busca una cadena traducida similar a Cognoms.
         /// </summary>
         internal static string Cognoms {
             get {
@@ -214,7 +214,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Completa el registro en HotNotes.
+        ///   Busca una cadena traducida similar a Completa el registre a HotNotes.
         /// </summary>
         internal static string Completa_el_registre {
             get {
@@ -223,7 +223,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Esta cuenta de usuario aún no ha sido activada. Por favor, revisa la bandeja de entrada y haz click en el enlace que encontrarás en nuestro correo.&lt;br /&gt;Si no has recibido ningún correo, haz click &lt;a href=&quot;/&quot;&gt;aquí&lt;/a&gt; para que te lo volvamos a enviar..
+        ///   Busca una cadena traducida similar a Aquest compte d&apos;usuari encara no ha estat activat. Si us plau, revisa la bústia d&apos;entrada i fes clic a l&apos;enllaç que trobaràs al nostre correu.&lt;br /&gt;Si no has rebut cap correu, fes clic &lt;a href=&quot;/&quot;&gt;aquí&lt;/a&gt; per a que te&apos;l tornem a enviar..
         /// </summary>
         internal static string Compte_desactivat {
             get {
@@ -232,7 +232,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Confirmar contraseña.
+        ///   Busca una cadena traducida similar a Confirmar contrasenya.
         /// </summary>
         internal static string Confirma_password {
             get {
@@ -241,7 +241,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Contactar.
+        ///   Busca una cadena traducida similar a Contacta.
         /// </summary>
         internal static string Contacta {
             get {
@@ -250,7 +250,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Correo electrónico.
+        ///   Busca una cadena traducida similar a Correu electrònic.
         /// </summary>
         internal static string Correu_electronic {
             get {
@@ -259,7 +259,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Los datos se han actualizado correctamente..
+        ///   Busca una cadena traducida similar a Les dades s&apos;han actualitzat correctament..
         /// </summary>
         internal static string Dades_actualitzades {
             get {
@@ -268,7 +268,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Fecha de creación.
+        ///   Busca una cadena traducida similar a Data de creació.
         /// </summary>
         internal static string Data_creacio {
             get {
@@ -277,7 +277,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Fecha de últ. modificación.
+        ///   Busca una cadena traducida similar a Data d&apos;últ. modificació.
         /// </summary>
         internal static string Data_modificat {
             get {
@@ -286,7 +286,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Fecha de nacimiento.
+        ///   Busca una cadena traducida similar a Data de naixement.
         /// </summary>
         internal static string Data_naixement {
             get {
@@ -295,7 +295,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Descarga el documento.
+        ///   Busca una cadena traducida similar a Descarrega el document.
         /// </summary>
         internal static string Descarregar_document {
             get {
@@ -313,7 +313,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Documentos.
+        ///   Busca una cadena traducida similar a Documents.
         /// </summary>
         internal static string Documents {
             get {
@@ -322,7 +322,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Documentos de la asignatura.
+        ///   Busca una cadena traducida similar a Documents de l&apos;assignatura.
         /// </summary>
         internal static string Documents_assignatura {
             get {
@@ -331,7 +331,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Documentos del usuario.
+        ///   Busca una cadena traducida similar a Documents de l&apos;usuari.
         /// </summary>
         internal static string Documents_usuari {
             get {
@@ -340,7 +340,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No existe ningún documento con éste identificador..
+        ///   Busca una cadena traducida similar a No existeix cap document amb aquest identificador..
         /// </summary>
         internal static string Document_no_existeix {
             get {
@@ -349,7 +349,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mujer.
+        ///   Busca una cadena traducida similar a Dona.
         /// </summary>
         internal static string Dona {
             get {
@@ -358,7 +358,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Todos los derechos reservados.
+        ///   Busca una cadena traducida similar a Tots els drets reservats.
         /// </summary>
         internal static string Drets_reservats {
             get {
@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No hay resultados.
+        ///   Busca una cadena traducida similar a No hi ha resultats.
         /// </summary>
         internal static string DT_sEmptyTable {
             get {
@@ -376,7 +376,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Primero.
+        ///   Busca una cadena traducida similar a Primer.
         /// </summary>
         internal static string DT_sFirst {
             get {
@@ -385,7 +385,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mostrando _START_-_END_ de _TOTAL_ resultados.
+        ///   Busca una cadena traducida similar a Mostrant _START_-_END_ de _TOTAL_ resultats.
         /// </summary>
         internal static string DT_sInfo {
             get {
@@ -394,7 +394,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mostrando 0 de 0 resultados.
+        ///   Busca una cadena traducida similar a Mostrant 0 de 0 resultats.
         /// </summary>
         internal static string DT_sInfoEmpty {
             get {
@@ -403,7 +403,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a (filtrados de _MAX_ resultados totales).
+        ///   Busca una cadena traducida similar a (filtrats de _MAX_ resultats totals).
         /// </summary>
         internal static string DT_sInfoFiltered {
             get {
@@ -412,7 +412,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Último.
+        ///   Busca una cadena traducida similar a Últim.
         /// </summary>
         internal static string DT_sLast {
             get {
@@ -421,7 +421,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ver _MENU_ resultados.
+        ///   Busca una cadena traducida similar a Veure _MENU_ resultats.
         /// </summary>
         internal static string DT_sLengthMenu {
             get {
@@ -430,7 +430,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Siguiente.
+        ///   Busca una cadena traducida similar a Següent.
         /// </summary>
         internal static string DT_sNext {
             get {
@@ -448,7 +448,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Obteniendo resultados....
+        ///   Busca una cadena traducida similar a Obtenint resultats....
         /// </summary>
         internal static string DT_sProcessing {
             get {
@@ -457,7 +457,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Buscar: .
+        ///   Busca una cadena traducida similar a Cercar: .
         /// </summary>
         internal static string DT_sSearch {
             get {
@@ -466,7 +466,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No hay resultados.
+        ///   Busca una cadena traducida similar a No hi ha resultats.
         /// </summary>
         internal static string DT_sZeroRecords {
             get {
@@ -475,7 +475,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ya existe un usuario registrado con esta dirección de correo electrónico..
+        ///   Busca una cadena traducida similar a Ja hi ha un usuari registrat amb aquesta adreça de correu electrònic..
         /// </summary>
         internal static string Email_ja_existent {
             get {
@@ -484,7 +484,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Los datos se han actualizado correctamente. Sin embargo, no podrás entrar hasta que hayas activado la nueva dirección de correo electrónico. Comprueba tu bandeja de entrada y haz click en el enlace que te hemos enviado..
+        ///   Busca una cadena traducida similar a Les dades s&apos;han actualitzat correctament. Tot i així, no podràs entrar fins que hagis activat la nova direcció de correu electrònic. Comprova la teva bústia d&apos;entrada i fes clic a l&apos;enllaç que t&apos;hem enviat..
         /// </summary>
         internal static string Email_modificat {
             get {
@@ -493,7 +493,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Estimado [[NOM]],&lt;br/&gt;&lt;br/&gt;Para completar el registro en HotNotes, visita el siguiente enlace: &lt;a href=&quot;[[LINK]]&quot;&gt;[[LINK]]&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Atentamente,&lt;br/&gt;&lt;b&gt;El equipo de HotNotes&lt;/b&gt;..
+        ///   Busca una cadena traducida similar a Estimat [[NOM]],&lt;br/&gt;&lt;br/&gt;Per a completar el registre a HotNotes, visita el següent enllaç: &lt;a href=&quot;[[LINK]]&quot;&gt;[[LINK]]&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Atentament,&lt;br/&gt;&lt;b&gt;L&apos;equip de HotNotes&lt;/b&gt;..
         /// </summary>
         internal static string Email_registre {
             get {
@@ -520,7 +520,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error durante el proceso de activación. Por favor, pruébalo de nuevo en unos minutos.&lt;br /&gt;Si el problema persiste, contacta con el administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
+        ///   Busca una cadena traducida similar a Hi ha hagut un error durant el procés d&apos;activació. Si us plau, torna-ho a provar en uns minuts.&lt;br /&gt;Si el problema persisteix, contacta amb l&apos;administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
         /// </summary>
         internal static string Error_activar {
             get {
@@ -529,7 +529,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error al subir el archivo. Por favor, inténtalo pasados unos minutos..
+        ///   Busca una cadena traducida similar a Hi ha hagut un error pujant el fitxer. Si us plau, torna-ho a intentar en uns minuts..
         /// </summary>
         internal static string Error_Amazon_S3 {
             get {
@@ -538,7 +538,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error enviando tu comentario. Por favor, inténtalo de nuevo más tarde..
+        ///   Busca una cadena traducida similar a Hi ha hagut un error enviant el teu comentari. Si us plau, torna-ho a intentar més tard..
         /// </summary>
         internal static string Error_comentant {
             get {
@@ -547,7 +547,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Error cargando los comentarios.
+        ///   Busca una cadena traducida similar a Error carregant els comentaris.
         /// </summary>
         internal static string Error_comentaris {
             get {
@@ -556,7 +556,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error desconocido..
+        ///   Busca una cadena traducida similar a Hi ha hagut un error desconegut..
         /// </summary>
         internal static string Error_desconegut {
             get {
@@ -565,7 +565,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No se ha encontrado ninguna assignatura con este Id..
+        ///   Busca una cadena traducida similar a No s&apos;ha trobat cap assignatura amb aquest Id..
         /// </summary>
         internal static string Error_id_assignatura {
             get {
@@ -574,7 +574,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No se ha encontrado ningún usuario con este Id..
+        ///   Busca una cadena traducida similar a No s&apos;ha trobat cap usuari amb aquest Id..
         /// </summary>
         internal static string Error_id_usuari {
             get {
@@ -583,7 +583,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error al subir el documento. Por favor, vuelve a intentarlo en unos minutos..
+        ///   Busca una cadena traducida similar a Hi ha hagut un error al pujar el document. Si us plau, torna-ho a provar en uns minuts..
         /// </summary>
         internal static string Error_pujar_document {
             get {
@@ -592,7 +592,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error durante el proceso de registro. Por favor, pruébalo de nuevo en unos minutos.&lt;br /&gt;Si el problema persiste, contacta con el administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
+        ///   Busca una cadena traducida similar a Hi ha hagut un error durant el procés de registre. Si us plau, torna-ho a provar en uns minuts.&lt;br /&gt;Si el problema persisteix, contacta amb l&apos;administrador: &lt;a href=&quot;mailto:jonathan.clara.marquez@gmail.com&quot;&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;.
         /// </summary>
         internal static string Error_registre {
             get {
@@ -601,7 +601,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha habido un error al valorar este documento. Por favor, vuelve a intentarlo más tarde..
+        ///   Busca una cadena traducida similar a Hi ha hagut un error a l&apos;hora de valorar aquest document. Si us plau, torna-ho a intentar més tard..
         /// </summary>
         internal static string Error_valoracio {
             get {
@@ -610,7 +610,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Escribe un comentario..
+        ///   Busca una cadena traducida similar a Escriu un comentari..
         /// </summary>
         internal static string Escriu_un_comentari {
             get {
@@ -619,7 +619,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¿Es un examen corregido?.
+        ///   Busca una cadena traducida similar a És un exàmen corregit?.
         /// </summary>
         internal static string Es_examen_corregit {
             get {
@@ -628,7 +628,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Examen.
+        ///   Busca una cadena traducida similar a Exàmen.
         /// </summary>
         internal static string Examen {
             get {
@@ -637,7 +637,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Exámenes.
+        ///   Busca una cadena traducida similar a Examens.
         /// </summary>
         internal static string Examens {
             get {
@@ -646,7 +646,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Archivo.
+        ///   Busca una cadena traducida similar a Fitxer.
         /// </summary>
         internal static string Fitxer {
             get {
@@ -655,7 +655,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Hombre.
+        ///   Busca una cadena traducida similar a Home.
         /// </summary>
         internal static string Home {
             get {
@@ -673,7 +673,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Inicio.
+        ///   Busca una cadena traducida similar a Inici.
         /// </summary>
         internal static string Inici {
             get {
@@ -682,7 +682,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Iniciar sesión.
+        ///   Busca una cadena traducida similar a Inicia sessió.
         /// </summary>
         internal static string Inicia_sessio {
             get {
@@ -691,7 +691,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Enlace externo.
+        ///   Busca una cadena traducida similar a Enllaç extern.
         /// </summary>
         internal static string LinkExtern {
             get {
@@ -700,7 +700,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Enlace a YouTube.
+        ///   Busca una cadena traducida similar a Enllaç a YouTube.
         /// </summary>
         internal static string LinkYoutube {
             get {
@@ -709,7 +709,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Debes ser mayor de edad para registrarte en HotNotes..
+        ///   Busca una cadena traducida similar a Has de ser major d&apos;edat per a registrar-te a HotNotes..
         /// </summary>
         internal static string Major_edat {
             get {
@@ -727,7 +727,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El tipo de archivo subido no está soportado. Por favor, sube un archivo que tenga uno de los siguientes formatos:.
+        ///   Busca una cadena traducida similar a El tipus d&apos;arxiu pujat no està suportat. Si us plau, puja un arxiu que tingui un dels següents formats:.
         /// </summary>
         internal static string MimeType_no_suportat {
             get {
@@ -754,7 +754,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Modificar datos.
+        ///   Busca una cadena traducida similar a Modificar dades.
         /// </summary>
         internal static string Modificar_dades {
             get {
@@ -763,7 +763,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Nombre.
+        ///   Busca una cadena traducida similar a Nom.
         /// </summary>
         internal static string Nom {
             get {
@@ -772,7 +772,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No especificado.
+        ///   Busca una cadena traducida similar a No especificat.
         /// </summary>
         internal static string No_especificat {
             get {
@@ -781,7 +781,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No hay ningún comentario en este documento..
+        ///   Busca una cadena traducida similar a No hi ha cap comentari en aquest document..
         /// </summary>
         internal static string No_hi_ha_comentaris {
             get {
@@ -790,7 +790,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No cerrar la sesión automáticamente.
+        ///   Busca una cadena traducida similar a No tanquis la sessió automàticament.
         /// </summary>
         internal static string No_tanquis_sessio {
             get {
@@ -817,7 +817,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Contraseña.
+        ///   Busca una cadena traducida similar a Contrasenya.
         /// </summary>
         internal static string Password {
             get {
@@ -826,7 +826,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Las contraseñas no coinciden..
+        ///   Busca una cadena traducida similar a Les contrasenyes no coincideixen..
         /// </summary>
         internal static string Passwords_no_coincideixen {
             get {
@@ -835,7 +835,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La contraseña debe tener como mínimo 6 caracteres..
+        ///   Busca una cadena traducida similar a La contrasenya ha de tenir com a mínim 6 caràcters..
         /// </summary>
         internal static string Password_curta {
             get {
@@ -844,7 +844,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Proyecto final de carrera.
+        ///   Busca una cadena traducida similar a Projecte final de carrera.
         /// </summary>
         internal static string PFC {
             get {
@@ -862,7 +862,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Práctica.
+        ///   Busca una cadena traducida similar a Pràctica.
         /// </summary>
         internal static string Practica {
             get {
@@ -871,7 +871,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Prácticas.
+        ///   Busca una cadena traducida similar a Pràctiques.
         /// </summary>
         internal static string Practiques {
             get {
@@ -880,7 +880,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Subir.
+        ///   Busca una cadena traducida similar a Pujar.
         /// </summary>
         internal static string Pujar {
             get {
@@ -889,7 +889,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Subir documento.
+        ///   Busca una cadena traducida similar a Pujar document.
         /// </summary>
         internal static string Pujar_Document {
             get {
@@ -898,7 +898,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Registrarse.
+        ///   Busca una cadena traducida similar a Registrar-se.
         /// </summary>
         internal static string Registrarse {
             get {
@@ -907,7 +907,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Regístrate.
+        ///   Busca una cadena traducida similar a Regístra&apos;t.
         /// </summary>
         internal static string Registrat {
             get {
@@ -916,7 +916,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El registro se ha completado satisfactoriamente. Sin embargo, antes de poder entrar, debes revisar tu dirección de correo y hacer click en el enlace que te hemos enviado para activar tu cuenta..
+        ///   Busca una cadena traducida similar a El registre s&apos;ha completat satisfactòriament. No obstant, abans de poder entrar, has de revisar la teva direcció de correu i fer clic a l&apos;enllaç que t&apos;hem enviat per activar el teu compte..
         /// </summary>
         internal static string Registre_completat {
             get {
@@ -943,7 +943,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Sexo.
+        ///   Busca una cadena traducida similar a Sexe.
         /// </summary>
         internal static string Sexe {
             get {
@@ -952,7 +952,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Acerca de HotNotes....
+        ///   Busca una cadena traducida similar a Sobre HotNotes....
         /// </summary>
         internal static string Sobre_HotNotes {
             get {
@@ -961,7 +961,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cerrar sesión.
+        ///   Busca una cadena traducida similar a Tanca sessió.
         /// </summary>
         internal static string Tanca_sessio {
             get {
@@ -970,7 +970,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Tipo.
+        ///   Busca una cadena traducida similar a Tipus.
         /// </summary>
         internal static string Tipus {
             get {
@@ -988,7 +988,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Trabajo.
+        ///   Busca una cadena traducida similar a Treball.
         /// </summary>
         internal static string Treball {
             get {
@@ -997,7 +997,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Trabajos.
+        ///   Busca una cadena traducida similar a Treballs.
         /// </summary>
         internal static string Treballs {
             get {
@@ -1006,7 +1006,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Nombre de usuario.
+        ///   Busca una cadena traducida similar a Nom d&apos;usuari.
         /// </summary>
         internal static string Username {
             get {
@@ -1015,7 +1015,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El nombre de usuario debe tener como mínimo 6 caracteres..
+        ///   Busca una cadena traducida similar a El nom d&apos;usuari ha de tenir com a mínim 6 caràcters..
         /// </summary>
         internal static string Username_curt {
             get {
@@ -1024,7 +1024,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El nombre de usuario o la contraseña introducidos son incorrectos.
+        ///   Busca una cadena traducida similar a El nom d&apos;usuari o la contrasenya introduïts són incorrectes.
         /// </summary>
         internal static string Username_password_incorrecte {
             get {
@@ -1033,7 +1033,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Este nombre de usuario ya existe. Por favor, elije otro..
+        ///   Busca una cadena traducida similar a Aquest nom d&apos;usuari ja existeix. Si us plau, tria&apos;n un altre..
         /// </summary>
         internal static string Usuari_ja_existent {
             get {
@@ -1042,7 +1042,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No existe ningún usuario con éste código..
+        ///   Busca una cadena traducida similar a No existeix cap usuari amb aquest codi..
         /// </summary>
         internal static string Usuari_no_existeix {
             get {
@@ -1051,7 +1051,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Valoración.
+        ///   Busca una cadena traducida similar a Valoració.
         /// </summary>
         internal static string Valoracio {
             get {
@@ -1060,7 +1060,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Versión.
+        ///   Busca una cadena traducida similar a Versió.
         /// </summary>
         internal static string Versio {
             get {

@@ -139,6 +139,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>language_ca.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\language_ca1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>language_ca.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\language_es.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -750,6 +755,7 @@
     <Content Include="Plugins\jquery.bootpag.min.js" />
     <Content Include="Plugins\jquery-1.10.2.js" />
     <Content Include="Plugins\sha3.js" />
+    <Content Include="Scripts\Ordenacio_DataTables.js" />
     <Content Include="Scripts\Valoracio.js" />
     <Content Include="Views\Account\Activate.aspx" />
     <Content Include="Views\Account\Manage.aspx" />
@@ -793,7 +799,7 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\language_ca.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>language_ca.Designer.cs</LastGenOutput>
+      <LastGenOutput>language_ca1.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

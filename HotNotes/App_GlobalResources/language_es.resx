@@ -414,4 +414,43 @@
   <data name="Benvingut" xml:space="preserve">
     <value>Bienvenido</value>
   </data>
+  <data name="DT_sEmptyTable" xml:space="preserve">
+    <value>No hay resultados</value>
+  </data>
+  <data name="DT_sFirst" xml:space="preserve">
+    <value>Primero</value>
+  </data>
+  <data name="DT_sInfo" xml:space="preserve">
+    <value>Mostrando _START_-_END_ de _TOTAL_ resultados</value>
+  </data>
+  <data name="DT_sInfoEmpty" xml:space="preserve">
+    <value>Mostrando 0 de 0 resultados</value>
+  </data>
+  <data name="DT_sInfoFiltered" xml:space="preserve">
+    <value>(filtrados de _MAX_ resultados totales)</value>
+  </data>
+  <data name="DT_sLast" xml:space="preserve">
+    <value>Último</value>
+  </data>
+  <data name="DT_sLengthMenu" xml:space="preserve">
+    <value>Ver _MENU_ resultados</value>
+  </data>
+  <data name="DT_sNext" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="DT_sPrevious" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="DT_sProcessing" xml:space="preserve">
+    <value>Obteniendo resultados...</value>
+  </data>
+  <data name="DT_sSearch" xml:space="preserve">
+    <value>Buscar: </value>
+  </data>
+  <data name="DT_sZeroRecords" xml:space="preserve">
+    <value>No hay resultados</value>
+  </data>
+  <data name="Error_id_usuari" xml:space="preserve">
+    <value>No se ha encontrado ningún usuario con este Id.</value>
+  </data>
 </root>
