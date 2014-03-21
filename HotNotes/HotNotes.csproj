@@ -139,17 +139,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>language_ca.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\language_ca1.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>language_ca.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\language_es.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>language_es.resx</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UsuariController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -757,11 +752,11 @@
     <Content Include="Plugins\sha3.js" />
     <Content Include="Scripts\Ordenacio_DataTables.js" />
     <Content Include="Scripts\Valoracio.js" />
-    <Content Include="Views\Account\Activate.aspx" />
-    <Content Include="Views\Account\Manage.aspx" />
-    <Content Include="Views\Account\Login.aspx" />
-    <Content Include="Views\Account\Register.aspx" />
-    <Content Include="Views\Account\Register_Complete.aspx" />
+    <Content Include="Views\Usuari\Activate.aspx" />
+    <Content Include="Views\Usuari\Manage.aspx" />
+    <Content Include="Views\Usuari\Login.aspx" />
+    <Content Include="Views\Usuari\Register.aspx" />
+    <Content Include="Views\Usuari\Register_Complete.aspx" />
     <Content Include="Views\Document\Assignatura.aspx" />
     <Content Include="Views\Document\Pujar.aspx" />
     <Content Include="Views\Document\Usuari.aspx" />

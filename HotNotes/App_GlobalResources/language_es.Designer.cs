@@ -583,6 +583,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No te puedes dessubscribir de un usuari al que no estás subscrito..
+        /// </summary>
+        internal static string Error_no_subscrit {
+            get {
+                return ResourceManager.GetString("Error_no_subscrit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ha habido un error al subir el documento. Por favor, vuelve a intentarlo en unos minutos..
         /// </summary>
         internal static string Error_pujar_document {
@@ -597,6 +606,15 @@ namespace Resources {
         internal static string Error_registre {
             get {
                 return ResourceManager.GetString("Error_registre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ha habido un error al subscribirse a este usuario. Por favor, vuelve a intentarlo en unos instantes..
+        /// </summary>
+        internal static string Error_subscriure {
+            get {
+                return ResourceManager.GetString("Error_subscriure", resourceCulture);
             }
         }
         

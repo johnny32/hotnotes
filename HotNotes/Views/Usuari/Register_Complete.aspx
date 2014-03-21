@@ -12,7 +12,7 @@
         <h1><%: ViewBag.Accio %></h1>
     </hgroup>
 
-    <div style="color: white; margin-top: 1em; margin-bottom: 1em;">
+    <div style="margin-top: 1em; margin-bottom: 1em;">
         <%: ViewBag.Message %>
     </div>
 </asp:Content>

@@ -453,4 +453,10 @@
   <data name="Error_id_usuari" xml:space="preserve">
     <value>No se ha encontrado ningún usuario con este Id.</value>
   </data>
+  <data name="Error_subscriure" xml:space="preserve">
+    <value>Ha habido un error al subscribirse a este usuario. Por favor, vuelve a intentarlo en unos instantes.</value>
+  </data>
+  <data name="Error_no_subscrit" xml:space="preserve">
+    <value>No te puedes dessubscribir de un usuari al que no estás subscrito.</value>
+  </data>
 </root>

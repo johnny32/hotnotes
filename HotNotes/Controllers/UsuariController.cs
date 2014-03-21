@@ -18,10 +18,10 @@ using MySql.Data.MySqlClient;
 namespace HotNotes.Controllers
 {
     [Authorize]
-    public class AccountController : BaseController
+    public class UsuariController : BaseController
     {
         //
-        // GET: /Account/Login
+        // GET: /Usuari/Login
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -31,7 +31,7 @@ namespace HotNotes.Controllers
         }
 
         //
-        // POST: /Account/Login
+        // POST: /Usuari/Login
 
         [HttpPost]
         [AllowAnonymous]
@@ -101,7 +101,7 @@ namespace HotNotes.Controllers
             cookie2.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie2);
             */
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Usuari");
         }
 
         //
@@ -187,7 +187,7 @@ namespace HotNotes.Controllers
 
                             var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
                                 {
-                                    Path = Url.Action("Activate", "Account", new RouteValueDictionary(new { id = CodiActivacio }))
+                                    Path = Url.Action("Activate", "Usuari", new RouteValueDictionary(new { id = CodiActivacio }))
                                 };
 
                             string url = urlBuilder.ToString();
@@ -453,7 +453,7 @@ namespace HotNotes.Controllers
                                 {
                                     var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
                                     {
-                                        Path = Url.Action("Activate", "Account", new RouteValueDictionary(new { id = CodiActivacio }))
+                                        Path = Url.Action("Activate", "Usuari", new RouteValueDictionary(new { id = CodiActivacio }))
                                     };
 
                                     string url = urlBuilder.ToString();
@@ -516,5 +516,61 @@ namespace HotNotes.Controllers
             return View(u);
         }
 
+        [HttpPost]
+        public ActionResult Subscriure(int IdUsuariSubscrit)
+        {
+            string resultat = "";
+
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("INSERT INTO Subscripcions (IdUsuariSubscriu, IdUsuariSubscrit) VALUES (@IdUsuariSubscriu, @IdUsuariSubscrit)", connection);
+                command.Parameters.AddWithValue("@IdUsuariSubscriu", IdUsuari);
+                command.Parameters.AddWithValue("@IdUsuariSubscrit", IdUsuariSubscrit);
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                    resultat = "OK";
+                }
+                catch (MySqlException e)
+                {
+                    resultat = Lang.GetString(lang, "Error_subscriure");
+                }
+            }
+
+            return Json(resultat);
+        }
+
+        [HttpPost]
+        public ActionResult Dessubscriure(int IdUsuariSubscrit)
+        {
+            string resultat = "";
+
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuariSubscriu AND IdUsuariSubscrit = @IdUsuariSubscrit", connection);
+                command.Parameters.AddWithValue("@IdUsuariSubscriu", IdUsuari);
+                command.Parameters.AddWithValue("@IdUsuariSubscrit", IdUsuariSubscrit);
+
+                try
+                {
+                    int nFiles = command.ExecuteNonQuery();
+                    if (nFiles == 1)
+                    {
+                        resultat = "OK";
+                    }
+                    else
+                    {
+                        resultat = Lang.GetString(lang, "Error_no_subscrit");
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    resultat = Lang.GetString(lang, "Error_subscriure");
+                }
+            }
+        }
     }
 }

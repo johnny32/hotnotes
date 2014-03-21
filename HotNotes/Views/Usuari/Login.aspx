@@ -62,7 +62,7 @@
             </div>
         </div>
         
-        <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Inicia_sessio") %></button> <button type="button" class="btn btn-info" onclick="window.location='<%: Url.Action("Register", "Account") %>'"><%: Lang.GetString(lang, "Registrat") %></button>
+        <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Inicia_sessio") %></button> <button type="button" class="btn btn-info" onclick="window.location='<%: Url.Action("Register", "Usuari") %>'"><%: Lang.GetString(lang, "Registrat") %></button>
     </fieldset>
     <br />
     <p>
