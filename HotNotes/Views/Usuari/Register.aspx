@@ -2,7 +2,8 @@
 <%@ Import Namespace="HotNotes.Helpers" %>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Register
+    <% string lang = ViewBag.Lang; %>
+    <%: Lang.GetString(lang, "Registrarse")  %>
 </asp:Content>
 
 <asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
@@ -64,7 +65,7 @@
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
     <% string lang = ViewBag.Lang; %>
 
-    <style type="text/css">
+    <style>
         .container input, .container select
         {
             width: 100%;
@@ -91,7 +92,7 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4><%: Lang.GetString(lang, "Error") %></h4>
             <p><%= ViewBag.Error %></p>
-            <script type="text/javascript">
+            <script>
                 $('#errors').removeClass('hide');
             </script>
             <% } %>

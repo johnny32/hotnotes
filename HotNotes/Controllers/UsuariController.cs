@@ -279,7 +279,7 @@ namespace HotNotes.Controllers
         //
         // GET: /Account/Manage
 
-        public ActionResult Manage()
+        public ActionResult Configuracio()
         {
             HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
             int id = int.Parse(cookie.Value);
@@ -330,12 +330,11 @@ namespace HotNotes.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Manage(int Id, string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
+        public ActionResult Configuracio(string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
             Usuari u = new Usuari()
             {
-                Id = Id,
-                Username = Username,
+                Id = IdUsuari,
                 Password = PasswordEnc,
                 Email = Email,
                 Nom = Nom,
@@ -351,9 +350,9 @@ namespace HotNotes.Controllers
 
                 MySqlTransaction transaction = connection.BeginTransaction();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT Username FROM Usuaris WHERE Username = @Username AND Id != @Id", connection);
-                cmd.Parameters.AddWithValue("@Username", Username);
-                cmd.Parameters.AddWithValue("@Id", Id);
+                MySqlCommand cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email AND Id != @Id", connection);
+                cmd.Parameters.AddWithValue("@Email", Email);
+                cmd.Parameters.AddWithValue("@Id", IdUsuari);
                 cmd.Transaction = transaction;
 
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -363,152 +362,132 @@ namespace HotNotes.Controllers
                     reader.Close();
                     transaction.Rollback();
 
-                    ViewBag.Error = Lang.GetString(base.lang, "Usuari_ja_existent");
+                    ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
                 }
                 else
                 {
                     reader.Close();
 
-                    cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Email = @Email AND Id != @Id", connection);
-                    cmd.Parameters.AddWithValue("@Email", Email);
-                    cmd.Parameters.AddWithValue("@Id", Id);
+                    cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Id = @Id", connection);
+                    cmd.Parameters.AddWithValue("@Id", IdUsuari);
                     cmd.Transaction = transaction;
 
                     reader = cmd.ExecuteReader();
 
                     if (reader.Read())
                     {
-                        reader.Close();
-                        transaction.Rollback();
+                        string emailAntic = reader.GetString(reader.GetOrdinal("Email"));
+                        bool emailModificat = emailAntic != Email;
 
-                        ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
-                    }
-                    else
-                    {
                         reader.Close();
 
-                        cmd = new MySqlCommand("SELECT Email FROM Usuaris WHERE Id = @Id", connection);
-                        cmd.Parameters.AddWithValue("@Id", Id);
+                        object SexeSQL = Sexe.ToString();
+                        if (Sexe == '-')
+                        {
+                            SexeSQL = DBNull.Value;
+                        }
+
+                        object CodiActivacio = DBNull.Value;
+                        bool Activat = true;
+
+                        if (emailModificat)
+                        {
+                            Guid g = Guid.NewGuid();
+                            string CodiActivacioString = Convert.ToBase64String(g.ToByteArray());
+                            CodiActivacioString = CodiActivacioString.Replace("=", "");
+                            CodiActivacioString = CodiActivacioString.Replace("+", "");
+                            CodiActivacioString = CodiActivacioString.Replace("/", "");
+                            CodiActivacio = CodiActivacioString;
+                            Activat = false;
+                        }
+
+                        string passwordSQL = "";
+                        if (PasswordEnc != "")
+                        {
+                            passwordSQL = ", Password = @Password";
+                        }
+
+                        cmd = new MySqlCommand("UPDATE Usuaris SET Email = @Email" + passwordSQL + ", Nom = @Nom, Cognoms = @Cognoms, DataNaixement = @DataNaixement, Sexe = @Sexe, Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
+                        if (PasswordEnc != "")
+                        {
+                            cmd.Parameters.AddWithValue("@Password", PasswordEnc);
+                        }
+                        cmd.Parameters.AddWithValue("@Email", Email);
+                        cmd.Parameters.AddWithValue("@Nom", Nom);
+                        cmd.Parameters.AddWithValue("@Cognoms", Cognoms);
+                        cmd.Parameters.AddWithValue("@DataNaixement", DataNaixement);
+                        cmd.Parameters.AddWithValue("@Sexe", SexeSQL);
+                        cmd.Parameters.AddWithValue("@Activat", Activat);
+                        cmd.Parameters.AddWithValue("@CodiActivacio", CodiActivacio);
+                        cmd.Parameters.AddWithValue("@Id", IdUsuari);
                         cmd.Transaction = transaction;
 
-                        reader = cmd.ExecuteReader();
-
-                        if (reader.Read())
+                        try
                         {
-                            string emailAntic = reader.GetString(reader.GetOrdinal("Email"));
-                            bool emailModificat = emailAntic != Email;
+                            reader = cmd.ExecuteReader();
 
                             reader.Close();
-
-                            object SexeSQL = Sexe.ToString();
-                            if (Sexe == '-')
-                            {
-                                SexeSQL = DBNull.Value;
-                            }
-
-                            object CodiActivacio = DBNull.Value;
-                            bool Activat = true;
+                            transaction.Commit();
 
                             if (emailModificat)
                             {
-                                Guid g = Guid.NewGuid();
-                                string CodiActivacioString = Convert.ToBase64String(g.ToByteArray());
-                                CodiActivacioString = CodiActivacioString.Replace("=", "");
-                                CodiActivacioString = CodiActivacioString.Replace("+", "");
-                                CodiActivacioString = CodiActivacioString.Replace("/", "");
-                                CodiActivacio = CodiActivacioString;
-                                Activat = false;
-                            }
-
-                            string passwordSQL = "";
-                            if (PasswordEnc != "")
-                            {
-                                passwordSQL = ", Password = @Password";
-                            }
-
-                            cmd = new MySqlCommand("UPDATE Usuaris SET Username = @Username" + passwordSQL + ", Email = @Email, Nom = @Nom, Cognoms = @Cognoms, DataNaixement = @DataNaixement, Sexe = @Sexe, Activat = @Activat, CodiActivacio = @CodiActivacio WHERE Id = @Id", connection);
-                            cmd.Parameters.AddWithValue("@Username", Username);
-                            if (PasswordEnc != "")
-                            {
-                                cmd.Parameters.AddWithValue("@Password", PasswordEnc);
-                            }
-                            cmd.Parameters.AddWithValue("@Email", Email);
-                            cmd.Parameters.AddWithValue("@Nom", Nom);
-                            cmd.Parameters.AddWithValue("@Cognoms", Cognoms);
-                            cmd.Parameters.AddWithValue("@DataNaixement", DataNaixement);
-                            cmd.Parameters.AddWithValue("@Sexe", SexeSQL);
-                            cmd.Parameters.AddWithValue("@Activat", Activat);
-                            cmd.Parameters.AddWithValue("@CodiActivacio", CodiActivacio);
-                            cmd.Parameters.AddWithValue("@Id", Id);
-                            cmd.Transaction = transaction;
-
-                            try
-                            {
-                                reader = cmd.ExecuteReader();
-
-                                reader.Close();
-                                transaction.Commit();
-
-                                if (emailModificat)
+                                var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
                                 {
-                                    var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
-                                    {
-                                        Path = Url.Action("Activate", "Usuari", new RouteValueDictionary(new { id = CodiActivacio }))
-                                    };
+                                    Path = Url.Action("Activate", "Usuari", new RouteValueDictionary(new { id = CodiActivacio }))
+                                };
 
-                                    string url = urlBuilder.ToString();
+                                string url = urlBuilder.ToString();
 
-                                    MailMessage msg = new MailMessage();
-                                    msg.To.Add(Email);
-                                    msg.Subject = Lang.GetString(lang, "Completa_el_registre");
-                                    msg.From = new MailAddress("webmasterhotnotes@gmail.com", "HotNotes Admin");
-                                    msg.Body = Lang.GetString(base.lang, "Email_registre").Replace("[[NOM]]", Nom).Replace("[[LINK]]", url);
-                                    msg.IsBodyHtml = true;
+                                MailMessage msg = new MailMessage();
+                                msg.To.Add(Email);
+                                msg.Subject = Lang.GetString(lang, "Completa_el_registre");
+                                msg.From = new MailAddress("webmasterhotnotes@gmail.com", "HotNotes Admin");
+                                msg.Body = Lang.GetString(base.lang, "Email_registre").Replace("[[NOM]]", Nom).Replace("[[LINK]]", url);
+                                msg.IsBodyHtml = true;
 
-                                    NetworkCredential nwCredential = new NetworkCredential("webmasterhotnotes", "thehotnotespassword");
+                                NetworkCredential nwCredential = new NetworkCredential("webmasterhotnotes", "thehotnotespassword");
 
-                                    SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                                    smtp.UseDefaultCredentials = false;
-                                    smtp.Credentials = nwCredential;
-                                    smtp.EnableSsl = true;
-                                    smtp.Send(msg);
+                                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                                smtp.UseDefaultCredentials = false;
+                                smtp.Credentials = nwCredential;
+                                smtp.EnableSsl = true;
+                                smtp.Send(msg);
 
-                                    FormsAuthentication.SignOut();
-                                    ViewBag.Accio = Lang.GetString(base.lang, "Dades_actualitzades");
-                                    ViewBag.Message = Lang.GetString(base.lang, "Email_modificat");
+                                FormsAuthentication.SignOut();
+                                ViewBag.Accio = Lang.GetString(base.lang, "Dades_actualitzades");
+                                ViewBag.Message = Lang.GetString(base.lang, "Email_modificat");
 
-                                    return View("Register_Complete");
-                                }
-                                else
-                                {
-                                    ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");                                    
-                                }
-                                return RedirectToAction("Index", "Home");
+                                return View("Register_Complete");
                             }
-                            catch (MySqlException)
+                            else
                             {
-                                reader.Close();
-                                transaction.Rollback();
-
-                                ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
+                                ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");
                             }
-                            catch (SmtpException)
-                            {
-                                reader.Close();
-                                transaction.Rollback();
-
-                                ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
-                            }
-                            //TODO Substituir els catch's per catch (Exception)
+                            return RedirectToAction("Index", "Home");
                         }
-                        else
+                        catch (MySqlException)
                         {
-                            //Usuari no existent previament!
                             reader.Close();
                             transaction.Rollback();
 
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
+                        catch (SmtpException)
+                        {
+                            reader.Close();
+                            transaction.Rollback();
+
+                            ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
+                        }
+                        //TODO Substituir els catch's per catch (Exception)
+                    }
+                    else
+                    {
+                        //Usuari no existent previament!
+                        reader.Close();
+                        transaction.Rollback();
+
+                        ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                     }
                 }
             }
@@ -571,6 +550,8 @@ namespace HotNotes.Controllers
                     resultat = Lang.GetString(lang, "Error_subscriure");
                 }
             }
+
+            return Json(resultat);
         }
     }
 }

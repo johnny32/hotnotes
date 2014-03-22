@@ -3,7 +3,7 @@
 <% string lang = ViewBag.Lang; %>
 <% if (Request.IsAuthenticated) { %>
     <ul class="nav navbar-nav navbar-right">
-        <li><%: Html.ActionLink(User.Identity.Name, "Manage", "Usuari", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" }) %></li>
+        <li><%: Html.ActionLink(User.Identity.Name, "Configuracio", "Usuari", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" }) %></li>
         <li> <% using (Html.BeginForm("Logout", "Usuari", FormMethod.Post, new { id = "logoutForm", @class = "navbar-form navbar-right" })) { %>
             <%: Html.AntiForgeryToken() %>
             <button type="button" class="btn btn-primary" onclick="document.getElementById('logoutForm').submit()"><%: Lang.GetString(lang, "Tanca_sessio") %></button>

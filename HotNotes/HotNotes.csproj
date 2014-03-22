@@ -134,7 +134,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\language_ca.Designer.cs">
+    <Compile Include="App_GlobalResources\language_ca1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>language_ca.resx</DependentUpon>
@@ -753,7 +753,7 @@
     <Content Include="Scripts\Ordenacio_DataTables.js" />
     <Content Include="Scripts\Valoracio.js" />
     <Content Include="Views\Usuari\Activate.aspx" />
-    <Content Include="Views\Usuari\Manage.aspx" />
+    <Content Include="Views\Usuari\Configuracio.aspx" />
     <Content Include="Views\Usuari\Login.aspx" />
     <Content Include="Views\Usuari\Register.aspx" />
     <Content Include="Views\Usuari\Register_Complete.aspx" />

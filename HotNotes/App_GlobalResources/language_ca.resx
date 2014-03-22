@@ -459,4 +459,10 @@
   <data name="Error_no_subscrit" xml:space="preserve">
     <value>No et pots dessubscriure d'un usuari al que no estàs subscrit.</value>
   </data>
+  <data name="Avis_no_matriculat" xml:space="preserve">
+    <value>Sembla que encara no t'has matriculat de cap curs. Has de seleccionar com a mínim un curs del qual estar matriculat per a poder pujar-hi documents.&lt;br/&gt;&lt;br/&gt;Si us plau, accedeix a la teva [[LINK_CONFIGURACIO]] i tria un curs del qual estar matriculat.</value>
+  </data>
+  <data name="Pagina_configuracio" xml:space="preserve">
+    <value>pàgina de configuració</value>
+  </data>
 </root>

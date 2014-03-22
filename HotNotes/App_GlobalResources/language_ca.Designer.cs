@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sembla que encara no t&apos;has matriculat de cap curs. Has de seleccionar com a mínim un curs del qual estar matriculat per a poder pujar-hi documents.&lt;br/&gt;&lt;br/&gt;Si us plau, accedeix a la teva [[LINK_CONFIGURACIO]] i tria un curs del qual estar matriculat..
+        /// </summary>
+        internal static string Avis_no_matriculat {
+            get {
+                return ResourceManager.GetString("Avis_no_matriculat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Benvingut.
         /// </summary>
         internal static string Benvingut {
@@ -367,6 +376,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No hi ha resultats.
+        /// </summary>
+        internal static string DT_sEmptyTable {
+            get {
+                return ResourceManager.GetString("DT_sEmptyTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Primer.
+        /// </summary>
+        internal static string DT_sFirst {
+            get {
+                return ResourceManager.GetString("DT_sFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Mostrant _START_-_END_ de _TOTAL_ resultats.
         /// </summary>
         internal static string DT_sInfo {
@@ -385,11 +412,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a .
+        ///   Busca una cadena traducida similar a (filtrats de _MAX_ resultats totals).
         /// </summary>
         internal static string DT_sInfoFiltered {
             get {
                 return ResourceManager.GetString("DT_sInfoFiltered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Últim.
+        /// </summary>
+        internal static string DT_sLast {
+            get {
+                return ResourceManager.GetString("DT_sLast", resourceCulture);
             }
         }
         
@@ -399,6 +435,42 @@ namespace Resources {
         internal static string DT_sLengthMenu {
             get {
                 return ResourceManager.GetString("DT_sLengthMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Següent.
+        /// </summary>
+        internal static string DT_sNext {
+            get {
+                return ResourceManager.GetString("DT_sNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Anterior.
+        /// </summary>
+        internal static string DT_sPrevious {
+            get {
+                return ResourceManager.GetString("DT_sPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Obtenint resultats....
+        /// </summary>
+        internal static string DT_sProcessing {
+            get {
+                return ResourceManager.GetString("DT_sProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cercar: .
+        /// </summary>
+        internal static string DT_sSearch {
+            get {
+                return ResourceManager.GetString("DT_sSearch", resourceCulture);
             }
         }
         
@@ -511,6 +583,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No s&apos;ha trobat cap usuari amb aquest Id..
+        /// </summary>
+        internal static string Error_id_usuari {
+            get {
+                return ResourceManager.GetString("Error_id_usuari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No et pots dessubscriure d&apos;un usuari al que no estàs subscrit..
+        /// </summary>
+        internal static string Error_no_subscrit {
+            get {
+                return ResourceManager.GetString("Error_no_subscrit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Hi ha hagut un error al pujar el document. Si us plau, torna-ho a provar en uns minuts..
         /// </summary>
         internal static string Error_pujar_document {
@@ -525,6 +615,15 @@ namespace Resources {
         internal static string Error_registre {
             get {
                 return ResourceManager.GetString("Error_registre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hi ha hagut un error al subscriure&apos;s a aquest usuari. Si us plau, torna-ho a provar en uns instants..
+        /// </summary>
+        internal static string Error_subscriure {
+            get {
+                return ResourceManager.GetString("Error_subscriure", resourceCulture);
             }
         }
         
@@ -723,6 +822,15 @@ namespace Resources {
         internal static string No_tanquis_sessio {
             get {
                 return ResourceManager.GetString("No_tanquis_sessio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a pàgina de configuració.
+        /// </summary>
+        internal static string Pagina_configuracio {
+            get {
+                return ResourceManager.GetString("Pagina_configuracio", resourceCulture);
             }
         }
         

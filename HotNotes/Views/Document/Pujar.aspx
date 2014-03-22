@@ -59,6 +59,14 @@
        </div>
     <% } %>
 
+    <% if (Model.Count == 0)
+       { %>
+    <div class="alert alert-block alert-warning" style="margin-right: 0.8em;">
+        <p><%= Lang.GetString(lang, "Avis_no_matriculat").Replace("[[LINK_CONFIGURACIO]]", "<a href=\"" + Url.Action("Configuracio", "Usuari") + "\">" + Lang.GetString(lang, "Pagina_configuracio") + "</a>") %></p>
+    </div>
+    <% }
+       else
+       { %>
     <form id="formPujar" action="<%: Url.Action("Pujar", "Document") %>" method="post" enctype="multipart/form-data">
         <fieldset class="text-center">
             <legend>Pujar nou document</legend>
@@ -171,6 +179,7 @@
             </div>
         </fieldset>
     </form>
+    <% } %>
 </asp:Content>
 
 

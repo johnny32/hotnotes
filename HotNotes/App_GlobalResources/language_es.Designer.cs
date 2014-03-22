@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Parece que aún no te has matriculado de ningún curso. Tienes que seleccionar como mínimo un curso del cual estar matriculado para poder subir documentos.&lt;br/&gt;&lt;br/&gt;Por favor, accede a tu [[LINK_CONFIGURACIO]] y selecciona un curso del cual estar matriculado..
+        /// </summary>
+        internal static string Avis_no_matriculat {
+            get {
+                return ResourceManager.GetString("Avis_no_matriculat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Bienvenido.
         /// </summary>
         internal static string Benvingut {
@@ -813,6 +822,15 @@ namespace Resources {
         internal static string No_tanquis_sessio {
             get {
                 return ResourceManager.GetString("No_tanquis_sessio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a página de configuración.
+        /// </summary>
+        internal static string Pagina_configuracio {
+            get {
+                return ResourceManager.GetString("Pagina_configuracio", resourceCulture);
             }
         }
         
