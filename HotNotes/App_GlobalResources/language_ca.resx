@@ -465,4 +465,34 @@
   <data name="Pagina_configuracio" xml:space="preserve">
     <value>pàgina de configuració</value>
   </data>
+  <data name="Cursos_matriculats" xml:space="preserve">
+    <value>Cursos matriculats</value>
+  </data>
+  <data name="Carrera" xml:space="preserve">
+    <value>Carrera</value>
+  </data>
+  <data name="Curs" xml:space="preserve">
+    <value>Curs</value>
+  </data>
+  <data name="Eliminar" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="Facultat" xml:space="preserve">
+    <value>Facultat</value>
+  </data>
+  <data name="Universitat" xml:space="preserve">
+    <value>Universitat</value>
+  </data>
+  <data name="Afegir_matricula" xml:space="preserve">
+    <value>Afegir matrícula</value>
+  </data>
+  <data name="Confirmar_eliminar_matricula" xml:space="preserve">
+    <value>Estàs segur de que vols eliminar aquesta matrícula?</value>
+  </data>
+  <data name="Error_dessubscriure" xml:space="preserve">
+    <value>Hi ha hagut un error al dessubscriure's d'aquest usuari. Si us plau, torna-ho a provar en uns instants.</value>
+  </data>
+  <data name="Error_no_matriculat" xml:space="preserve">
+    <value>No estàs matriculat d'aquest curs.</value>
+  </data>
 </root>

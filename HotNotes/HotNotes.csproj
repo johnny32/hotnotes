@@ -158,6 +158,7 @@
     <Compile Include="Models\Assignatura.cs" />
     <Compile Include="Models\Comentari.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\Matricula.cs" />
     <Compile Include="Models\Usuari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

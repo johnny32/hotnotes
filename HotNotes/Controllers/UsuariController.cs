@@ -1,5 +1,6 @@
 ﻿//System
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
@@ -315,7 +316,31 @@ namespace HotNotes.Controllers
                         Activat = reader.GetBoolean(reader.GetOrdinal("Activat"))
                     };
 
-                    return View(u);
+                    reader.Close();
+
+                    cmd = new MySqlCommand("SELECT m.IdCarrera, m.Curs, c.Nom AS NomCarrera, f.Nom AS NomFacultat, u.Nom AS NomUniversitat " + 
+                                           "FROM Matricules m, Carreres c, Facultats f, Universitats u " + 
+                                           "WHERE m.IdUsuari = @IdUsuari AND m.IdCarrera = c.Id AND c.IdFacultat = f.Id AND f.IdUniversitat = u.Id " +
+                                           "ORDER BY c.Nom ASC, m.Curs ASC", connection);
+                    cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                    reader = cmd.ExecuteReader();
+
+                    List<Matricula> matricules = new List<Matricula>();
+
+                    while (reader.Read())
+                    {
+                        Matricula m = new Matricula();
+                        m.IdUsuari = IdUsuari;
+                        m.IdCarrera = reader.GetInt32(reader.GetOrdinal("IdCarrera"));
+                        m.Curs = reader.GetInt32(reader.GetOrdinal("Curs"));
+                        m.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+                        m.NomFacultat = reader.GetString(reader.GetOrdinal("NomFacultat"));
+                        m.NomUniversitat = reader.GetString(reader.GetOrdinal("NomUniversitat"));
+
+                        matricules.Add(m);
+                    }
+
+                    return View(new Tuple<Usuari, List<Matricula>>(u, matricules));
                 }
                 else
                 {
@@ -543,6 +568,40 @@ namespace HotNotes.Controllers
                     else
                     {
                         resultat = Lang.GetString(lang, "Error_no_subscrit");
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    resultat = Lang.GetString(lang, "Error_dessubscriure");
+                }
+            }
+
+            return Json(resultat);
+        }
+
+        [HttpPost]
+        public ActionResult EliminarMatricula(int IdCarrera, int Curs)
+        {
+            string resultat = "";
+
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM Matricules WHERE IdUsuari = @IdUsuari AND IdCarrera = @IdCarrera AND Curs = @Curs", connection);
+                command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                command.Parameters.AddWithValue("@IdCarrera", IdCarrera);
+                command.Parameters.AddWithValue("@Curs", Curs);
+
+                try
+                {
+                    int nFiles = command.ExecuteNonQuery();
+                    if (nFiles == 1)
+                    {
+                        resultat = "OK";
+                    }
+                    else
+                    {
+                        resultat = Lang.GetString(lang, "Error_no_matriculat");
                     }
                 }
                 catch (MySqlException e)
