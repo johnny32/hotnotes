@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Afegir.
+        /// </summary>
+        internal static string Afegir {
+            get {
+                return ResourceManager.GetString("Afegir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Afegir matrícula.
         /// </summary>
         internal static string Afegir_matricula {
@@ -219,6 +228,15 @@ namespace Resources {
         internal static string Cercar {
             get {
                 return ResourceManager.GetString("Cercar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cinquè.
+        /// </summary>
+        internal static string Cinque {
+            get {
+                return ResourceManager.GetString("Cinque", resourceCulture);
             }
         }
         
@@ -637,6 +655,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Hi ha hagut un error al eliminar aquesta matrícula. Si us plau, torna-ho a intentar en uns instants..
+        /// </summary>
+        internal static string Error_eliminar_matricula {
+            get {
+                return ResourceManager.GetString("Error_eliminar_matricula", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No s&apos;ha trobat cap assignatura amb aquest Id..
         /// </summary>
         internal static string Error_id_assignatura {
@@ -651,6 +678,24 @@ namespace Resources {
         internal static string Error_id_usuari {
             get {
                 return ResourceManager.GetString("Error_id_usuari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ja estàs matriculat d&apos;aquesta carrera i d&apos;aquest curs..
+        /// </summary>
+        internal static string Error_ja_matriculat {
+            get {
+                return ResourceManager.GetString("Error_ja_matriculat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hi ha hagut un error al matricular-se d&apos;aquest curs. Si us plau, torna-ho a provar en uns instants..
+        /// </summary>
+        internal static string Error_matricular {
+            get {
+                return ResourceManager.GetString("Error_matricular", resourceCulture);
             }
         }
         
@@ -997,6 +1042,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Primer.
+        /// </summary>
+        internal static string Primer {
+            get {
+                return ResourceManager.GetString("Primer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Pujar.
         /// </summary>
         internal static string Pujar {
@@ -1011,6 +1065,15 @@ namespace Resources {
         internal static string Pujar_Document {
             get {
                 return ResourceManager.GetString("Pujar_Document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Quart.
+        /// </summary>
+        internal static string Quart {
+            get {
+                return ResourceManager.GetString("Quart", resourceCulture);
             }
         }
         
@@ -1060,6 +1123,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Segon.
+        /// </summary>
+        internal static string Segon {
+            get {
+                return ResourceManager.GetString("Segon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sense especificar.
+        /// </summary>
+        internal static string Sense_especificar {
+            get {
+                return ResourceManager.GetString("Sense_especificar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sexe.
         /// </summary>
         internal static string Sexe {
@@ -1078,11 +1159,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Tancar.
+        /// </summary>
+        internal static string Tancar {
+            get {
+                return ResourceManager.GetString("Tancar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tanca sessió.
         /// </summary>
         internal static string Tanca_sessio {
             get {
                 return ResourceManager.GetString("Tanca_sessio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tercer.
+        /// </summary>
+        internal static string Tercer {
+            get {
+                return ResourceManager.GetString("Tercer", resourceCulture);
             }
         }
         
@@ -1119,6 +1218,33 @@ namespace Resources {
         internal static string Treballs {
             get {
                 return ResourceManager.GetString("Treballs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tria una carrera.
+        /// </summary>
+        internal static string Tria_carrera {
+            get {
+                return ResourceManager.GetString("Tria_carrera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tria una facultat.
+        /// </summary>
+        internal static string Tria_facultat {
+            get {
+                return ResourceManager.GetString("Tria_facultat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tria una universitat.
+        /// </summary>
+        internal static string Tria_universitat {
+            get {
+                return ResourceManager.GetString("Tria_universitat", resourceCulture);
             }
         }
         

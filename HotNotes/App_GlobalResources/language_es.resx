@@ -495,4 +495,46 @@
   <data name="Error_no_matriculat" xml:space="preserve">
     <value>No estás matriculado de este curso.</value>
   </data>
+  <data name="Error_ja_matriculat" xml:space="preserve">
+    <value>Ya estás matriculado de esta carrera y este curso.</value>
+  </data>
+  <data name="Error_eliminar_matricula" xml:space="preserve">
+    <value>Ha habido un error al eliminar esta matrícula. Por favor, vuelve a intentarlo en unos instantes.</value>
+  </data>
+  <data name="Error_matricular" xml:space="preserve">
+    <value>Ha habido un error al matricularse de este curso. Por favor, vuelve a intentarlo en unos instantes.</value>
+  </data>
+  <data name="Afegir" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="Tancar" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="Tria_carrera" xml:space="preserve">
+    <value>Elige una carrera</value>
+  </data>
+  <data name="Tria_facultat" xml:space="preserve">
+    <value>Elige una facultad</value>
+  </data>
+  <data name="Tria_universitat" xml:space="preserve">
+    <value>Elige una universidad</value>
+  </data>
+  <data name="Cinque" xml:space="preserve">
+    <value>Quinto</value>
+  </data>
+  <data name="Primer" xml:space="preserve">
+    <value>Primero</value>
+  </data>
+  <data name="Quart" xml:space="preserve">
+    <value>Cuarto</value>
+  </data>
+  <data name="Segon" xml:space="preserve">
+    <value>Segundo</value>
+  </data>
+  <data name="Sense_especificar" xml:space="preserve">
+    <value>Sin especificar</value>
+  </data>
+  <data name="Tercer" xml:space="preserve">
+    <value>Tercero</value>
+  </data>
 </root>

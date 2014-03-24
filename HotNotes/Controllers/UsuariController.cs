@@ -579,6 +579,50 @@ namespace HotNotes.Controllers
             return Json(resultat);
         }
 
+        #region Matricules
+
+        [HttpPost]
+        public ActionResult AfegirMatricula(int IdCarrera, int Curs)
+        {
+            string resultat = "";
+
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM Matricules WHERE IdUsuari = @IdUsuari AND IdCarrera = @IdCarrera AND Curs = @Curs", connection);
+                command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                command.Parameters.AddWithValue("@IdCarrera", IdCarrera);
+                command.Parameters.AddWithValue("@Curs", Curs);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    resultat = Lang.GetString(lang, "Error_ja_matriculat");
+                }
+                else
+                {
+                    reader.Close();
+                    command = new MySqlCommand("INSERT INTO Matricules (IdUsuari, IdCarrera, Curs) VALUES (@IdUsuari, @IdCarrera, @Curs)", connection);
+                    command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
+                    command.Parameters.AddWithValue("@IdCarrera", IdCarrera);
+                    command.Parameters.AddWithValue("@Curs", Curs);
+
+                    int nRows = command.ExecuteNonQuery();
+                    if (nRows == 1)
+                    {
+                        resultat = "OK";
+                    }
+                    else
+                    {
+                        resultat = Lang.GetString(lang, "Error_matricular");
+                    }
+                }
+            }
+
+            return Json(resultat);
+        }
+
         [HttpPost]
         public ActionResult EliminarMatricula(int IdCarrera, int Curs)
         {
@@ -606,11 +650,94 @@ namespace HotNotes.Controllers
                 }
                 catch (MySqlException e)
                 {
-                    resultat = Lang.GetString(lang, "Error_subscriure");
+                    resultat = Lang.GetString(lang, "Error_eliminar_matricula");
                 }
             }
 
             return Json(resultat);
         }
+
+        public ActionResult LlistatUniversitats()
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SELECT u.Id, u.Nom, p.Poblacio FROM Universitats u, Poblacions p WHERE u.IdPoblacio = p.Id ORDER BY Nom ASC", connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                List<Universitat> resultat = new List<Universitat>();
+
+                while (reader.Read())
+                {
+                    Universitat u = new Universitat();
+
+                    u.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    u.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    u.Poblacio = reader.GetString(reader.GetOrdinal("Poblacio"));
+
+                    resultat.Add(u);
+                }
+
+                return Json(resultat, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult LlistatFacultats(int IdUniversitat)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SELECT Id, Nom, Campus FROM Facultats WHERE IdUniversitat = @IdUniversitat ORDER BY Nom ASC", connection);
+                command.Parameters.AddWithValue("@IdUniversitat", IdUniversitat);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                List<Facultat> resultat = new List<Facultat>();
+
+                while (reader.Read())
+                {
+                    Facultat f = new Facultat();
+
+                    f.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    f.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    if (!reader.IsDBNull(reader.GetOrdinal("Campus")))
+                    {
+                        f.Campus = reader.GetString(reader.GetOrdinal("Campus"));
+                    }
+
+                    resultat.Add(f);
+                }
+
+                return Json(resultat, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult LlistatCarreres(int IdFacultat)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SELECT Id, Nom FROM Carreres WHERE IdFacultat = @IdFacultat ORDER BY Nom ASC", connection);
+                command.Parameters.AddWithValue("@IdFacultat", IdFacultat);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                List<Carrera> resultat = new List<Carrera>();
+
+                while (reader.Read())
+                {
+                    Carrera c = new Carrera();
+
+                    c.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    c.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+
+                    resultat.Add(c);
+                }
+
+                return Json(resultat, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
     }
 }

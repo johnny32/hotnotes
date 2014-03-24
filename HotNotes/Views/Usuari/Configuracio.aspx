@@ -26,6 +26,11 @@
         {
             padding-bottom: 0.25em;
         }
+
+        #modalMatricula > .modal-dialog
+        {
+            width: 48em;
+        }
     </style>
 
     <script type="text/javascript">
@@ -131,7 +136,110 @@
         });
 
         function obrirModalAfegirMatricula() {
+            $('#modalMatriculaContingut').hide();
+            $('#modalMatriculaProgressBar').show();
+            $('#modalMatricula').modal('show');
 
+            $.ajax({
+                url: '<%: Url.Action("LlistatUniversitats", "Usuari") %>',
+                type: 'get',
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var html = '';
+                    $.each(data, function (i, item) {
+                        html += '<option value="' + item.Id + '">' + item.Nom + '</option>';
+                    });
+                    $('#selectUniversitats').html(html);
+                    carregarFacultats();
+                    $('#modalMatriculaProgressBar').hide();
+                    $('#modalMatriculaContingut').show();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#modalMatricula').html('<div class="alert alert-danger"><%: Lang.GetString(lang, "Error_desconegut") %>: ' + errorThrown + '</div>');
+                }
+            })
+        }
+
+        function carregarFacultats() {
+            var params = {
+                IdUniversitat: $('#selectUniversitats option:selected').val()
+            };
+
+            $.ajax({
+                url: '<%: Url.Action("LlistatFacultats", "Usuari") %>',
+                type: 'get',
+                data: params,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var html = '';
+                    $.each(data, function (i, item) {
+                        html += '<option value="' + item.Id + '">' + item.Nom + '</option>';
+                    });
+                    $('#selectFacultats').html(html);
+                    carregarCarreres();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#modalMatricula').html('<div class="alert alert-danger"><%: Lang.GetString(lang, "Error_desconegut") %>: ' + errorThrown + '</div>');
+                }
+            });
+        }
+
+        function carregarCarreres() {
+            var params = {
+                IdFacultat: $('#selectFacultats option:selected').val()
+            };
+
+            $.ajax({
+                url: '<%: Url.Action("LlistatCarreres", "Usuari") %>',
+                type: 'get',
+                data: params,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var html = '';
+                    $.each(data, function (i, item) {
+                        html += '<option value="' + item.Id + '">' + item.Nom + '</option>';
+                    });
+                    $('#selectCarreres').html(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#modalMatricula').html('<div class="alert alert-danger"><%: Lang.GetString(lang, "Error_desconegut") %>: ' + errorThrown + '</div>');
+                }
+            });
+        }
+
+        function afegirMatricula() {
+            var params = {
+                IdCarrera: $('#selectCarreres option:selected').val(),
+                Curs: $('#selectCurs option:selected').val()
+            };
+
+            $.ajax({
+                url: '<%: Url.Action("AfegirMatricula", "Usuari") %>',
+                type: 'post',
+                data: params,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'OK') {
+                        tableMatriculesObj.fnAddData([
+                            $('#selectCarreres option:selected').text(),
+                            params.Curs,
+                            $('#selectFacultats option:selected').text(),
+                            $('#selectUniversitats option:selected').text(),
+                            '<button type="button" class="btn btn-danger btn-xs" onclick="eliminarMatricula(this, ' + params.IdCarrera + ', ' + params.Curs + ');"><%: Lang.GetString(lang, "Eliminar") %></button>'
+                        ]);
+                    } else {
+                        $('#errors').html('<button type="button" class="close" data-dismiss="alert">&times;</button><p>' + data + '</p>');
+                        $('#errors').removeClass('hide');
+                    }
+                    $('#modalMatricula').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#modalMatricula').html('<div class="alert alert-danger"><%: Lang.GetString(lang, "Error_desconegut") %>: ' + errorThrown + '</div>');
+                }
+            })
         }
 
         function eliminarMatricula(domElem, idCarrera, curs) {
@@ -309,6 +417,59 @@
         <%  } %>
         </tbody>
     </table>
+
+    <div id="modalMatricula" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"><%: Lang.GetString(lang, "Afegir_matricula") %></h4>
+                </div>
+                <div id="modalMatriculaProgressBar" class="modal-body">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            <span class="sr-only"><%: Lang.GetString(lang, "Carregant") %></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="modalMatriculaContingut" class="modal-body">
+                    <div class="form-group">
+                        <label for="selectUniversitats"><%: Lang.GetString(lang, "Tria_universitat") %></label>
+                        <select id="selectUniversitats" class="form-control" onchange="carregarFacultats();"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectFacultats"><%: Lang.GetString(lang, "Tria_facultat") %></label>
+                        <select id="selectFacultats" class="form-control" onchange="carregarCarreres();"></select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="selectCarreres"><%: Lang.GetString(lang, "Tria_carrera") %></label>
+                                <select id="selectCarreres" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-left: 0;">
+                            <div class="form-group">
+                                <label for="selectCurs"><%: Lang.GetString(lang, "Curs") %></label>
+                                <select id="selectCurs" class="form-control">
+                                    <option value="1"><%: Lang.GetString(lang, "Primer") %></option>
+                                    <option value="2"><%: Lang.GetString(lang, "Segon") %></option>
+                                    <option value="3"><%: Lang.GetString(lang, "Tercer") %></option>
+                                    <option value="4"><%: Lang.GetString(lang, "Quart") %></option>
+                                    <option value="5"><%: Lang.GetString(lang, "Cinque") %></option>
+                                    <option value="0"><%: Lang.GetString(lang, "Sense_especificar") %></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><%: Lang.GetString(lang, "Tancar") %></button>
+                    <button type="button" class="btn btn-primary" onclick="afegirMatricula();"><%: Lang.GetString(lang, "Afegir") %></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <%
         } %>
 </asp:Content>

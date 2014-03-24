@@ -156,9 +156,12 @@
     </Compile>
     <Compile Include="Helpers\Lang.cs" />
     <Compile Include="Models\Assignatura.cs" />
+    <Compile Include="Models\Carrera.cs" />
     <Compile Include="Models\Comentari.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\Facultat.cs" />
     <Compile Include="Models\Matricula.cs" />
+    <Compile Include="Models\Universitat.cs" />
     <Compile Include="Models\Usuari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
