@@ -769,6 +769,7 @@
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\_LangPartial.ascx" />
     <Content Include="Views\Shared\_LoginPartial.aspx" />
+    <Content Include="Views\Usuari\Veure.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

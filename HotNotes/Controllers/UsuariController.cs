@@ -21,6 +21,49 @@ namespace HotNotes.Controllers
     [Authorize]
     public class UsuariController : BaseController
     {
+        [Authorize]
+        public ActionResult Veure(int Id)
+        {
+            //Veure perfil d'un usuari
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT u.Username, u.Nom, u.Cognoms, u.Sexe, COUNT(d.Id) AS NumDocumentsPujats, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuari AND IdUsuariSubscrit = @IdUsuariSubscrit) AS EmSegueix FROM Usuaris u, Documents d WHERE IdUsuari = @IdUsuari AND d.IdUsuari = u.Id", connection);
+                cmd.Parameters.AddWithValue("@IdUsuari", Id);
+                cmd.Parameters.AddWithValue("@IdUsuariSubscrit", base.IdUsuari);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Usuari u = new Usuari();
+                    u.Id = Id;
+                    u.Username = reader.GetString(reader.GetOrdinal("Username"));
+                    u.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    u.Cognoms = reader.GetString(reader.GetOrdinal("Cognoms"));
+                    if (!reader.IsDBNull(reader.GetOrdinal("Sexe")))
+                    {
+                        u.Sexe = reader.GetChar(reader.GetOrdinal("Sexe"));
+                    }
+                    else
+                    {
+                        u.Sexe = '-';
+                    }
+                    u.NumDocumentsPujats = reader.GetInt32(reader.GetOrdinal("NumDocumentsPujats"));
+                    u.EmSegueix = reader.GetBoolean(reader.GetOrdinal("EmSegueix"));
+
+                    return View(u);
+                }
+                else
+                {
+                    ViewBag.Error = Lang.GetString(lang, "Error_id_usuari");
+                }
+
+                return View();
+            }
+        }
+
+
         //
         // GET: /Usuari/Login
 

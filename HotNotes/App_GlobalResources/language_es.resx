@@ -537,4 +537,7 @@
   <data name="Tercer" xml:space="preserve">
     <value>Tercero</value>
   </data>
+  <data name="Perfil_usuari" xml:space="preserve">
+    <value>Perfil del usuario</value>
+  </data>
 </root>

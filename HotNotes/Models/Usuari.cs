@@ -13,5 +13,7 @@ namespace HotNotes.Models
         public DateTime DataNaixement;
         public char Sexe;
         public bool Activat;
+        public int NumDocumentsPujats;
+        public bool EmSegueix;
     }
 }

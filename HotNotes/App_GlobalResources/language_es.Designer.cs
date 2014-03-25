@@ -1006,6 +1006,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Perfil del usuario.
+        /// </summary>
+        internal static string Perfil_usuari {
+            get {
+                return ResourceManager.GetString("Perfil_usuari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Proyecto final de carrera.
         /// </summary>
         internal static string PFC {
