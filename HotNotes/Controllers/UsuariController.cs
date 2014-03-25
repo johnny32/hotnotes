@@ -90,18 +90,6 @@ namespace HotNotes.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            /*Session.Abandon();
-
-            // clear authentication cookie
-            HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-            cookie1.Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies.Add(cookie1);
-
-            // clear session cookie (not necessary for your current problem but i would recommend you do it anyway)
-            HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "");
-            cookie2.Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies.Add(cookie2);
-            */
             return RedirectToAction("Login", "Usuari");
         }
 
@@ -279,7 +267,7 @@ namespace HotNotes.Controllers
 
         //
         // GET: /Account/Manage
-
+        [Authorize]
         public ActionResult Configuracio()
         {
             HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
@@ -354,7 +342,7 @@ namespace HotNotes.Controllers
         // POST: /Account/Manage
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Configuracio(string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
             Usuari u = new Usuari()
@@ -521,6 +509,7 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Subscriure(int IdUsuariSubscrit)
         {
             string resultat = "";
@@ -547,6 +536,7 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Dessubscriure(int IdUsuariSubscrit)
         {
             string resultat = "";
@@ -582,6 +572,7 @@ namespace HotNotes.Controllers
         #region Matricules
 
         [HttpPost]
+        [Authorize]
         public ActionResult AfegirMatricula(int IdCarrera, int Curs)
         {
             string resultat = "";
@@ -624,6 +615,7 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult EliminarMatricula(int IdCarrera, int Curs)
         {
             string resultat = "";
@@ -657,6 +649,7 @@ namespace HotNotes.Controllers
             return Json(resultat);
         }
 
+        [Authorize]
         public ActionResult LlistatUniversitats()
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -682,6 +675,7 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult LlistatFacultats(int IdUniversitat)
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -712,6 +706,7 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult LlistatCarreres(int IdFacultat)
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))

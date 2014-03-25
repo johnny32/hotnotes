@@ -23,6 +23,7 @@ namespace HotNotes.Controllers
         //
         // GET: /Document/
 
+        [Authorize]
         public ActionResult Veure(int Id)
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -150,6 +151,7 @@ namespace HotNotes.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult GetComentaris(int IdDocument)
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -180,6 +182,7 @@ namespace HotNotes.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Comentar(int IdDocument, string Comentari)
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -207,12 +210,14 @@ namespace HotNotes.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Pujar()
         {
             return View(GetLlistaAssignatures());
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, string Ruta = null, HttpPostedFileBase Fitxer = null, Nullable<bool> ExamenCorregit = null)
         {
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
@@ -357,6 +362,7 @@ namespace HotNotes.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Descarregar(int Id)
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -397,6 +403,7 @@ namespace HotNotes.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Assignatura(int Id)
         {
             ViewBag.Id = Id;
@@ -451,6 +458,7 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Usuari(int Id)
         {
             ViewBag.Id = Id;
@@ -505,6 +513,7 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
         public JsonResult Valoracio(int Id)
         {
             //Si l'usuari no ha valorat encara el document, retornem la puntuacio mitja. Si ja l'ha valorat, mostrem la seva puntuacio.
@@ -543,6 +552,7 @@ namespace HotNotes.Controllers
             return Json(valoracio, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         public JsonResult Valorar(int Id, int Valoracio)
         {
             if (Valoracio >= 0 && Valoracio <= 10)
@@ -580,6 +590,7 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
         private bool MatchMIMETipus(string mimeType, TipusDocument tipusDocument)
         {
             bool correcte = false;
@@ -606,6 +617,7 @@ namespace HotNotes.Controllers
             return correcte;
         }
 
+        [Authorize]
         private List<Assignatura> GetLlistaAssignatures()
         {
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
