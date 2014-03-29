@@ -227,7 +227,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, string Ruta = null, HttpPostedFileBase Fitxer = null, Nullable<bool> ExamenCorregit = null)
         {
-            Log.Debug("Pujar document " + Nom + " (" + Tipus + ") a assignatura " + IdAssignatura);
+            Log.Info("Pujar document " + Nom + " (" + Tipus + ") a assignatura " + IdAssignatura);
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
             string MimeType = "";
             string KeyAmazon = "";
@@ -424,6 +424,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Assignatura(int Id)
         {
+            Log.Info("Llistat de documents de l'assignatura " + Id);
             ViewBag.Id = Id;
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -465,10 +466,13 @@ namespace HotNotes.Controllers
                         resultats.Add(d);
                     }
 
+                    Log.Info("Total de documents: " + resultats.Count);
+
                     return View(resultats);
                 }
                 else
                 {
+                    Log.Warn("ID de l'assignatura inexistent: " + Id);
                     ViewBag.Error = Lang.GetString(base.lang, "Error_id_assignatura");
                 }
 
@@ -479,6 +483,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Usuari(int Id)
         {
+            Log.Info("Llistat de documents de l'usuari " + Id);
             ViewBag.Id = Id;
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -520,10 +525,13 @@ namespace HotNotes.Controllers
                         resultats.Add(d);
                     }
 
+                    Log.Info("Total de documents: " + resultats.Count);
+
                     return View(resultats);
                 }
                 else
                 {
+                    Log.Warn("ID d'usuari inexistent: " + Id);
                     ViewBag.Error = Lang.GetString(base.lang, "Error_id_usuari");
                 }
 
@@ -573,6 +581,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public JsonResult Valorar(int Id, int Valoracio)
         {
+            Log.Info("Valorar document " + Id + " amd valoracio: " + Valoracio);
             if (Valoracio >= 0 && Valoracio <= 10)
             {
                 using (MySqlConnection connection = new MySqlConnection(ConnectionString))

@@ -25,6 +25,8 @@ namespace HotNotes.Controllers
         public ActionResult Veure(int Id)
         {
             //Veure perfil d'un usuari
+            Log.Info("Veure perfil de l'usuari " + Id);
+
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -56,6 +58,7 @@ namespace HotNotes.Controllers
                 }
                 else
                 {
+                    Log.Warn("ID d'usuari inexistent: " + Id);
                     ViewBag.Error = Lang.GetString(lang, "Error_id_usuari");
                 }
 
@@ -82,6 +85,7 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string Username, string PasswordEnc, bool RememberMe)
         {
+            Log.Info("Login usuari: " + Username);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -99,23 +103,27 @@ namespace HotNotes.Controllers
                             HttpCookie cookie = new HttpCookie("UserID", id);
                             HttpContext.Response.Cookies.Add(cookie);
                             FormsAuthentication.SetAuthCookie(Username, RememberMe);
+                            Log.Info("Login correcte");
                             return RedirectToAction("Index", "Home");
                         }
                         else
                         {
                             //Encara no ha activat el compte
+                            Log.Warn("Login incorrecte: Compte desactivat");
                             ViewBag.Error = Lang.GetString(base.lang, "Compte_desactivat");
                         }
                     }
                     else
                     {
                         //Password incorrecte
+                        Log.Warn("Login incorrecte: Password incorrecte");
                         ViewBag.Error = Lang.GetString(base.lang, "Username_password_incorrecte");
                     }
                 }
                 else
                 {
                     //Usuari incorrecte
+                    Log.Warn("Login incorrecte: Username incorrecte");
                     ViewBag.Error = Lang.GetString(base.lang, "Username_password_incorrecte");
                 }
             }
@@ -153,6 +161,7 @@ namespace HotNotes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(string Username, string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
+            Log.Info("Registrar nou usuari: " + Username);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -169,7 +178,7 @@ namespace HotNotes.Controllers
                 {
                     reader.Close();
                     transaction.Rollback();
-
+                    Log.Warn("Username " + Username + " ja existent");
                     ViewBag.Error = Lang.GetString(base.lang, "Usuari_ja_existent");
                 }
                 else
@@ -184,6 +193,7 @@ namespace HotNotes.Controllers
 
                     if (reader.Read())
                     {
+                        Log.Warn("Email " + Email + " ja existent");
                         ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
                     }
                     else
@@ -218,9 +228,9 @@ namespace HotNotes.Controllers
                             reader = cmd.ExecuteReader();
 
                             var urlBuilder = new System.UriBuilder(Request.Url.AbsoluteUri)
-                                {
-                                    Path = Url.Action("Activate", "Usuari", new RouteValueDictionary(new { id = CodiActivacio }))
-                                };
+                            {
+                                Path = Url.Action("Activate", "Usuari", new RouteValueDictionary(new { id = CodiActivacio }))
+                            };
 
                             string url = urlBuilder.ToString();
 
@@ -244,24 +254,23 @@ namespace HotNotes.Controllers
 
                             ViewBag.Accio = Lang.GetString(base.lang, "Registrat");
                             ViewBag.Message = Lang.GetString(base.lang, "Registre_completat");
-
+                            Log.Info("Registre completat");
                             return View("Register_Complete");
                         }
-                        catch (SqlException)
+                        catch (SqlException e)
                         {
                             reader.Close();
                             transaction.Rollback();
-
+                            Log.Error("Error al registrar", e);
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
-                        catch (SmtpException)
+                        catch (SmtpException e)
                         {
                             reader.Close();
                             transaction.Rollback();
-
+                            Log.Error("Error al enviar email de confirmacio", e);
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
-                        //TODO Substituir els catch's per catch (Exception)
                     }
                 }
             }
@@ -274,6 +283,7 @@ namespace HotNotes.Controllers
         [AllowAnonymous]
         public ActionResult Activate(string id)
         {
+            Log.Info("Activar compte amb codi d'activacio " + id);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -293,15 +303,18 @@ namespace HotNotes.Controllers
                         cmd.Parameters.AddWithValue("@CodiActivacio", DBNull.Value);
                         cmd.Parameters.AddWithValue("@Id", Id.ToString());
                         cmd.ExecuteReader();
+                        Log.Info("Activacio correcte");
                         ViewBag.Response = Lang.GetString(base.lang, "Activar_correcte");
                     }
-                    catch (SqlException)
+                    catch (SqlException e)
                     {
+                        Log.Error("Error al activar compte d'usuari", e);
                         ViewBag.Error = Lang.GetString(base.lang, "Error_activar");
                     }
                 }
                 else
                 {
+                    Log.Warn("Codi d'activacio inexistent");
                     ViewBag.Error = Lang.GetString(base.lang, "Codi_activar_incorrecte");
                 }
             }
@@ -313,13 +326,12 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Configuracio()
         {
-            HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
-            int id = int.Parse(cookie.Value);
+            Log.Info("Carregar configuracio de l'usuari " + IdUsuari);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT Id, Username, Password, Email, Nom, Cognoms, DataNaixement, Sexe, Activat FROM Usuaris WHERE Id = @Id", connection);
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@Id", IdUsuari);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -336,7 +348,7 @@ namespace HotNotes.Controllers
 
                     Usuari u = new Usuari()
                     {
-                        Id = id,
+                        Id = IdUsuari,
                         Username = reader.GetString(reader.GetOrdinal("Username")),
                         Password = reader.GetString(reader.GetOrdinal("Password")),
                         Email = reader.GetString(reader.GetOrdinal("Email")),
@@ -375,6 +387,7 @@ namespace HotNotes.Controllers
                 }
                 else
                 {
+                    Log.Warn("ID d'usuari inexistent");
                     ViewBag.Error = Lang.GetString(base.lang, "Usuari_no_existeix");
                 }
                 return View();
@@ -388,6 +401,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Configuracio(string PasswordEnc, string Email, string Nom, string Cognoms, DateTime DataNaixement, char Sexe)
         {
+            Log.Info("Guardar configuracio de l'usuari " + IdUsuari);
             Usuari u = new Usuari()
             {
                 Id = IdUsuari,
@@ -417,7 +431,7 @@ namespace HotNotes.Controllers
                 {
                     reader.Close();
                     transaction.Rollback();
-
+                    Log.Warn("Email " + Email + " ja esta registrat per un altre usuari");
                     ViewBag.Error = Lang.GetString(base.lang, "Email_ja_existent");
                 }
                 else
@@ -448,6 +462,7 @@ namespace HotNotes.Controllers
 
                         if (emailModificat)
                         {
+                            Log.Info("Email modificat. Enviar correu nou de confirmacio i desactivar el compte");
                             Guid g = Guid.NewGuid();
                             string CodiActivacioString = Convert.ToBase64String(g.ToByteArray());
                             CodiActivacioString = CodiActivacioString.Replace("=", "");
@@ -512,37 +527,37 @@ namespace HotNotes.Controllers
                                 FormsAuthentication.SignOut();
                                 ViewBag.Accio = Lang.GetString(base.lang, "Dades_actualitzades");
                                 ViewBag.Message = Lang.GetString(base.lang, "Email_modificat");
-
+                                Log.Info("Email de confirmacio enviat");
                                 return View("Register_Complete");
                             }
                             else
                             {
+                                Log.Info("Dades actualitzades");
                                 ViewBag.Message = Lang.GetString(base.lang, "Dades_actualitzades");
                             }
                             return RedirectToAction("Index", "Home");
                         }
-                        catch (MySqlException)
+                        catch (MySqlException e)
                         {
                             reader.Close();
                             transaction.Rollback();
-
+                            Log.Error("Error actualitzant dades", e);
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
-                        catch (SmtpException)
+                        catch (SmtpException e)
                         {
                             reader.Close();
                             transaction.Rollback();
-
+                            Log.Error("Error enviant email de confirmacio", e);
                             ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                         }
-                        //TODO Substituir els catch's per catch (Exception)
                     }
                     else
                     {
                         //Usuari no existent previament!
                         reader.Close();
                         transaction.Rollback();
-
+                        Log.Warn("ID d'usuari inexistent");
                         ViewBag.Error = Lang.GetString(base.lang, "Error_registre");
                     }
                 }
@@ -555,6 +570,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Subscriure(int IdUsuariSubscrit)
         {
+            Log.Info("Subscriure usuari " + IdUsuari + " a actualitzacions de l'usuari " + IdUsuariSubscrit);
             string resultat = "";
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -571,6 +587,7 @@ namespace HotNotes.Controllers
                 }
                 catch (MySqlException e)
                 {
+                    Log.Error("Error al subscriure usuari", e);
                     resultat = Lang.GetString(lang, "Error_subscriure");
                 }
             }
@@ -582,6 +599,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Dessubscriure(int IdUsuariSubscrit)
         {
+            Log.Info("Dessubscriure usuari " + IdUsuari + " de les actualitzacions de l'usuari " + IdUsuariSubscrit);
             string resultat = "";
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -600,11 +618,13 @@ namespace HotNotes.Controllers
                     }
                     else
                     {
+                        Log.Warn("Usuari no subscrit previament");
                         resultat = Lang.GetString(lang, "Error_no_subscrit");
                     }
                 }
                 catch (MySqlException e)
                 {
+                    Log.Error("Error al dessubscriure usuari", e);
                     resultat = Lang.GetString(lang, "Error_dessubscriure");
                 }
             }
@@ -618,6 +638,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult AfegirMatricula(int IdCarrera, int Curs)
         {
+            Log.Info("Matricular usuari " + IdUsuari + " a la carrera " + IdCarrera + " i curs " + Curs);
             string resultat = "";
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -632,6 +653,7 @@ namespace HotNotes.Controllers
 
                 if (reader.Read())
                 {
+                    Log.Warn("Usuari ja matriculat previament");
                     resultat = Lang.GetString(lang, "Error_ja_matriculat");
                 }
                 else
@@ -661,6 +683,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult EliminarMatricula(int IdCarrera, int Curs)
         {
+            Log.Info("Eliminar matricula de l'usuari " + IdUsuari + " a la carrera " + IdCarrera + " i curs " + Curs);
             string resultat = "";
 
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
@@ -680,11 +703,13 @@ namespace HotNotes.Controllers
                     }
                     else
                     {
+                        Log.Warn("Usuari no matriculat previament");
                         resultat = Lang.GetString(lang, "Error_no_matriculat");
                     }
                 }
                 catch (MySqlException e)
                 {
+                    Log.Error("Error al eliminar matricula", e);
                     resultat = Lang.GetString(lang, "Error_eliminar_matricula");
                 }
             }
