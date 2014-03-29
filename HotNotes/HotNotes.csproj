@@ -818,8 +818,8 @@
     <Content Include="Plugins\bootstrap\fonts\glyphicons-halflings-regular.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="aws-sessionprovider-sample.config" />
     <Content Include="Plugins\DataTables\images\Sorting icons.psd" />
+    <Content Include="Log4net.config" />
     <None Include="Plugins\jquery-ui-1.10.3\package.json" />
     <None Include="Plugins\jquery-ui-1.10.3\README.md" />
     <None Include="Plugins\jquery-ui-1.10.3\ui.accordion.jquery.json" />

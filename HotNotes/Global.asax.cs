@@ -19,6 +19,8 @@ namespace HotNotes
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            log4net.Config.XmlConfigurator.Configure();
         }
 
         public static void RegisterRoutes(RouteCollection routes)

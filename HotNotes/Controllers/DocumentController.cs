@@ -26,6 +26,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Veure(int Id)
         {
+            Log.Info("Veure document " + Id);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -145,6 +146,7 @@ namespace HotNotes.Controllers
                 else
                 {
                     reader.Close();
+                    Log.Warn("El document " + Id + " no existeix");
                     ViewBag.Error = Lang.GetString(base.lang, "Document_no_existeix");
                 }
             }
@@ -154,6 +156,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult GetComentaris(int IdDocument)
         {
+            Log.Info("Carregar comentaris del document " + IdDocument);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -177,6 +180,8 @@ namespace HotNotes.Controllers
 
                 reader.Close();
 
+                Log.Info("Total comentaris del document " + IdDocument + ": " + comentaris.Count);
+
                 return Json(comentaris, JsonRequestBehavior.AllowGet);
             }
         }
@@ -185,6 +190,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Comentar(int IdDocument, string Comentari)
         {
+            Log.Info("Inserir comentari a document " + IdDocument);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -213,6 +219,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Pujar()
         {
+            Log.Info("Pujar nou document");
             return View(GetLlistaAssignatures());
         }
 
@@ -220,12 +227,14 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Pujar(string Nom, string Idioma, string Tipus, int IdAssignatura, string Ruta = null, HttpPostedFileBase Fitxer = null, Nullable<bool> ExamenCorregit = null)
         {
+            Log.Debug("Pujar document " + Nom + " (" + Tipus + ") a assignatura " + IdAssignatura);
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
             string MimeType = "";
             string KeyAmazon = "";
 
             if (Fitxer == null && Ruta == null)
             {
+                Log.Warn("No hi ha fitxer ni ruta");
                 ViewBag.Error = Lang.GetString(base.lang, "Falta_ruta_o_fitxer");
                 return View(GetLlistaAssignatures());
             }
@@ -236,6 +245,7 @@ namespace HotNotes.Controllers
 
                 if (!MatchMIMETipus(MimeType, Path.GetExtension(Fitxer.FileName), TipusDocument))
                 {
+                    Log.Warn("MimeType incorrecte: " + MimeType);
                     ViewBag.Error = Lang.GetString(base.lang, "MimeType_no_suportat");
 
                     if (TipusDocument == TipusDocument.Practica)
@@ -270,9 +280,13 @@ namespace HotNotes.Controllers
 
                         if (putResponse.HttpStatusCode != System.Net.HttpStatusCode.OK)
                         {
-                            Log.Error("Error pujjant arxiu a S3. HttpStatusCode: " + putResponse.HttpStatusCode.ToString());
+                            Log.Warn("Error pujant arxiu a S3. HttpStatusCode: " + putResponse.HttpStatusCode.ToString());
                             ViewBag.Error = Lang.GetString(lang, "Error_Amazon_S3");
                             return View(GetLlistaAssignatures());
+                        }
+                        else
+                        {
+                            Log.Info("Document afegir a AWS. Key: " + KeyAmazon);
                         }
                     }
                     catch (AmazonS3Exception ex)
@@ -292,6 +306,7 @@ namespace HotNotes.Controllers
                 {
                     Ruta = Ruta.Replace("watch?v=", "embed/");
                 }
+                Log.Info("Video de YouTube. Ruta corregida: " + Ruta);
             }
 
             int IdDocument = -1;
@@ -346,9 +361,11 @@ namespace HotNotes.Controllers
                     MySqlDataReader reader = cmd.ExecuteReader();
                     reader.Read();
                     IdDocument = reader.GetInt32(0);
+                    Log.Info("Document afegit a la base de dades amb id: " + IdDocument);
                 }
                 catch (Exception e)
                 {
+                    Log.Error("Error al inserir document a la base de dades", e);
                     ViewBag.Error = Lang.GetString(base.lang, "Error_pujar_document");
                     return View(GetLlistaAssignatures());
                 }
@@ -365,6 +382,7 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Descarregar(int Id)
         {
+            Log.Info("Descarregar document " + Id);
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 MySqlCommand cmd = new MySqlCommand("SELECT Nom, MimeType, KeyAmazon FROM Documents WHERE Id = @Id", connection);
