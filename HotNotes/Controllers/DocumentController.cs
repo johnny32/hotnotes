@@ -234,7 +234,7 @@ namespace HotNotes.Controllers
             {
                 MimeType = Fitxer.ContentType;
 
-                if (!MatchMIMETipus(MimeType, TipusDocument))
+                if (!MatchMIMETipus(MimeType, Path.GetExtension(Fitxer.FileName), TipusDocument))
                 {
                     ViewBag.Error = Lang.GetString(base.lang, "MimeType_no_suportat");
 
@@ -591,7 +591,7 @@ namespace HotNotes.Controllers
         }
 
         [Authorize]
-        private bool MatchMIMETipus(string mimeType, TipusDocument tipusDocument)
+        private bool MatchMIMETipus(string mimeType, string extensio, TipusDocument tipusDocument)
         {
             bool correcte = false;
 
@@ -608,7 +608,7 @@ namespace HotNotes.Controllers
                     mimeType == "text/plain" || //.txt
                     mimeType == "application/vnd.ms-powerpoint" || //.ppt
                     mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation" || //.pptx
-                    ((mimeType == "multipart/x-zip" || mimeType == "application/zip") && tipusDocument == TipusDocument.Practica)) //Les practiques poden estar tambe en format .zip
+                    ((mimeType == "multipart/x-zip" || mimeType == "application/zip" || (mimeType == "application/octet-stream" && extensio == ".zip")) && tipusDocument == TipusDocument.Practica)) //Les practiques poden estar tambe en format .zip
                 {
                     correcte = true;
                 }
