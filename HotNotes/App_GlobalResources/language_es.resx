@@ -540,4 +540,13 @@
   <data name="Perfil_usuari" xml:space="preserve">
     <value>Perfil del usuario</value>
   </data>
+  <data name="Dessubscriures" xml:space="preserve">
+    <value>Dejar de seguir</value>
+  </data>
+  <data name="Subscriures" xml:space="preserve">
+    <value>Seguir</value>
+  </data>
+  <data name="Et_segueix" xml:space="preserve">
+    <value>Te sigue</value>
+  </data>
 </root>

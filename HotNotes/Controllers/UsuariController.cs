@@ -27,16 +27,21 @@ namespace HotNotes.Controllers
             //Veure perfil d'un usuari
             Log.Info("Veure perfil de l'usuari " + Id);
 
+            if (Id == base.IdUsuari)
+            {
+                return RedirectToAction("Configuracio");
+            }
+
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT u.Username, u.Nom, u.Cognoms, u.Sexe, COUNT(d.Id) AS NumDocumentsPujats, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuari AND IdUsuariSubscrit = @IdUsuariSubscrit) AS EmSegueix FROM Usuaris u, Documents d WHERE IdUsuari = @IdUsuari AND d.IdUsuari = u.Id", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT u.Username, u.Nom, u.Cognoms, u.Sexe, COUNT(d.Id) AS NumDocumentsPujats, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuari AND IdUsuariSubscrit = @IdUsuariSubscrit) AS EmSegueix, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuariSubscrit AND IdUsuariSubscrit = @IdUsuari) AS ElSegueixo FROM Usuaris u, Documents d WHERE IdUsuari = @IdUsuari AND d.IdUsuari = u.Id", connection);
                 cmd.Parameters.AddWithValue("@IdUsuari", Id);
                 cmd.Parameters.AddWithValue("@IdUsuariSubscrit", base.IdUsuari);
 
                 MySqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
+                if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("Username")))
                 {
                     Usuari u = new Usuari();
                     u.Id = Id;
@@ -53,6 +58,7 @@ namespace HotNotes.Controllers
                     }
                     u.NumDocumentsPujats = reader.GetInt32(reader.GetOrdinal("NumDocumentsPujats"));
                     u.EmSegueix = reader.GetBoolean(reader.GetOrdinal("EmSegueix"));
+                    u.ElSegueixo = reader.GetBoolean(reader.GetOrdinal("ElSegueixo"));
 
                     return View(u);
                 }

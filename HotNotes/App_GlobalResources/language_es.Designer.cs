@@ -376,6 +376,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Dejar de seguir.
+        /// </summary>
+        internal static string Dessubscriures {
+            get {
+                return ResourceManager.GetString("Dessubscriures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Documento.
         /// </summary>
         internal static string Document {
@@ -772,6 +781,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Te sigue.
+        /// </summary>
+        internal static string Et_segueix {
+            get {
+                return ResourceManager.GetString("Et_segueix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Examen.
         /// </summary>
         internal static string Examen {
@@ -1164,6 +1182,15 @@ namespace Resources {
         internal static string Sobre_HotNotes {
             get {
                 return ResourceManager.GetString("Sobre_HotNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seguir.
+        /// </summary>
+        internal static string Subscriures {
+            get {
+                return ResourceManager.GetString("Subscriures", resourceCulture);
             }
         }
         
