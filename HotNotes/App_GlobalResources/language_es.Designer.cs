@@ -970,6 +970,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Número de documentos subidos.
+        /// </summary>
+        internal static string Num_documents_pujats {
+            get {
+                return ResourceManager.GetString("Num_documents_pujats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a página de configuración.
         /// </summary>
         internal static string Pagina_configuracio {
@@ -1353,6 +1362,15 @@ namespace Resources {
         internal static string Versio {
             get {
                 return ResourceManager.GetString("Versio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ver.
+        /// </summary>
+        internal static string Veure {
+            get {
+                return ResourceManager.GetString("Veure", resourceCulture);
             }
         }
     }

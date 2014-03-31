@@ -60,7 +60,30 @@ namespace HotNotes.Controllers
                     u.EmSegueix = reader.GetBoolean(reader.GetOrdinal("EmSegueix"));
                     u.ElSegueixo = reader.GetBoolean(reader.GetOrdinal("ElSegueixo"));
 
-                    return View(u);
+                    reader.Close();
+                    cmd = new MySqlCommand("SELECT m.IdCarrera, m.Curs, c.Nom AS NomCarrera, f.Nom AS NomFacultat, u.Nom AS NomUniversitat " +
+                                            "FROM Matricules m, Carreres c, Facultats f, Universitats u " +
+                                            "WHERE m.IdUsuari = @IdUsuari AND m.IdCarrera = c.Id AND c.IdFacultat = f.Id AND f.IdUniversitat = u.Id " +
+                                            "ORDER BY c.Nom ASC, m.Curs ASC", connection);
+                    cmd.Parameters.AddWithValue("@IdUsuari", Id);
+                    reader = cmd.ExecuteReader();
+
+                    List<Matricula> matricules = new List<Matricula>();
+
+                    while (reader.Read())
+                    {
+                        Matricula m = new Matricula();
+                        m.IdUsuari = IdUsuari;
+                        m.IdCarrera = reader.GetInt32(reader.GetOrdinal("IdCarrera"));
+                        m.Curs = reader.GetInt32(reader.GetOrdinal("Curs"));
+                        m.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+                        m.NomFacultat = reader.GetString(reader.GetOrdinal("NomFacultat"));
+                        m.NomUniversitat = reader.GetString(reader.GetOrdinal("NomUniversitat"));
+
+                        matricules.Add(m);
+                    }
+
+                    return View(new Tuple<Usuari, List<Matricula>>(u, matricules));
                 }
                 else
                 {

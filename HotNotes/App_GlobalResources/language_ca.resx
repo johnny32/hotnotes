@@ -549,4 +549,10 @@
   <data name="Et_segueix" xml:space="preserve">
     <value>Et segueix</value>
   </data>
+  <data name="Veure" xml:space="preserve">
+    <value>Veure</value>
+  </data>
+  <data name="Num_documents_pujats" xml:space="preserve">
+    <value>Nombre de documents pujats</value>
+  </data>
 </root>
