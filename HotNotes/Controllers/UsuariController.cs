@@ -830,6 +830,94 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Seguidors(int Id)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SELECT Id, Username FROM Usuaris WHERE Id = @Id", connection);
+                command.Parameters.AddWithValue("@Id", Id);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Usuari usuariPrincipal = new Usuari();
+                    usuariPrincipal.Username = reader.GetString(reader.GetOrdinal("Username"));
+
+                    reader.Close();
+                    command = new MySqlCommand("SELECT s.IdUsuariSubscriu, u.Nom, u.Cognoms FROM Subscripcions s, Usuaris u WHERE s.IdUsuariSubscrit = @IdUsuariSubscrit AND s.IdUsuariSubscriu = u.Id ORDER BY u.Nom ASC", connection);
+                    command.Parameters.AddWithValue("@IdUsuariSubscrit", Id);
+
+                    reader = command.ExecuteReader();
+
+                    List<Usuari> resultat = new List<Usuari>();
+
+                    while (reader.Read())
+                    {
+                        Usuari u = new Usuari();
+                        u.Id = reader.GetInt32(reader.GetOrdinal("IdUsuariSubscriu"));
+                        u.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                        u.Cognoms = reader.GetString(reader.GetOrdinal("Cognoms"));
+
+                        resultat.Add(u);
+                    }
+
+                    return View(new Tuple<Usuari, List<Usuari>>(usuariPrincipal, resultat));
+                }
+                else
+                {
+                    Log.Warn("ID d'usuari inexistent: " + Id);
+                    ViewBag.Error = Lang.GetString(lang, "Error_id_usuari");
+                    return View();
+                }
+            }
+        }
+
+        [Authorize]
+        public ActionResult Seguint(int Id)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SELECT Id, Username FROM Usuaris WHERE Id = @Id", connection);
+                command.Parameters.AddWithValue("@Id", Id);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Usuari usuariPrincipal = new Usuari();
+                    usuariPrincipal.Username = reader.GetString(reader.GetOrdinal("Username"));
+
+                    reader.Close();
+                    command = new MySqlCommand("SELECT s.IdUsuariSubscrit, u.Nom, u.Cognoms FROM Subscripcions s, Usuaris u WHERE s.IdUsuariSubscriu = @IdUsuariSubscriu AND s.IdUsuariSubscrit = u.Id ORDER BY u.Nom ASC", connection);
+                    command.Parameters.AddWithValue("@IdUsuariSubscriu", Id);
+
+                    reader = command.ExecuteReader();
+
+                    List<Usuari> resultat = new List<Usuari>();
+
+                    while (reader.Read())
+                    {
+                        Usuari u = new Usuari();
+                        u.Id = reader.GetInt32(reader.GetOrdinal("IdUsuariSubscrit"));
+                        u.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                        u.Cognoms = reader.GetString(reader.GetOrdinal("Cognoms"));
+
+                        resultat.Add(u);
+                    }
+
+                    return View(new Tuple<Usuari, List<Usuari>>(usuariPrincipal, resultat));
+                }
+                else
+                {
+                    Log.Warn("ID d'usuari inexistent: " + Id);
+                    ViewBag.Error = Lang.GetString(lang, "Error_id_usuari");
+                    return View();
+                }
+            }
+        }
+
         #endregion
     }
 }

@@ -22,6 +22,8 @@
 
     <% string lang = ViewBag.Lang; %>
     <script>
+        <% if (ViewBag.Error == null)
+           { %>
         function subscriure(id) {
             var params = {
                 IdUsuariSubscrit: id
@@ -106,6 +108,13 @@
                 }
             });
         });
+        <% }
+           else
+           { %>
+        $(document).ready(function () {
+            $('#errors').removeClass('hide');
+        });
+        <% } %>
     </script>
 </asp:Content>
 
@@ -180,12 +189,6 @@
         <%  } %>
         </tbody>
     </table>
-    <%  }
-        else
-        { %>
-            <script>
-                $('#errors').removeClass('hide');
-            </script>
     <%  } %>
 </asp:Content>
 
