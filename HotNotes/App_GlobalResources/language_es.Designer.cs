@@ -1168,6 +1168,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Seguidores del usuario.
+        /// </summary>
+        internal static string Seguidors_usuari {
+            get {
+                return ResourceManager.GetString("Seguidors_usuari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sin especificar.
         /// </summary>
         internal static string Sense_especificar {

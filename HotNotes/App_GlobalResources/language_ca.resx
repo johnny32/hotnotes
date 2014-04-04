@@ -555,4 +555,7 @@
   <data name="Num_documents_pujats" xml:space="preserve">
     <value>Nombre de documents pujats</value>
   </data>
+  <data name="Seguidors_usuari" xml:space="preserve">
+    <value>Seguidors de l'usuari</value>
+  </data>
 </root>
