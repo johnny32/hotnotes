@@ -558,4 +558,10 @@
   <data name="Seguidors_usuari" xml:space="preserve">
     <value>Seguidors de l'usuari</value>
   </data>
+  <data name="Veure_perfil" xml:space="preserve">
+    <value>Veure perfil</value>
+  </data>
+  <data name="Usuaris_segueix" xml:space="preserve">
+    <value>Usuaris que segueix</value>
+  </data>
 </root>

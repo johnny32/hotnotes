@@ -6,7 +6,7 @@
     <%  string lang = ViewBag.Lang;
         if (ViewBag.Error == null)
         { %>
-    <%: Lang.GetString(lang, "Seguidors_usuari") %> <%: Model.Item1.Username %>
+    <%: Lang.GetString(lang, "Usuaris_segueix") %> <%: Model.Item1.Username %>
     <%  }
         else
         { %>
@@ -33,7 +33,7 @@
        { %>
     <script>
         $(document).ready(function () {
-            tableSeguidorsObj = $('#tableSeguidors').dataTable({
+            tableSeguidorsObj = $('#tableSeguint').dataTable({
                 sDom: "<'row-fluid'<'col-md-6'f><'col-md-6'>r>t",
                 bPaginate: false,
                 bStateSave: false,
@@ -80,9 +80,9 @@
 
     <% if (ViewBag.Error == null)
        { %>
-    <h2 style="margin-bottom: 1em;"><%: Lang.GetString(lang, "Seguidors_usuari") %> <%: Model.Item1.Username %></h2>
+    <h2 style="margin-bottom: 1em;"><%: Lang.GetString(lang, "Usuaris_segueix") %> <%: Model.Item1.Username %></h2>
 
-    <table id="tableSeguidors" border="0" class="table table-striped table-bordered" style="width: 100%;">
+    <table id="tableSeguint" border="0" class="table table-striped table-bordered" style="width: 100%;">
         <thead>
             <tr>
                 <th><%: Lang.GetString(lang, "Nom") %></th>

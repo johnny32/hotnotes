@@ -1339,6 +1339,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Usuarios que sigue.
+        /// </summary>
+        internal static string Usuaris_segueix {
+            get {
+                return ResourceManager.GetString("Usuaris_segueix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Este nombre de usuario ya existe. Por favor, elije otro..
         /// </summary>
         internal static string Usuari_ja_existent {
@@ -1380,6 +1389,15 @@ namespace Resources {
         internal static string Veure {
             get {
                 return ResourceManager.GetString("Veure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ver perfil.
+        /// </summary>
+        internal static string Veure_perfil {
+            get {
+                return ResourceManager.GetString("Veure_perfil", resourceCulture);
             }
         }
     }

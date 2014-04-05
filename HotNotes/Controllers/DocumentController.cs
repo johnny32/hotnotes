@@ -108,7 +108,7 @@ namespace HotNotes.Controllers
                     reader.Read();
 
                     d.NomAutor = reader.GetString(reader.GetOrdinal("Nom")) + " " + reader.GetString(reader.GetOrdinal("Cognoms"));
-                    d.LinkPerfilAutor = Url.Action("Index", "Usuari", new { Id = idUsuari });
+                    d.LinkPerfilAutor = Url.Action("Perfil", "Usuari", new { Id = idUsuari });
 
                     //Carregar PDFs a la variable Ruta per a poder-los mostrar incrustats
                     if (d.MimeType == "application/pdf" && d.KeyAmazon != null)

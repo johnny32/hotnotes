@@ -22,7 +22,7 @@ namespace HotNotes.Controllers
     public class UsuariController : BaseController
     {
         [Authorize]
-        public ActionResult Veure(int Id)
+        public ActionResult Perfil(int Id)
         {
             //Veure perfil d'un usuari
             Log.Info("Veure perfil de l'usuari " + Id);
