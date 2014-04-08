@@ -37,6 +37,9 @@
                 success: function (data) {
                     if (data == 'OK') {
                         $('#buttonFollow').html('<button type="button" class="btn btn-danger" onclick="dessubscriure(<%: Model.Item1.Id %>);"><%: Lang.GetString(lang, "Dessubscriures") %></button>');
+                        var numSeguidors = parseInt($('#numSeguidors').text());
+                        numSeguidors++;
+                        $('#numSeguidors').text(numSeguidors);
                     } else {
                         $('#errors').html('<button type="button" class="close" data-dismiss="alert">&times;</button><p>' + data + '</p>');
                         $('#errors').removeClass('hide');
@@ -62,6 +65,9 @@
                 success: function (data) {
                     if (data == 'OK') {
                         $('#buttonFollow').html('<button type="button" class="btn btn-success" onclick="subscriure(<%: Model.Item1.Id %>);"><%: Lang.GetString(lang, "Subscriures") %></button>');
+                        var numSeguidors = parseInt($('#numSeguidors').text());
+                        numSeguidors--;
+                        $('#numSeguidors').text(numSeguidors);
                     } else {
                         $('#errors').html('<button type="button" class="close" data-dismiss="alert">&times;</button><p>' + data + '</p>');
                         $('#errors').removeClass('hide');
@@ -131,8 +137,14 @@
         if (ViewBag.Error == null)
         { %>
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-6">
             <h2><%: Model.Item1.Username %></h2>
+        </div>
+        <div class="col-md-2">
+            <a href="<%: Url.Action("Seguidors", "Usuari", new { Id = Model.Item1.Id }) %>" class="numFollowersLink"><div class="numFollowersText" id="numSeguidors"><%: Model.Item1.NumSeguidors %></div><div><%: Lang.GetString(lang, "Seguidors").ToLower() %></div></a>
+        </div>
+        <div class="col-md-2">
+            <a href="<%: Url.Action("Seguint", "Usuari", new { Id = Model.Item1.Id }) %>" class="numFollowersLink"><div class="numFollowersText" id="numSeguint"><%: Model.Item1.NumSeguint %></div><div><%: Lang.GetString(lang, "Seguint").ToLower() %></div></a>
         </div>
         <div class="col-md-2">
             <div id="buttonFollow">

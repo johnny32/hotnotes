@@ -117,3 +117,15 @@ div#body
 {
     float: right !important;
 }
+
+.numFollowersText
+{
+    font-size: xx-large;
+    margin-top: -20px;
+}
+
+.numFollowersLink:hover
+{
+    background-color: initial;
+    text-decoration: none;
+}

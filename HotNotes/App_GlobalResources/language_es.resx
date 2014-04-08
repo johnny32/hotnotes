@@ -564,4 +564,10 @@
   <data name="Usuaris_segueix" xml:space="preserve">
     <value>Usuarios que sigue</value>
   </data>
+  <data name="Seguidors" xml:space="preserve">
+    <value>Seguidores</value>
+  </data>
+  <data name="Seguint" xml:space="preserve">
+    <value>Siguiendo</value>
+  </data>
 </root>

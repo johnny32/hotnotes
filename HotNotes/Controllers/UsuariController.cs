@@ -61,6 +61,23 @@ namespace HotNotes.Controllers
                     u.ElSegueixo = reader.GetBoolean(reader.GetOrdinal("ElSegueixo"));
 
                     reader.Close();
+
+                    cmd = new MySqlCommand("SELECT COUNT(IdUsuariSubscrit) AS NumSeguint FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuari", connection);
+                    cmd.Parameters.AddWithValue("@IdUsuari", Id);
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    u.NumSeguint = reader.GetInt32(reader.GetOrdinal("NumSeguint"));
+
+                    reader.Close();
+
+                    cmd = new MySqlCommand("SELECT COUNT(IdUsuariSubscriu) AS NumSeguidors FROM Subscripcions WHERE IdUsuariSubscrit = @IdUsuari", connection);
+                    cmd.Parameters.AddWithValue("@IdUsuari", Id);
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                    u.NumSeguidors = reader.GetInt32(reader.GetOrdinal("NumSeguidors"));
+
+                    reader.Close();
+
                     cmd = new MySqlCommand("SELECT m.IdCarrera, m.Curs, c.Nom AS NomCarrera, f.Nom AS NomFacultat, u.Nom AS NomUniversitat " +
                                             "FROM Matricules m, Carreres c, Facultats f, Universitats u " +
                                             "WHERE m.IdUsuari = @IdUsuari AND m.IdCarrera = c.Id AND c.IdFacultat = f.Id AND f.IdUniversitat = u.Id " +

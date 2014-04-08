@@ -17,5 +17,7 @@ namespace HotNotes.Models
         public int NumDocumentsPujats;
         public bool EmSegueix;
         public bool ElSegueixo;
+        public int NumSeguidors;
+        public int NumSeguint;
     }
 }

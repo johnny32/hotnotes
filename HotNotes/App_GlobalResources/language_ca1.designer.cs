@@ -1168,11 +1168,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Seguidors.
+        /// </summary>
+        internal static string Seguidors {
+            get {
+                return ResourceManager.GetString("Seguidors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Seguidors de l&apos;usuari.
         /// </summary>
         internal static string Seguidors_usuari {
             get {
                 return ResourceManager.GetString("Seguidors_usuari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seguint.
+        /// </summary>
+        internal static string Seguint {
+            get {
+                return ResourceManager.GetString("Seguint", resourceCulture);
             }
         }
         
