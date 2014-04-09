@@ -32,10 +32,10 @@ namespace HotNotes.Controllers
                 return RedirectToAction("Configuracio");
             }
 
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT u.Username, u.Nom, u.Cognoms, u.Sexe, COUNT(d.Id) AS NumDocumentsPujats, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuari AND IdUsuariSubscrit = @IdUsuariSubscrit) AS EmSegueix, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuariSubscrit AND IdUsuariSubscrit = @IdUsuari) AS ElSegueixo FROM Usuaris u, Documents d WHERE IdUsuari = @IdUsuari AND d.IdUsuari = u.Id", connection);
+                var cmd = new MySqlCommand("SELECT u.Username, u.Nom, u.Cognoms, u.Sexe, COUNT(d.Id) AS NumDocumentsPujats, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuari AND IdUsuariSubscrit = @IdUsuariSubscrit) AS EmSegueix, EXISTS(SELECT * FROM Subscripcions WHERE IdUsuariSubscriu = @IdUsuariSubscrit AND IdUsuariSubscrit = @IdUsuari) AS ElSegueixo FROM Usuaris u, Documents d WHERE IdUsuari = @IdUsuari AND d.IdUsuari = u.Id", connection);
                 cmd.Parameters.AddWithValue("@IdUsuari", Id);
                 cmd.Parameters.AddWithValue("@IdUsuariSubscrit", base.IdUsuari);
 
@@ -609,7 +609,7 @@ namespace HotNotes.Controllers
                 }
             }
 
-            return View(u);
+            return View(new Tuple<Usuari, List<Matricula>>(u, new List<Matricula>()));
         }
 
         [HttpPost]

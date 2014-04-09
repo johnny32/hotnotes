@@ -82,15 +82,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8 well">
+            <div class="col-md-10 well">
                 <section class="content-wrapper main-content clear-fix">
                     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
                 </section>
-            </div>
-            <div class="col-md-2">
-                <div class="well" style="font-weight: bold;">
-                    TODO: PUBLICITAT
-                </div>
             </div>
         </div>
     </div>
