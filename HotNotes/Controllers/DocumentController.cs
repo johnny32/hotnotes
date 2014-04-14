@@ -265,7 +265,7 @@ namespace HotNotes.Controllers
                 string[] parts = Fitxer.FileName.Split(separator);
                 string extensio = parts[parts.Length - 1];
 
-                KeyAmazon = Path.GetRandomFileName().Replace(".", "") + "." + extensio;
+                KeyAmazon = IdAssignatura + "/" + Path.GetRandomFileName().Replace(".", "") + "." + extensio;
                 using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
                 {
                     try
