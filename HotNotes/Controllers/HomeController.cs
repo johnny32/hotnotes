@@ -27,8 +27,8 @@ namespace HotNotes.Controllers
                                                " IF(EXISTS(SELECT v.IdDocument FROM Valoracions v WHERE v.IdDocument = d.Id), (SELECT AVG(v.Valoracio) FROM Valoracions v WHERE v.IdDocument = d.Id), 0) AS Valoracio " +
                                                " FROM Documents d, Usuaris u, Assignatures a, Carreres c" +
                                                " WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id" +
-                                               " AND IdAssignatura IN (SELECT a.Id FROM Assignatures a, Matricules m WHERE a.IdCarrera = m.IdCarrera AND a.Curs = m.Curs AND m.IdUsuari = @IdUsuari)" +
-                                               " OR IdUsuari IN (SELECT Id FROM Usuaris u, Subscripcions s WHERE u.Id = s.IdUsuariSubscrit AND s.IdUsuariSubscriu = @IdUsuari)" +
+                                               " AND (IdAssignatura IN (SELECT a.Id FROM Assignatures a, Matricules m WHERE a.IdCarrera = m.IdCarrera AND a.Curs = m.Curs AND m.IdUsuari = @IdUsuari)" +
+                                               " OR IdUsuari IN (SELECT Id FROM Usuaris u, Subscripcions s WHERE u.Id = s.IdUsuariSubscrit AND s.IdUsuariSubscriu = @IdUsuari))" +
                                                " ORDER BY DataAfegit DESC", connection);
                 command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 MySqlDataReader reader = command.ExecuteReader();
