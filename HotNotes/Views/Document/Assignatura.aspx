@@ -83,8 +83,8 @@
         %>
             <tr>
                 <td><a href="<%: Url.Action("Veure", "Document", new { Id = d.Id }) %>"><%: d.Nom %></a></td>
-                <td><%: d.Tipus.ToString() %></td>
-                <td><a href="<%: Url.Action("Usuari", "Document", new { Id = d.IdUsuari }) %>"><%: d.Username %></a></td>
+                <td><%: Lang.GetString(lang, d.Tipus.ToString()) %></td>
+                <td><a href="<%: Url.Action("Perfil", "Usuari", new { Id = d.IdUsuari }) %>"><%: d.Username %></a></td>
                 <td><%: d.DataAfegit.ToShortDateString() %> <%: d.DataAfegit.ToShortTimeString() %></td>
                 <td>
                     <span data-valoracio="<%: d.Valoracio %>">

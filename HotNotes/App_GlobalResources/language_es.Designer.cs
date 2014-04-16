@@ -169,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Bienvenido a HotNotes.
+        /// </summary>
+        internal static string Benvingut_a_HotNotes {
+            get {
+                return ResourceManager.GetString("Benvingut_a_HotNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cargando.
         /// </summary>
         internal static string Carregant {
@@ -183,6 +192,15 @@ namespace Resources {
         internal static string Carregant_comentaris {
             get {
                 return ResourceManager.GetString("Carregant_comentaris", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cargando los últimos documentos....
+        /// </summary>
+        internal static string Carregant_ultims_documents {
+            get {
+                return ResourceManager.GetString("Carregant_ultims_documents", resourceCulture);
             }
         }
         
@@ -372,6 +390,15 @@ namespace Resources {
         internal static string Descarregar_document {
             get {
                 return ResourceManager.GetString("Descarregar_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a HotNotes es una red social orientada a compartir material académico, tales como apuntes, prácticas, examenes corregidos y otros, con el resto de la comunidad universitaria. Para más información, visita nuestra sección [[LINKABOUT]]..
+        /// </summary>
+        internal static string Descripcio_portada {
+            get {
+                return ResourceManager.GetString("Descripcio_portada", resourceCulture);
             }
         }
         

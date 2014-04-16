@@ -6,6 +6,7 @@ using System.Web.Http.ModelBinding.Binders;
 using System.Web.Mvc;
 using MySql.Data.MySqlClient;
 using HotNotes.Models;
+using HotNotes.Helpers;
 
 namespace HotNotes.Controllers
 {
@@ -15,10 +16,16 @@ namespace HotNotes.Controllers
         public ActionResult Index()
         {
             Log.Info("Pagina principal per l'usuari " + IdUsuari);
+            return View();
+        }
+
+        [Authorize]
+        public JsonResult DocumentsPaginaPrincipal()
+        {
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                /* Obtenir tots els documents (amb els usuaris, les assignatures a les que corresponen i les valoracions si existeixen)
+                /* Obtenir els 100 ultims documents (amb els usuaris, les assignatures a les que corresponen i les valoracions si existeixen)
                  * de les assignatures que pertanyen a les carreres i cursos matriculats
                  * o als usuaris que seguim, ordenats per data en que es van afegir descendentment
                  * (els mes recents primers)
@@ -29,7 +36,8 @@ namespace HotNotes.Controllers
                                                " WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id" +
                                                " AND (IdAssignatura IN (SELECT a.Id FROM Assignatures a, Matricules m WHERE a.IdCarrera = m.IdCarrera AND a.Curs = m.Curs AND m.IdUsuari = @IdUsuari)" +
                                                " OR IdUsuari IN (SELECT Id FROM Usuaris u, Subscripcions s WHERE u.Id = s.IdUsuariSubscrit AND s.IdUsuariSubscriu = @IdUsuari))" +
-                                               " ORDER BY DataAfegit DESC", connection);
+                                               " ORDER BY DataAfegit DESC" +
+                                               " LIMIT 100", connection);
                 command.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 MySqlDataReader reader = command.ExecuteReader();
 
@@ -51,15 +59,19 @@ namespace HotNotes.Controllers
                         Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
                     };
 
+                    d.DataAfegitString = d.DataAfegit.ToShortDateString() + " " + d.DataAfegit.ToShortTimeString();
+                    d.TipusString = Lang.GetString(lang, d.Tipus.ToString());
+                    d.LinkDocument = Url.Action("Veure", "Document", new { Id = d.Id });
+                    d.LinkUsuari = Url.Action("Perfil", "Usuari", new { Id = d.IdUsuari });
+                    d.LinkAssignatura = Url.Action("Assignatura", "Document", new { Id = d.IdAssignatura });
+
                     resultats.Add(d);
                 }
 
                 Log.Info("Total de documents: " + resultats.Count);
 
-                return View(resultats);
+                return Json(resultats, JsonRequestBehavior.AllowGet);
             }
-
-            return View();
         }
 
         [Authorize]

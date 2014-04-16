@@ -169,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Benvingut a HotNotes.
+        /// </summary>
+        internal static string Benvingut_a_HotNotes {
+            get {
+                return ResourceManager.GetString("Benvingut_a_HotNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Carregant.
         /// </summary>
         internal static string Carregant {
@@ -183,6 +192,15 @@ namespace Resources {
         internal static string Carregant_comentaris {
             get {
                 return ResourceManager.GetString("Carregant_comentaris", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Carregant els últims documents....
+        /// </summary>
+        internal static string Carregant_ultims_documents {
+            get {
+                return ResourceManager.GetString("Carregant_ultims_documents", resourceCulture);
             }
         }
         
@@ -372,6 +390,15 @@ namespace Resources {
         internal static string Descarregar_document {
             get {
                 return ResourceManager.GetString("Descarregar_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a HotNotes és una xarxa social orientada a compartir material acadèmic, tals com apunts, pràctiques, examens corregits i altres, amb la resta de la comunitat universitària. Per més informació, visita la nostra secció [[LINKABOUT]]..
+        /// </summary>
+        internal static string Descripcio_portada {
+            get {
+                return ResourceManager.GetString("Descripcio_portada", resourceCulture);
             }
         }
         
@@ -1213,7 +1240,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Sobre HotNotes....
+        ///   Busca una cadena traducida similar a Sobre HotNotes.
         /// </summary>
         internal static string Sobre_HotNotes {
             get {

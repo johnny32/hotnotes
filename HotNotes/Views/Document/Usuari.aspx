@@ -83,7 +83,7 @@
         %>
             <tr>
                 <td><a href="<%: Url.Action("Veure", "Document", new { Id = d.Id }) %>"><%: d.Nom %></a></td>
-                <td><%: d.Tipus.ToString() %></td>
+                <td><%: Lang.GetString(lang, d.Tipus.ToString()) %></td>
                 <td><a href="<%: Url.Action("Assignatura", "Document", new { Id = d.IdAssignatura }) %>"><%: d.NomAssignatura %></a></td>
                 <td><%: d.DataAfegit.ToShortDateString() %> <%: d.DataAfegit.ToShortTimeString() %></td>
                 <td>

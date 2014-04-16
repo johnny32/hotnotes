@@ -190,7 +190,7 @@
     <value>Sexe</value>
   </data>
   <data name="Sobre_HotNotes" xml:space="preserve">
-    <value>Sobre HotNotes...</value>
+    <value>Sobre HotNotes</value>
   </data>
   <data name="Tanca_sessio" xml:space="preserve">
     <value>Tanca sessió</value>
@@ -569,5 +569,14 @@
   </data>
   <data name="Seguint" xml:space="preserve">
     <value>Seguint</value>
+  </data>
+  <data name="Benvingut_a_HotNotes" xml:space="preserve">
+    <value>Benvingut a HotNotes</value>
+  </data>
+  <data name="Carregant_ultims_documents" xml:space="preserve">
+    <value>Carregant els últims documents...</value>
+  </data>
+  <data name="Descripcio_portada" xml:space="preserve">
+    <value>HotNotes és una xarxa social orientada a compartir material acadèmic, tals com apunts, pràctiques, examens corregits i altres, amb la resta de la comunitat universitària. Per més informació, visita la nostra secció [[LINKABOUT]].</value>
   </data>
 </root>

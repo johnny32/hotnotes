@@ -570,4 +570,13 @@
   <data name="Seguint" xml:space="preserve">
     <value>Siguiendo</value>
   </data>
+  <data name="Benvingut_a_HotNotes" xml:space="preserve">
+    <value>Bienvenido a HotNotes</value>
+  </data>
+  <data name="Carregant_ultims_documents" xml:space="preserve">
+    <value>Cargando los últimos documentos...</value>
+  </data>
+  <data name="Descripcio_portada" xml:space="preserve">
+    <value>HotNotes es una red social orientada a compartir material académico, tales como apuntes, prácticas, examenes corregidos y otros, con el resto de la comunidad universitaria. Para más información, visita nuestra sección [[LINKABOUT]].</value>
+  </data>
 </root>

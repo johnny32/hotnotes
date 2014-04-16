@@ -129,3 +129,8 @@ div#body
     background-color: initial;
     text-decoration: none;
 }
+
+#info
+{
+    margin: 2em auto 3em;
+}

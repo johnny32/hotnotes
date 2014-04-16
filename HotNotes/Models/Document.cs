@@ -57,12 +57,18 @@ namespace HotNotes.Models
         public int Id;
         public string Nom;
         public TipusDocument Tipus;
+        public string TipusString;
         public DateTime DataAfegit;
+        public string DataAfegitString;
         public int IdUsuari;
         public string Username;
         public int IdAssignatura;
         public string NomAssignatura;
         public string NomCarrera;
         public double Valoracio;
+        //Placeholders per construir els links MVC parametritzats a les crides AJAX
+        public string LinkDocument;
+        public string LinkUsuari;
+        public string LinkAssignatura;
     }
 }
