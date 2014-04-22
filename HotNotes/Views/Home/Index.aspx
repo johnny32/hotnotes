@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 <%@ Import Namespace="HotNotes.Helpers" %>
-<%@ Import Namespace="HotNotes.Models" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
     <%  string lang = ViewBag.Lang;
@@ -24,7 +23,7 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '<%: Url.Action("DocumentsPaginaPrincipal", "Home") %>',
+                url: '<%: Url.Action("DocumentsPaginaPrincipal", "Document") %>',
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {

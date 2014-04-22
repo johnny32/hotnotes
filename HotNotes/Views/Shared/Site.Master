@@ -69,7 +69,7 @@
     <div id="container">
         <div class="row">
             <div class="col-md-2">
-                <div class="well">
+                <div id="navFiltres" class="well">
                     <ul class="nav nav-pills nav-stacked">
                     <%
                         foreach (TipusDocument td in Document.TipusDocuments)

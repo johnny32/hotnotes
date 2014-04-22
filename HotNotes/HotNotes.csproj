@@ -756,6 +756,7 @@
     <Content Include="Plugins\sha3.js" />
     <Content Include="Scripts\Ordenacio_DataTables.js" />
     <Content Include="Scripts\Valoracio.js" />
+    <Content Include="Views\Document\Filtrar.aspx" />
     <Content Include="Views\Usuari\Activate.aspx" />
     <Content Include="Views\Usuari\Configuracio.aspx" />
     <Content Include="Views\Usuari\Login.aspx" />
