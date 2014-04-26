@@ -730,6 +730,178 @@ namespace HotNotes.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Cercar(string termesCerca)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                Log.Info("Cercant termes: " + termesCerca);
+                connection.Open();
+
+                string[] termesCercaArray = termesCerca.Split(',');
+                var resultats = new HashSet<DocumentLlistat>(new DocumentLlistatComparer());
+
+                var queryPartComuna = "SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera," +
+                            " IF(EXISTS(SELECT v.IdDocument FROM Valoracions v WHERE v.IdDocument = d.Id), (SELECT AVG(v.Valoracio) FROM Valoracions v WHERE v.IdDocument = d.Id), 0) AS Valoracio " +
+                            " FROM Documents d, Usuaris u, Assignatures a, Carreres c" +
+                            " WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id";
+
+                //Afegim els documents que coincideix el nom amb els termes de cerca
+                var query = queryPartComuna;
+
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    query += " AND d.Nom LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
+                }
+
+                query += " ORDER BY DataAfegit DESC LIMIT 100";
+                var command = new MySqlCommand(query, connection);
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    command.Parameters.AddWithValue("@terme" + i, "%" + termesCercaArray[i] + "%");
+                }
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var d = new DocumentLlistat
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
+                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
+                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
+                        Username = reader.GetString(reader.GetOrdinal("Username")),
+                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
+                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
+                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
+                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
+                    };
+
+                    resultats.Add(d);
+                }
+
+                reader.Close();
+
+                //Afegim els documents que coincideix l'assignatura amb els termes de cerca
+                query = queryPartComuna;
+
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    query += " AND a.Nom LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
+                }
+
+                query += " ORDER BY DataAfegit DESC LIMIT 100";
+                command = new MySqlCommand(query, connection);
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    command.Parameters.AddWithValue("@terme" + i, "%" + termesCercaArray[i] + "%");
+                }
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var d = new DocumentLlistat
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
+                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
+                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
+                        Username = reader.GetString(reader.GetOrdinal("Username")),
+                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
+                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
+                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
+                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
+                    };
+
+                    resultats.Add(d);
+                }
+
+                reader.Close();
+
+                //Afegim els documents que coincideix el tipus de document amb els termes de cerca
+                query = queryPartComuna;
+
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    query += " AND d.Tipus LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
+                }
+
+                query += " ORDER BY DataAfegit DESC LIMIT 100";
+                command = new MySqlCommand(query, connection);
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    command.Parameters.AddWithValue("@terme" + i, "%" + termesCercaArray[i] + "%");
+                }
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var d = new DocumentLlistat
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
+                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
+                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
+                        Username = reader.GetString(reader.GetOrdinal("Username")),
+                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
+                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
+                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
+                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
+                    };
+
+                    resultats.Add(d);
+                }
+
+                reader.Close();
+
+                //Afegim els documents que coincideix el nom d'usuari amb els termes de cerca
+                query = queryPartComuna;
+
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    query += " AND u.Nom LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
+                }
+
+                query += " ORDER BY DataAfegit DESC LIMIT 100";
+                command = new MySqlCommand(query, connection);
+                for (var i = 0; i < termesCercaArray.Length; i++)
+                {
+                    command.Parameters.AddWithValue("@terme" + i, "%" + termesCercaArray[i] + "%");
+                }
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var d = new DocumentLlistat
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
+                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
+                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
+                        Username = reader.GetString(reader.GetOrdinal("Username")),
+                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
+                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
+                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
+                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
+                    };
+
+                    resultats.Add(d);
+                }
+
+                reader.Close();
+
+                return View(resultats);
+            }
+        }
+
         private bool MatchMIMETipus(string mimeType, string extensio, TipusDocument tipusDocument)
         {
             bool correcte = false;

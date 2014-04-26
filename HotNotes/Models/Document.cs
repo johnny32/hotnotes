@@ -70,5 +70,23 @@ namespace HotNotes.Models
         public string LinkDocument;
         public string LinkUsuari;
         public string LinkAssignatura;
+
+        public string ToString()
+        {
+            return Nom;
+        }
+    }
+
+    public class DocumentLlistatComparer : IEqualityComparer<DocumentLlistat>
+    {
+        public bool Equals(DocumentLlistat a, DocumentLlistat b)
+        {
+            return a.Id == b.Id;
+        }
+
+        public int GetHashCode(DocumentLlistat item)
+        {
+            return StringComparer.InvariantCultureIgnoreCase.GetHashCode(item.Id);
+        }
     }
 }
