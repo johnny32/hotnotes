@@ -127,7 +127,7 @@
     <value>Introdueix els termes de cerca...</value>
   </data>
   <data name="Cercar" xml:space="preserve">
-    <value>Buscar</value>
+    <value>Cercar</value>
   </data>
   <data name="Cognoms" xml:space="preserve">
     <value>Cognoms</value>
@@ -581,5 +581,14 @@
   </data>
   <data name="Cerca_menys_3_caracters" xml:space="preserve">
     <value>Els termes de cerca han de tenir 3 caràcters com a mínim.</value>
+  </data>
+  <data name="Resultats_cerca" xml:space="preserve">
+    <value>Resultats de la cerca</value>
+  </data>
+  <data name="Assignatures" xml:space="preserve">
+    <value>Assignatures</value>
+  </data>
+  <data name="Usuaris" xml:space="preserve">
+    <value>Usuaris</value>
   </data>
 </root>

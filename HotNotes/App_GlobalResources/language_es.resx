@@ -582,4 +582,13 @@
   <data name="Cerca_menys_3_caracters" xml:space="preserve">
     <value>Los términos de búsqueda deben tener 3 caracteres como mínimo.</value>
   </data>
+  <data name="Resultats_cerca" xml:space="preserve">
+    <value>Resultados de la búsqueda</value>
+  </data>
+  <data name="Assignatures" xml:space="preserve">
+    <value>Asignaturas</value>
+  </data>
+  <data name="Usuaris" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
 </root>

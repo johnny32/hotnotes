@@ -731,8 +731,11 @@ namespace HotNotes.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public ActionResult Cercar(string termesCerca)
         {
+            termesCerca = termesCerca.Trim();
+
             if (termesCerca.Length < 3)
             {
                 Log.Info("Cerca amb menys de 3 caracters: " + termesCerca);
@@ -745,7 +748,7 @@ namespace HotNotes.Controllers
                 Log.Info("Cercant termes: " + termesCerca);
                 connection.Open();
 
-                string[] termesCercaArray = termesCerca.Split(',');
+                string[] termesCercaArray = termesCerca.Split(' ');
                 var documents = new List<DocumentLlistat>();
 
                 //Documents
@@ -858,6 +861,8 @@ namespace HotNotes.Controllers
                 }
 
                 reader.Close();
+
+                ViewBag.TermesCerca = termesCerca;
 
                 return View(new Tuple<List<DocumentLlistat>, List<Assignatura>, List<Usuari>>(documents, assignatures, usuaris));
             }

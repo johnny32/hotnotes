@@ -142,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Asignaturas.
+        /// </summary>
+        internal static string Assignatures {
+            get {
+                return ResourceManager.GetString("Assignatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Autor.
         /// </summary>
         internal static string Autor {
@@ -1186,6 +1195,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Resultados de la búsqueda.
+        /// </summary>
+        internal static string Resultats_cerca {
+            get {
+                return ResourceManager.GetString("Resultats_cerca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ruta.
         /// </summary>
         internal static string Ruta {
@@ -1389,6 +1407,15 @@ namespace Resources {
         internal static string Username_password_incorrecte {
             get {
                 return ResourceManager.GetString("Username_password_incorrecte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Usuarios.
+        /// </summary>
+        internal static string Usuaris {
+            get {
+                return ResourceManager.GetString("Usuaris", resourceCulture);
             }
         }
         
