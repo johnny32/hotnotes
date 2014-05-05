@@ -733,21 +733,26 @@ namespace HotNotes.Controllers
         [Authorize]
         public ActionResult Cercar(string termesCerca)
         {
+            if (termesCerca.Length < 3)
+            {
+                Log.Info("Cerca amb menys de 3 caracters: " + termesCerca);
+                ViewBag.Error = Lang.GetString(lang, "Cerca_menys_3_caracters");
+                return View();
+            }
+
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 Log.Info("Cercant termes: " + termesCerca);
                 connection.Open();
 
                 string[] termesCercaArray = termesCerca.Split(',');
-                var resultats = new HashSet<DocumentLlistat>(new DocumentLlistatComparer());
+                var documents = new List<DocumentLlistat>();
 
-                var queryPartComuna = "SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera," +
+                //Documents
+                var query = "SELECT d.Id, d.Nom, d.Tipus, d.DataAfegit, d.IdUsuari, u.Username, d.IdAssignatura, a.Nom AS NomAssignatura, c.Nom AS NomCarrera," +
                             " IF(EXISTS(SELECT v.IdDocument FROM Valoracions v WHERE v.IdDocument = d.Id), (SELECT AVG(v.Valoracio) FROM Valoracions v WHERE v.IdDocument = d.Id), 0) AS Valoracio " +
                             " FROM Documents d, Usuaris u, Assignatures a, Carreres c" +
                             " WHERE d.IdUsuari = u.Id AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id";
-
-                //Afegim els documents que coincideix el nom amb els termes de cerca
-                var query = queryPartComuna;
 
                 for (var i = 0; i < termesCercaArray.Length; i++)
                 {
@@ -779,20 +784,21 @@ namespace HotNotes.Controllers
                         Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
                     };
 
-                    resultats.Add(d);
+                    documents.Add(d);
                 }
 
                 reader.Close();
 
-                //Afegim els documents que coincideix l'assignatura amb els termes de cerca
-                query = queryPartComuna;
+                //Assignatures
+                var assignatures = new List<Assignatura>();
+                query = "SELECT a.Id, a.Nom, a.Curs, c.Id AS IdCarrera, c.Nom AS NomCarrera FROM Assignatures a, Carreres c" +
+                        " WHERE a.IdCarrera = c.Id";
 
                 for (var i = 0; i < termesCercaArray.Length; i++)
                 {
                     query += " AND a.Nom LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
                 }
 
-                query += " ORDER BY DataAfegit DESC LIMIT 100";
                 command = new MySqlCommand(query, connection);
                 for (var i = 0; i < termesCercaArray.Length; i++)
                 {
@@ -803,34 +809,33 @@ namespace HotNotes.Controllers
 
                 while (reader.Read())
                 {
-                    var d = new DocumentLlistat
+                    var a = new Assignatura()
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("Id")),
                         Nom = reader.GetString(reader.GetOrdinal("Nom")),
-                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
-                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
-                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
-                        Username = reader.GetString(reader.GetOrdinal("Username")),
-                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
-                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
-                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
-                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
+                        Curs = reader.GetInt32(reader.GetOrdinal("Curs")),
+                        Carrera = new Carrera()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("IdCarrera")),
+                            Nom = reader.GetString(reader.GetOrdinal("NomCarrera"))
+                        }
                     };
 
-                    resultats.Add(d);
+                    assignatures.Add(a);
                 }
 
                 reader.Close();
 
-                //Afegim els documents que coincideix el tipus de document amb els termes de cerca
-                query = queryPartComuna;
+                //Usuaris
+                var usuaris = new List<Usuari>();
+                query = "SELECT u.Id, u.Nom, u.Cognoms, u.Username FROM Usuaris u" + 
+                        " WHERE u.Activat = true";
 
                 for (var i = 0; i < termesCercaArray.Length; i++)
                 {
-                    query += " AND d.Tipus LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
+                    query += " AND (u.Nom LIKE @terme" + i + " OR u.Cognoms LIKE @terme" + i + " OR u.Username LIKE @terme" + i + ")"; //Afegim els termes parametritzats per evitar SQL injection
                 }
 
-                query += " ORDER BY DataAfegit DESC LIMIT 100";
                 command = new MySqlCommand(query, connection);
                 for (var i = 0; i < termesCercaArray.Length; i++)
                 {
@@ -841,64 +846,20 @@ namespace HotNotes.Controllers
 
                 while (reader.Read())
                 {
-                    var d = new DocumentLlistat
+                    var u = new Usuari()
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("Id")),
                         Nom = reader.GetString(reader.GetOrdinal("Nom")),
-                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
-                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
-                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
-                        Username = reader.GetString(reader.GetOrdinal("Username")),
-                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
-                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
-                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
-                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
+                        Cognoms = reader.GetString(reader.GetOrdinal("Cognoms")),
+                        Username = reader.GetString(reader.GetOrdinal("Username"))
                     };
 
-                    resultats.Add(d);
+                    usuaris.Add(u);
                 }
 
                 reader.Close();
 
-                //Afegim els documents que coincideix el nom d'usuari amb els termes de cerca
-                query = queryPartComuna;
-
-                for (var i = 0; i < termesCercaArray.Length; i++)
-                {
-                    query += " AND u.Nom LIKE @terme" + i; //Afegim els termes parametritzats per evitar SQL injection
-                }
-
-                query += " ORDER BY DataAfegit DESC LIMIT 100";
-                command = new MySqlCommand(query, connection);
-                for (var i = 0; i < termesCercaArray.Length; i++)
-                {
-                    command.Parameters.AddWithValue("@terme" + i, "%" + termesCercaArray[i] + "%");
-                }
-
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var d = new DocumentLlistat
-                    {
-                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
-                        Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus"))),
-                        DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit")),
-                        IdUsuari = reader.GetInt32(reader.GetOrdinal("IdUsuari")),
-                        Username = reader.GetString(reader.GetOrdinal("Username")),
-                        IdAssignatura = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
-                        NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura")),
-                        NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera")),
-                        Valoracio = reader.GetDouble(reader.GetOrdinal("Valoracio")),
-                    };
-
-                    resultats.Add(d);
-                }
-
-                reader.Close();
-
-                return View(resultats);
+                return View(new Tuple<List<DocumentLlistat>, List<Assignatura>, List<Usuari>>(documents, assignatures, usuaris));
             }
         }
 
@@ -934,7 +895,7 @@ namespace HotNotes.Controllers
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT A.Id, A.Nom, A.Curs, C.Id AS IdCarrera, C.Nom AS NomCarrera FROM Assignatures A, Carreres C, Matricules M WHERE M.IdUsuari = @IdUsuari AND M.IdCarrera = A.IdCarrera AND A.IdCarrera = C.Id AND M.Curs = A.Curs ORDER BY A.IdCarrera, A.Curs, A.Nom", connection);
                 cmd.Parameters.AddWithValue("@IdUsuari", IdUsuari);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -946,7 +907,9 @@ namespace HotNotes.Controllers
                     a.Id = reader.GetInt32(reader.GetOrdinal("Id"));
                     a.Nom = reader.GetString(reader.GetOrdinal("Nom"));
                     a.Curs = reader.GetInt32(reader.GetOrdinal("Curs"));
-                    a.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+                    a.Carrera = new Carrera();
+                    a.Carrera.Id = reader.GetInt32(reader.GetOrdinal("IdCarrera"));
+                    a.Carrera.Nom = reader.GetString(reader.GetOrdinal("NomCarrera"));
 
                     l.Add(a);
                 }

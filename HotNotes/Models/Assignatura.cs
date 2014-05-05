@@ -10,6 +10,11 @@ namespace HotNotes.Models
         public int Id;
         public string Nom;
         public int Curs;
-        public string NomCarrera;
+        public Carrera Carrera;
+
+        public string ToString()
+        {
+            return Nom;
+        }
     }
 }

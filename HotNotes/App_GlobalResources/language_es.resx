@@ -579,4 +579,7 @@
   <data name="Descripcio_portada" xml:space="preserve">
     <value>HotNotes es una red social orientada a compartir material académico, tales como apuntes, prácticas, examenes corregidos y otros, con el resto de la comunidad universitaria. Para más información, visita nuestra sección [[LINKABOUT]].</value>
   </data>
+  <data name="Cerca_menys_3_caracters" xml:space="preserve">
+    <value>Los términos de búsqueda deben tener 3 caracteres como mínimo.</value>
+  </data>
 </root>

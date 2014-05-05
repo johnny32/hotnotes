@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Amazon.IdentityManagement.Model;
 
 namespace HotNotes.Models
 {
@@ -19,5 +20,10 @@ namespace HotNotes.Models
         public bool ElSegueixo;
         public int NumSeguidors;
         public int NumSeguint;
+
+        public string ToString()
+        {
+            return Username + " - " + Nom + " " + Cognoms;
+        }
     }
 }

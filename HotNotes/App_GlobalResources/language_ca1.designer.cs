@@ -250,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Els termes de cerca han de tenir 3 caràcters com a mínim..
+        /// </summary>
+        internal static string Cerca_menys_3_caracters {
+            get {
+                return ResourceManager.GetString("Cerca_menys_3_caracters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cinquè.
         /// </summary>
         internal static string Cinque {
