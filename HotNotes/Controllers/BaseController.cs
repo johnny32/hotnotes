@@ -42,7 +42,8 @@ namespace HotNotes.Controllers
             get
             {
                 HttpCookie cookie = HttpContext.Request.Cookies.Get("UserID");
-                return int.Parse(cookie.Value);
+                if (cookie != null) return int.Parse(cookie.Value);
+                return -1;
             }
         }
 
@@ -67,8 +68,11 @@ namespace HotNotes.Controllers
 
         protected void SetLangCookie(ActionExecutingContext filterContext, string lang)
         {
-            HttpCookie newCookie = new HttpCookie("HotNotes_lang", lang);
-            newCookie.Expires = DateTime.Now.AddYears(5);
+            var newCookie = new HttpCookie("HotNotes_lang", lang)
+            {
+                Expires = DateTime.Now.AddYears(5)
+            };
+
             filterContext.HttpContext.Response.SetCookie(newCookie);
         }
 

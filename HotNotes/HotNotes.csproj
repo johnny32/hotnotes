@@ -144,6 +144,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>language_es.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\UsuariController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
@@ -756,6 +757,7 @@
     <Content Include="Plugins\sha3.js" />
     <Content Include="Scripts\Ordenacio_DataTables.js" />
     <Content Include="Scripts\Valoracio.js" />
+    <Content Include="Views\Admin\Login.aspx" />
     <Content Include="Views\Document\Cercar.aspx" />
     <Content Include="Views\Document\Filtrar.aspx" />
     <Content Include="Views\Usuari\Activate.aspx" />
@@ -803,7 +805,6 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\language_ca.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>language_ca1.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -863,6 +864,7 @@
     <None Include="Plugins\jquery-ui-1.10.3\ui\.jshintrc" />
     <None Include="Properties\PublishProfiles\hotnotes - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hotnotes - Web Deploy.pubxml" />
+    <Content Include="Views\Shared\SiteAdmin.Master" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

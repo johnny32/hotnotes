@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Área de administradores.
+        /// </summary>
+        internal static string Area_administradors {
+            get {
+                return ResourceManager.GetString("Area_administradors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Artículo.
         /// </summary>
         internal static string Article {
