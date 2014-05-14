@@ -52,14 +52,8 @@
                 </div>
             </div>
             <br />
-            <div class="row">
-                <div class="col-md-6 text-right">
-                    <input name="PasswordEnc" type="hidden" />
-                </div>
-                <div class="col-md-6 text-right">
-                    <input name="RememberMe" type="hidden" />
-                </div>
-            </div>
+            <input name="PasswordEnc" type="hidden" />
+            <input name="RememberMe" type="hidden" />
         </div>
         
         <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Inicia_sessio") %></button> <button type="button" class="btn btn-info" onclick="window.location='<%: Url.Action("Register", "Usuari") %>'"><%: Lang.GetString(lang, "Registrat") %></button>

@@ -43,12 +43,13 @@ namespace HotNotes.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            HttpContext.Request.Cookies.Remove("UserID");
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(string Username, string Password, bool RememberMe)
+        public ActionResult Login(string Username, string PasswordEnc, bool RememberMe)
         {
             Log.Info("Login administrador: " + Username);
             using (var connection = new MySqlConnection(ConnectionString))
@@ -60,13 +61,13 @@ namespace HotNotes.Controllers
 
                 if (reader.Read())
                 {
-                    if (Password == reader.GetString(reader.GetOrdinal("Password")))
+                    if (PasswordEnc == reader.GetString(reader.GetOrdinal("Password")))
                     {
                         var cookie = new HttpCookie("IsAdmin", "true");
                         HttpContext.Response.Cookies.Add(cookie);
                         FormsAuthentication.SetAuthCookie(Username, RememberMe);
                         Log.Info("Login correcte");
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Admin");
                     }
                     else
                     {
