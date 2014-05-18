@@ -72,18 +72,18 @@
             <legend>Pujar nou document</legend>
             <div class="container" style="width: 100%;">
                 <div class="row">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="Nom"><%: Lang.GetString(lang, "Nom") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <input name="Nom" type="text" style="width: 100%;" required/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="IdAssignatura"><%: Lang.GetString(lang, "Assignatura") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <select name="IdAssignatura" class="form-control">
                         <%
                             for (int i = 0; i < Model.Count; i++)
@@ -92,13 +92,13 @@
 
                                 if (i == 0)
                                 { %>
-                            <optgroup label="<%: a.NomCarrera %>">
+                            <optgroup label="<%: a.Carrera.Nom %>">
                                 <%
                                 }
-                                else if (a.NomCarrera != Model[i - 1].NomCarrera)
+                                else if (a.Carrera.Nom != Model[i - 1].Carrera.Nom)
                                 { %>
                             </optgroup>
-                            <optgroup label="<%: a.NomCarrera %>">
+                            <optgroup label="<%: a.Carrera.Nom %>">
                                 <%
                                 }
                             %>
@@ -111,10 +111,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="Idioma"><%: Lang.GetString(lang, "Idioma") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <select name="Idioma" class="form-control">
                             <option value="es" <%: lang == "es" ? "selected" : "" %>><%: Lang.GetString(lang, "Castella") %></option>
                             <option value="ca" <%: lang == "ca" ? "selected" : "" %>><%: Lang.GetString(lang, "Catala") %></option>
@@ -124,10 +124,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="Tipus"><%: Lang.GetString(lang, "Tipus") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <select name="Tipus" class="form-control">
                         <%
                             string selected = "selected";
@@ -143,27 +143,27 @@
                     </div>
                 </div>
                 <div class="row" id="rowExamen">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="ExamenCorregitCB"><%: Lang.GetString(lang, "Es_examen_corregit") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <input name="ExamenCorregitCB" type="checkbox" />
                         <input name="ExamenCorregit" type="hidden" />
                     </div>
                 </div>
                 <div class="row" id="rowFitxer">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="Fitxer"><%: Lang.GetString(lang, "Fitxer") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <input name="Fitxer" type="file" />
                     </div>
                 </div>
                 <div class="row" id="rowRuta" style="display: none;">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-3 text-right">
                         <label for="Ruta"><%: Lang.GetString(lang, "Ruta") %></label>
                     </div>
-                    <div class="col-md-7 text-left">
+                    <div class="col-md-9 text-left">
                         <input name="Ruta" type="text" style="width: 100%;" />
                     </div>
                 </div>

@@ -35,12 +35,15 @@ namespace HotNotes.Controllers
             return View();
         }
 
-        public RedirectToRouteResult CanviarIdioma(string codiIdioma)
+        public ActionResult CanviarIdioma(string codiIdioma, string returnUrl = "")
         {
             HttpCookie newCookie = new HttpCookie("HotNotes_lang", codiIdioma);
             newCookie.Expires = DateTime.Now.AddYears(5);
             HttpContext.Response.SetCookie(newCookie);
-            return RedirectToAction("Index");
+            if (returnUrl != string.Empty)
+                return Redirect(returnUrl);
+            else
+                return RedirectToAction("Index");
         }
     }
 }

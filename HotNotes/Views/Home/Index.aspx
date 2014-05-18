@@ -48,7 +48,7 @@
                         html += '<td><a href="' + item.LinkAssignatura + '">' + item.NomAssignatura + '</a></td>';
                         html += '<td>' + item.DataAfegitString + '</td>';
                         html += '<td>';
-                        html += '<span data-valoracio="' + item.Valoracio + '">';
+                        html += '<div class="valoracio-table" data-valoracio="' + item.Valoracio + '">';
 
                         var valoracio = item.Valoracio / 2.0;
                         var partEntera = Math.floor(valoracio);
@@ -75,7 +75,7 @@
                             html += '<img src="<%: Url.Content("~/Content/images/star-empty.png") %>" />';
                         }
                         
-                        html += '</span>';
+                        html += '</div>';
                         html += '</td>';
                         html += '</tr>';
                     });

@@ -134,3 +134,13 @@ div#body
 {
     margin: 2em auto 3em;
 }
+
+table.dataTable > thead > tr > th
+{
+    font-size: 1em;
+}
+
+.valoracio-table
+{
+    display: inline-flex;
+}
