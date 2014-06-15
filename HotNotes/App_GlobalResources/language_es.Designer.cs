@@ -970,6 +970,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Moderar documentos.
+        /// </summary>
+        internal static string Moderar_documents {
+            get {
+                return ResourceManager.GetString("Moderar_documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Modificar.
         /// </summary>
         internal static string Modificar {
@@ -1362,6 +1371,15 @@ namespace Resources {
         internal static string Tria_carrera {
             get {
                 return ResourceManager.GetString("Tria_carrera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Elige un documento.
+        /// </summary>
+        internal static string Tria_document {
+            get {
+                return ResourceManager.GetString("Tria_document", resourceCulture);
             }
         }
         

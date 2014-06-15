@@ -134,7 +134,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\language_ca1.designer.cs">
+    <Compile Include="App_GlobalResources\language_ca.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>language_ca.resx</DependentUpon>
@@ -754,9 +754,13 @@
     <Content Include="Plugins\sha3.js" />
     <Content Include="Scripts\Ordenacio_DataTables.js" />
     <Content Include="Scripts\Valoracio.js" />
+    <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\Login.aspx" />
+    <Content Include="Views\Admin\ModerarDocumentsAssignatura.aspx" />
+    <Content Include="Views\Admin\ModerarDocumentsCarrera.aspx" />
     <Content Include="Views\Document\Cercar.aspx" />
     <Content Include="Views\Document\Filtrar.aspx" />
+    <Content Include="Views\Shared\_LoginAdminPartial.aspx" />
     <Content Include="Views\Usuari\Activate.aspx" />
     <Content Include="Views\Usuari\Configuracio.aspx" />
     <Content Include="Views\Usuari\Login.aspx" />
@@ -802,6 +806,7 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\language_ca.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>language_ca.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

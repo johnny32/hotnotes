@@ -594,4 +594,10 @@
   <data name="Area_administradors" xml:space="preserve">
     <value>Àrea d'administradors</value>
   </data>
+  <data name="Moderar_documents" xml:space="preserve">
+    <value>Moderar documents</value>
+  </data>
+  <data name="Tria_document" xml:space="preserve">
+    <value>Tria un document</value>
+  </data>
 </root>

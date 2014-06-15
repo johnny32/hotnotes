@@ -50,35 +50,19 @@
 
             <div class="collapse navbar-collapse" id="navbar-top">
                 <ul class="nav navbar-nav">
-                    <li><a href="<%: Url.Action("Index", "Home") %>"><%: Lang.GetString(lang, "Inici") %></a></li>
-                    <li><a href="<%: Url.Action("Pujar", "Document") %>"><%: Lang.GetString(lang, "Pujar_Document") %></a></li>
-                    <li><a href="<%: Url.Action("About", "Home") %>"><%: Lang.GetString(lang, "Sobre_HotNotes") %></a></li>
-                    <li><a href="<%: Url.Action("Contact", "Home") %>"><%: Lang.GetString(lang, "Contacta") %></a></li>
+                    <li class="active"><a href="<%: Url.Action("Index", "Admin") %>"><%: Lang.GetString(lang, "Inici") %></a></li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search" style="margin-left: 1.5em;" action="<%: Url.Action("Cercar", "Document") %>" method="post">
-                    <div class="form-group">
-                        <input name="termesCerca" type="text" class="form-control" placeholder="<%= Lang.GetString(lang, "Cercador") %>" />
-                    </div>
-                    <button type="submit" class="btn btn-default"><%: Lang.GetString(lang, "Cercar") %></button>
-                </form>
                 <%: Html.Partial("_LangPartial") %>
-                <%: Html.Partial("_LoginPartial") %>
+                <%: Html.Partial("_LoginAdminPartial") %>
             </div>
         </nav>
     </header>
     <div id="container">
         <div class="row">
             <div class="col-md-2">
-                <div id="navFiltres" class="well">
+                <div id="navAdmin" class="well">
                     <ul class="nav nav-pills nav-stacked">
-                    <%
-                        foreach (TipusDocument td in Document.TipusDocuments)
-                        {
-                    %>
-                        <li><a href="<%: Url.Action("Filtrar", "Document", new { Tipus = td }) %>"><%: Lang.GetString(lang, td.ToString()) %></a></li>
-                    <%
-                        }
-                    %>
+                        <li <%= ViewBag.Action == "Moderar" ? "class=\"active\"" : "" %>><a href="<%: Url.Action("Index", "Admin") %>"><%: Lang.GetString(lang, "Moderar_documents") %></a></li>
                     </ul>
                 </div>
             </div>
