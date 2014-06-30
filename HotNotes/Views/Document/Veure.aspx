@@ -6,7 +6,7 @@
     <%
         if (ViewBag.Error == null)
         {
-            Response.Write(Model.Nom + " - " + Model.NomAutor);
+            Response.Write(Model.Nom + " - " + Model.Autor.Nom + " " + Model.Autor.Cognoms);
         }
         else
         {
@@ -210,7 +210,7 @@
 <%
     } 
 %>
-    <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Model.LinkPerfilAutor %>"><%: Model.NomAutor %></a></span><br />
+    <span style="font-size: small;"><%: Lang.GetString(ViewBag.Lang, "Autor") %>: <a href="<%: Url.Action("Perfil", "Usuari", new { Id = Model.Autor.Id }) %>"><%: Model.Autor.Nom + " " + Model.Autor.Cognoms %></a></span><br />
     <div id="valoracio"></div>
 </div>
 

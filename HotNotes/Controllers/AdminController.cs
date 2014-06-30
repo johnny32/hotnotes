@@ -209,7 +209,7 @@ namespace HotNotes.Controllers
             }
         }
 
-        /*[Authorize]
+        [Authorize]
         public ActionResult ModerarDocument(int id)
         {
             if (!IsAdmin)
@@ -222,8 +222,99 @@ namespace HotNotes.Controllers
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                var cmd = new MySqlCommand("SELECT ")
+                var cmd = new MySqlCommand("SELECT d.Nom, d.Idioma, d.Tipus, d.ExamenCorregit, d.DataAfegit, d.DataModificat, d.Versio, d.IdAssignatura, a.Nom AS NomAssignatura, a.IdCarrera, c.Nom AS NomCarrera " +
+                                           "FROM Documents d, Assignatures a, Carreres c " +
+                                           "WHERE d.Id = @IdDocument AND d.IdAssignatura = a.Id AND a.IdCarrera = c.Id", connection);
+                cmd.Parameters.AddWithValue("@IdDocument", id);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                Document d = new Document();
+                if (reader.Read())
+                {
+                    d.Id = id;
+                    d.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    d.Idioma = reader.GetString(reader.GetOrdinal("Idioma"));
+                    d.Tipus = (TipusDocument)Enum.Parse(typeof(TipusDocument), reader.GetString(reader.GetOrdinal("Tipus")));
+                    if (reader.IsDBNull(reader.GetOrdinal("ExamenCorregit")))
+                    {
+                        d.ExamenCorregit = null;
+                    }
+                    else
+                    {
+                        d.ExamenCorregit = reader.GetBoolean(reader.GetOrdinal("ExamenCorregit"));   
+                    }
+                    d.DataAfegit = reader.GetDateTime(reader.GetOrdinal("DataAfegit"));
+                    if (reader.IsDBNull(reader.GetOrdinal("DataModificat")))
+                    {
+                        d.DataModificat = null;
+                    }
+                    else
+                    {
+                        d.DataModificat = reader.GetDateTime(reader.GetOrdinal("DataModificat"));
+                    }
+                    if (reader.IsDBNull(reader.GetOrdinal("Versio")))
+                    {
+                        d.Versio = null;
+                    }
+                    else
+                    {
+                        d.Versio = reader.GetDouble(reader.GetOrdinal("Versio"));
+                    }
+                    d.Assignatura = new Assignatura
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("IdAssignatura")),
+                        Nom = reader.GetString(reader.GetOrdinal("NomAssignatura")),
+                        Carrera = new Carrera
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("IdCarrera")),
+                            Nom = reader.GetString(reader.GetOrdinal("NomCarrera"))
+                        }
+                    };
+
+                    reader.Close();
+
+                    cmd = new MySqlCommand("SELECT c.Id, c.Nom FROM Carreres c ORDER BY c.Id ASC", connection);
+                    reader = cmd.ExecuteReader();
+                    var carreres = new List<Carrera>();
+
+                    while (reader.Read())
+                    {
+                        carreres.Add(new Carrera
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Nom = reader.GetString(reader.GetOrdinal("Nom"))
+                        });
+                    }
+
+                    ViewBag.Carreres = carreres;
+
+                    reader.Close();
+
+                    cmd = new MySqlCommand("SELECT a.Id, a.Nom, a.Curs FROM Assignatures a WHERE a.IdCarrera = @IdCarrera ORDER BY a.Id ASC", connection);
+                    cmd.Parameters.AddWithValue("@IdCarrera", d.Assignatura.Carrera.Id);
+                    reader = cmd.ExecuteReader();
+                    var assignatures = new List<Assignatura>();
+
+                    while (reader.Read())
+                    {
+                        assignatures.Add(new Assignatura
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                            Curs = reader.GetInt32(reader.GetOrdinal("Curs"))
+                        });
+                    }
+
+                    ViewBag.Assignatures = assignatures;
+                }
+                else
+                {
+                    Log.Warn("El document " + id + " no existeix");
+                    ViewBag.Error = Lang.GetString(base.lang, "Document_no_existeix");
+                }
+
+                reader.Close();
+                return View(d);
             }
-        }*/
+        }
     }
 }

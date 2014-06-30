@@ -756,6 +756,7 @@
     <Content Include="Scripts\Valoracio.js" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\Login.aspx" />
+    <Content Include="Views\Admin\ModerarDocument.aspx" />
     <Content Include="Views\Admin\ModerarDocumentsAssignatura.aspx" />
     <Content Include="Views\Admin\ModerarDocumentsCarrera.aspx" />
     <Content Include="Views\Document\Cercar.aspx" />

@@ -10,5 +10,6 @@ namespace HotNotes.Models
         public int Id;
         public string Nom;
         public string Campus;
+        public Universitat Universitat;
     }
 }

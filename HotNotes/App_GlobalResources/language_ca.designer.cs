@@ -970,6 +970,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Moderar document.
+        /// </summary>
+        internal static string Moderar_document {
+            get {
+                return ResourceManager.GetString("Moderar_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Moderar documents.
         /// </summary>
         internal static string Moderar_documents {

@@ -9,5 +9,6 @@ namespace HotNotes.Models
     {
         public int Id;
         public string Nom;
+        public Facultat Facultat;
     }
 }

@@ -600,4 +600,7 @@
   <data name="Tria_document" xml:space="preserve">
     <value>Tria un document</value>
   </data>
+  <data name="Moderar_document" xml:space="preserve">
+    <value>Moderar document</value>
+  </data>
 </root>
