@@ -385,7 +385,7 @@
             </div>
             <input name="PasswordEnc" type="hidden" value=""/>
             <div class="text-center" style="margin: 2em;">
-                <button type="submit" tabindex="9" class="btn btn-info" onclick="modificarDades();"><%: Lang.GetString(lang, "Modificar") %></button>
+                <button type="submit" tabindex="9" class="btn btn-primary" onclick="modificarDades();"><%: Lang.GetString(lang, "Modificar") %></button>
             </div>
         </fieldset>
      <% } %>

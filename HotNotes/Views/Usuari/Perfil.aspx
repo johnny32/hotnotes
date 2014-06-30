@@ -174,7 +174,7 @@
         <div class="col-md-12">
             <%: Lang.GetString(lang, "Num_documents_pujats") %>: <%: Model.Item1.NumDocumentsPujats %>
             &nbsp;
-            <a href="<%: Url.Action("Usuari", "Document", new { Id = Model.Item1.Id }) %>" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span> <%: Lang.GetString(lang, "Veure") %></a>
+            <a href="<%: Url.Action("Usuari", "Document", new { Id = Model.Item1.Id }) %>" class="btn btn-default"><%: Lang.GetString(lang, "Veure") %></a>
         </div>
     </div>
 

@@ -170,7 +170,7 @@
                 <br />
                 <div class="row">
                     <div class="col-md-6 text-right">
-                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> <%: Lang.GetString(lang, "Pujar") %></button>
+                        <button type="submit" class="btn btn-primary"><%: Lang.GetString(lang, "Pujar") %></button>
                     </div>
                     <div class="col-md-6 text-left">
                         <button type="reset" class="btn btn-default"><%: Lang.GetString(lang, "Reset") %></button>

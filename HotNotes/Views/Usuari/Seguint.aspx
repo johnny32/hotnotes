@@ -94,7 +94,7 @@
            { %>
             <tr>
                 <td><%: u.Nom %> <%: u.Cognoms %></td>
-                <td><a href="<%: Url.Action("Perfil", "Usuari", new { Id = u.Id }) %>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-eye-open"></span> <%: Lang.GetString(lang, "Veure_perfil") %></a></td>
+                <td><a href="<%: Url.Action("Perfil", "Usuari", new { Id = u.Id }) %>" class="btn btn-default btn-sm"><%: Lang.GetString(lang, "Veure_perfil") %></a></td>
             </tr>
         <% } %>
         </tbody>

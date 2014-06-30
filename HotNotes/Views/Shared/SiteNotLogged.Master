@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     <%: Styles.Render("~/Content/Site.css") %>
     <%: Styles.Render("~/Plugins/bootstrap/css/bootstrap.min.css") %>
+    <%: Styles.Render("~/Plugins/bootstrap/css/bootstrap-theme.min.css") %>
     <%: Styles.Render("~/Content/Layout.css") %>
     <%: Styles.Render("~/Content/LayoutNotLogged.css") %>
     <%: Scripts.Render("~/Plugins/jquery-1.10.2.js") %>
@@ -32,11 +33,11 @@
                     </button>
                     <a class="navbar-brand" href="<%: Url.Action("Index", "Home") %>">HotNotes</a>
                 </div>
-            </div>
 
-            <div class="collapse navbar-collapse" id="navbar-top">
-                <%: Html.Partial("_LangPartial") %>
-                <%: Html.Partial("_LoginPartial")%>
+                <div class="collapse navbar-collapse" id="navbar-top">
+                    <%: Html.Partial("_LangPartial") %>
+                    <%: Html.Partial("_LoginPartial")%>
+                </div>
             </div>
         </nav>
     </header>

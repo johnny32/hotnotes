@@ -827,6 +827,8 @@
     </Content>
     <Content Include="Plugins\DataTables\images\Sorting icons.psd" />
     <Content Include="Log4net.config" />
+    <Content Include="Plugins\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Plugins\bootstrap\css\bootstrap.css.map" />
     <None Include="Plugins\jquery-ui-1.10.3\package.json" />
     <None Include="Plugins\jquery-ui-1.10.3\README.md" />
     <None Include="Plugins\jquery-ui-1.10.3\ui.accordion.jquery.json" />
@@ -867,6 +869,7 @@
     <None Include="Properties\PublishProfiles\hotnotes - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hotnotes - Web Deploy.pubxml" />
     <Content Include="Views\Shared\SiteAdmin.Master" />
+    <None Include="Properties\PublishProfiles\HotNotes Local.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -21,7 +21,7 @@
     <ul>
         <% foreach (DocumentLlistat d in Model)
            { %>
-        <li><a href="<%: Url.Action("ModerarDocument", "Admin", new { Id = d.Id }) %>"><%: d.Nom %> (<%: d.Valoracio %>)</a></li>
+        <li><a href="<%: Url.Action("ModerarDocument", "Admin", new { Id = d.Id }) %>"><%: d.Nom %> (<%: d.Valoracio %>)</a> </li>
         <% } %>
     </ul>
 

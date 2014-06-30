@@ -27,7 +27,7 @@ a
     text-decoration: underline;
 }
 
-a:link, a:visited, a:active, a:hover
+a:link:not(.btn), a:visited, a:active, a:hover
 {
     color: #333;
 }

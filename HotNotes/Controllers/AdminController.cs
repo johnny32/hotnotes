@@ -208,5 +208,22 @@ namespace HotNotes.Controllers
                 return View(r);
             }
         }
+
+        /*[Authorize]
+        public ActionResult ModerarDocument(int id)
+        {
+            if (!IsAdmin)
+            {
+                return RedirectToAction("Login");
+            }
+
+            Log.Info("Moderar document: " + id);
+
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd = new MySqlCommand("SELECT ")
+            }
+        }*/
     }
 }
