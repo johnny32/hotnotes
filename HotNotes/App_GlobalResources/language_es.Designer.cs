@@ -412,6 +412,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Guardar.
+        /// </summary>
+        internal static string Desar {
+            get {
+                return ResourceManager.GetString("Desar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descarga el documento.
         /// </summary>
         internal static string Descarregar_document {

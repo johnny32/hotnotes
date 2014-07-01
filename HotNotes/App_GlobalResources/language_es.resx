@@ -603,4 +603,22 @@
   <data name="Moderar_document" xml:space="preserve">
     <value>Moderar documento</value>
   </data>
+  <data name="Confirmar_eliminar_document" xml:space="preserve">
+    <value>¿Estás seguro de que deseas eliminar este documento?</value>
+  </data>
+  <data name="Desar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="Document_eliminat" xml:space="preserve">
+    <value>Documento eliminado correctamente.</value>
+  </data>
+  <data name="Document_modificat" xml:space="preserve">
+    <value>Documento modificado correctamente.</value>
+  </data>
+  <data name="Eliminar_document" xml:space="preserve">
+    <value>Eliminar documento</value>
+  </data>
+  <data name="Num_docs" xml:space="preserve">
+    <value>Nº docs</value>
+  </data>
 </root>

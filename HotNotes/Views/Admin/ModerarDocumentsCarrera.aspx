@@ -20,7 +20,13 @@
     <ul>
         <% foreach (Assignatura a in Model)
            { %>
-        <li><a href="<%: Url.Action("ModerarDocumentsAssignatura", "Admin", new { Id = a.Id }) %>"><%: a.Nom %> (<%: a.Curs %>)</a></li>
+        <li><a href="<%: Url.Action("ModerarDocumentsAssignatura", "Admin", new { Id = a.Id }) %>"><%: a.Nom %> 
+            <% if (a.NumDocs > 0)
+               { %>
+            <span class="badge"><%: a.NumDocs %></span>
+            <% } %>
+            </a>
+        </li>
         <% } %>
     </ul>
 

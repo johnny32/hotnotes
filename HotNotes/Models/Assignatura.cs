@@ -11,6 +11,7 @@ namespace HotNotes.Models
         public string Nom;
         public int Curs;
         public Carrera Carrera;
+        public int NumDocs;
 
         public string ToString()
         {

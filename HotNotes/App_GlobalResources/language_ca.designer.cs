@@ -322,6 +322,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Estàs segur de que vols eliminar aquest document?.
+        /// </summary>
+        internal static string Confirmar_eliminar_document {
+            get {
+                return ResourceManager.GetString("Confirmar_eliminar_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Estàs segur de que vols eliminar aquesta matrícula?.
         /// </summary>
         internal static string Confirmar_eliminar_matricula {
@@ -412,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Desar.
+        /// </summary>
+        internal static string Desar {
+            get {
+                return ResourceManager.GetString("Desar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descarrega el document.
         /// </summary>
         internal static string Descarregar_document {
@@ -471,6 +489,24 @@ namespace Resources {
         internal static string Documents_usuari {
             get {
                 return ResourceManager.GetString("Documents_usuari", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Document eliminat correctament..
+        /// </summary>
+        internal static string Document_eliminat {
+            get {
+                return ResourceManager.GetString("Document_eliminat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Document modificat correctament..
+        /// </summary>
+        internal static string Document_modificat {
+            get {
+                return ResourceManager.GetString("Document_modificat", resourceCulture);
             }
         }
         
@@ -615,6 +651,15 @@ namespace Resources {
         internal static string Eliminar {
             get {
                 return ResourceManager.GetString("Eliminar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Eliminar document.
+        /// </summary>
+        internal static string Eliminar_document {
+            get {
+                return ResourceManager.GetString("Eliminar_document", resourceCulture);
             }
         }
         
@@ -1038,6 +1083,15 @@ namespace Resources {
         internal static string No_tanquis_sessio {
             get {
                 return ResourceManager.GetString("No_tanquis_sessio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Núm. docs.
+        /// </summary>
+        internal static string Num_docs {
+            get {
+                return ResourceManager.GetString("Num_docs", resourceCulture);
             }
         }
         

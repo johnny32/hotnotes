@@ -813,7 +813,7 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\language_es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>language_es.Designer.cs</LastGenOutput>
+      <LastGenOutput>language_es1.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

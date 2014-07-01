@@ -129,11 +129,12 @@ namespace HotNotes.Controllers
             }
 
             Log.Info("Moderar documents de carrera amb id: " + Id);
+            ViewBag.Action = "Moderar";
 
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                var cmd = new MySqlCommand("SELECT a.Id, a.Nom, a.Curs, a.IdCarrera, c.Nom AS NomCarrera FROM Assignatures a, Carreres c WHERE a.IdCarrera = @IdCarrera AND a.IdCarrera = c.Id ORDER BY Curs, Id ASC", connection);
+                var cmd = new MySqlCommand("SELECT a.Id, a.Nom, a.Curs, a.IdCarrera, c.Nom AS NomCarrera, (SELECT COUNT(Id) FROM Documents WHERE IdAssignatura = a.Id) AS NumDocs FROM Assignatures a, Carreres c WHERE a.IdCarrera = @IdCarrera AND a.IdCarrera = c.Id ORDER BY Curs, Id ASC", connection);
                 cmd.Parameters.AddWithValue("@IdCarrera", Id);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -147,6 +148,7 @@ namespace HotNotes.Controllers
                         Id = reader.GetInt32(reader.GetOrdinal("Id")),
                         Nom = reader.GetString(reader.GetOrdinal("Nom")),
                         Curs = reader.GetInt32(reader.GetOrdinal("Curs")),
+                        NumDocs = reader.GetInt32(reader.GetOrdinal("NumDocs")),
                         Carrera = new Carrera()
                         {
                             Id = Id,
@@ -157,6 +159,19 @@ namespace HotNotes.Controllers
                     ViewBag.NomCarrera = a.Carrera.Nom;
 
                     r.Add(a);
+                }
+
+                if (string.IsNullOrEmpty(ViewBag.NomCarrera))
+                {
+                    reader.Close();
+                    cmd = new MySqlCommand("SELECT Nom FROM Carreres WHERE Id = @Id", connection);
+                    cmd.Parameters.AddWithValue("@Id", Id);
+                    reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        ViewBag.NomCarrera = reader.GetString(reader.GetOrdinal("Nom"));
+                    }
                 }
 
                 return View(r);
@@ -172,6 +187,7 @@ namespace HotNotes.Controllers
             }
 
             Log.Info("Moderar documents de carrera amb id: " + Id);
+            ViewBag.Action = "Moderar";
 
             using (var connection = new MySqlConnection(ConnectionString))
             {
@@ -205,12 +221,28 @@ namespace HotNotes.Controllers
                     r.Add(d);
                 }
 
+                if (ViewBag.IdCarrera == -1)
+                {
+                    reader.Close();
+                    cmd = new MySqlCommand("SELECT a.Nom AS NomAssignatura, c.Id AS IdCarrera, c.Nom AS NomCarrera FROM Assignatures a, Carreres c WHERE a.IdCarrera = c.Id AND a.Id = @IdAssignatura", connection);
+                    cmd.Parameters.AddWithValue("@IdAssignatura", Id);
+                    reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        ViewBag.IdCarrera = reader.GetInt32(reader.GetOrdinal("IdCarrera"));
+                        ViewBag.NomCarrera = reader.GetString(reader.GetOrdinal("NomCarrera"));
+                        ViewBag.NomAssignatura = reader.GetString(reader.GetOrdinal("NomAssignatura"));
+                    }
+                }
+
                 return View(r);
             }
         }
 
         [Authorize]
-        public ActionResult ModerarDocument(int id)
+        [HttpGet]
+        public ActionResult ModerarDocument(int id, string resultat = "")
         {
             if (!IsAdmin)
             {
@@ -218,6 +250,12 @@ namespace HotNotes.Controllers
             }
 
             Log.Info("Moderar document: " + id);
+            ViewBag.Action = "Moderar";
+
+            if (!string.IsNullOrEmpty(resultat))
+            {
+                ViewBag.Resultat = resultat;
+            }
 
             using (var connection = new MySqlConnection(ConnectionString))
             {
@@ -314,6 +352,99 @@ namespace HotNotes.Controllers
 
                 reader.Close();
                 return View(d);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ModerarDocument(int id, string nom, string idioma, string tipus, bool examenCorregit, int assignatura)
+        {
+            if (!IsAdmin)
+            {
+                return RedirectToAction("Login");
+            }
+
+            Log.Info("Moderar document: " + id);
+
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd = new MySqlCommand("UPDATE Documents SET Nom = @Nom, Idioma = @Idioma, Tipus = @Tipus, ExamenCorregit = @ExamenCorregit, IdAssignatura = @IdAssignatura, DataModificat = NOW(), Versio = Versio + 1 WHERE Id = @Id", connection);
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@Nom", nom);
+                cmd.Parameters.AddWithValue("@Idioma", idioma);
+                cmd.Parameters.AddWithValue("@Tipus", tipus);
+                cmd.Parameters.AddWithValue("@ExamenCorregit", examenCorregit ? 1 : 0);
+                cmd.Parameters.AddWithValue("@IdAssignatura", assignatura);
+                cmd.ExecuteNonQuery();
+
+                return RedirectToAction("ModerarDocument", "Admin", new { id = id, resultat = Lang.GetString(lang, "Document_modificat") });
+            }
+        }
+
+        [Authorize]
+        public JsonResult LlistaAssignatures(int idCarrera)
+        {
+            if (!IsAdmin)
+            {
+                Response.StatusCode = 401;
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            Log.Info("Obtenint llistat d'assignatures de la carrera " + idCarrera);
+
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd = new MySqlCommand("SELECT Id, Nom, Curs FROM Assignatures WHERE IdCarrera = @IdCarrera ORDER BY Id ASC", connection);
+                cmd.Parameters.AddWithValue("@IdCarrera", idCarrera);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                var assignatures = new List<Assignatura>();
+
+                while (reader.Read())
+                {
+                    assignatures.Add(new Assignatura
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Nom = reader.GetString(reader.GetOrdinal("Nom")),
+                        Curs = reader.GetInt32(reader.GetOrdinal("Curs"))
+                    });
+                }
+
+                reader.Close();
+                return Json(assignatures, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public JsonResult EliminarDocument(int id)
+        {
+            if (!IsAdmin)
+            {
+                Response.StatusCode = 401;
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            Log.Info("Eliminant document " + id);
+
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd = new MySqlCommand("DELETE FROM Comentaris WHERE IdDocument = @IdDocument", connection);
+                cmd.Parameters.AddWithValue("@IdDocument", id);
+                cmd.ExecuteNonQuery();
+
+                cmd = new MySqlCommand("DELETE FROM Valoracions WHERE IdDocument = @IdDocument", connection);
+                cmd.Parameters.AddWithValue("@IdDocument", id);
+                cmd.ExecuteNonQuery();
+
+                cmd = new MySqlCommand("DELETE FROM Documents WHERE Id = @Id", connection);
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.ExecuteNonQuery();
+
+                return Json("OK");
             }
         }
     }
