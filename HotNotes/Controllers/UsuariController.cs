@@ -460,7 +460,7 @@ namespace HotNotes.Controllers
                 Activat = true
             };
 
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
 

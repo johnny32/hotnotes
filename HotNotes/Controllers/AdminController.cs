@@ -24,9 +24,54 @@ namespace HotNotes.Controllers
             get
             {
                 HttpCookie cookie = HttpContext.Request.Cookies.Get("IsAdmin");
-                if (cookie != null) return bool.Parse(cookie.Value);
-                return false;
+                if (cookie == null || !bool.Parse(cookie.Value))
+                    return false;
+
+                cookie = HttpContext.Request.Cookies.Get("AdminID");
+                if (cookie == null)
+                    return false;
+
+                var userId = int.Parse(cookie.Value);
+                var isAdmin = false;
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    var cmd = new MySqlCommand("SELECT * FROM Administradors WHERE Id = @Id", connection);
+                    cmd.Parameters.AddWithValue("@Id", userId);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                        isAdmin = true;
+
+                    reader.Close();
+
+                    return isAdmin;
+                }
+                
             }
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var cookie = filterContext.HttpContext.Request.Cookies.Get("AdminID");
+            if (cookie != null)
+            {
+                var userId = int.Parse(cookie.Value);
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    var cmd = new MySqlCommand("SELECT Username FROM Administradors WHERE Id = @Id", connection);
+                    cmd.Parameters.AddWithValue("@Id", userId);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                        ViewBag.AdminUsername = reader.GetString(reader.GetOrdinal("Username"));
+
+                    reader.Close();
+                }
+            }
+             
+            base.OnActionExecuting(filterContext);
         }
 
         [AllowAnonymous]
@@ -67,7 +112,18 @@ namespace HotNotes.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            HttpContext.Request.Cookies.Remove("UserID");
+            var cookie = HttpContext.Request.Cookies.Get("AdminID");
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Today.AddDays(-1);
+                HttpContext.Response.Cookies.Set(cookie);
+            }
+            cookie = HttpContext.Request.Cookies.Get("IsAdmin");
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Today.AddDays(-1);
+                HttpContext.Response.Cookies.Set(cookie);
+            }
             return View();
         }
 
@@ -79,7 +135,7 @@ namespace HotNotes.Controllers
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
-                var cmd = new MySqlCommand("SELECT Password FROM Administradors WHERE Username = @Username", connection);
+                var cmd = new MySqlCommand("SELECT Id, Password FROM Administradors WHERE Username = @Username", connection);
                 cmd.Parameters.AddWithValue("@Username", Username);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -89,7 +145,8 @@ namespace HotNotes.Controllers
                     {
                         var cookie = new HttpCookie("IsAdmin", "true");
                         HttpContext.Response.Cookies.Add(cookie);
-                        FormsAuthentication.SetAuthCookie(Username, RememberMe);
+                        cookie = new HttpCookie("AdminID", reader.GetInt32(reader.GetOrdinal("Id")).ToString());
+                        HttpContext.Response.Cookies.Add(cookie);
                         Log.Info("Login correcte");
                         return RedirectToAction("Index", "Admin");
                     }
@@ -111,16 +168,18 @@ namespace HotNotes.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            var cookie = HttpContext.Request.Cookies.Get("AdminID");
+            cookie.Expires = DateTime.Today.AddDays(-1);
+            HttpContext.Response.Cookies.Set(cookie);
+            cookie = HttpContext.Request.Cookies.Get("IsAdmin");
+            cookie.Expires = DateTime.Today.AddDays(-1);
+            HttpContext.Response.Cookies.Set(cookie);
             return RedirectToAction("Login", "Admin");
         }
 
-        [Authorize]
         public ActionResult ModerarDocumentsCarrera(int Id)
         {
             if (!IsAdmin)
@@ -178,7 +237,6 @@ namespace HotNotes.Controllers
             }
         }
 
-        [Authorize]
         public ActionResult ModerarDocumentsAssignatura(int Id)
         {
             if (!IsAdmin)
@@ -240,7 +298,6 @@ namespace HotNotes.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult ModerarDocument(int id, string resultat = "")
         {
@@ -355,7 +412,6 @@ namespace HotNotes.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult ModerarDocument(int id, string nom, string idioma, string tipus, bool examenCorregit, int assignatura)
         {
@@ -382,7 +438,6 @@ namespace HotNotes.Controllers
             }
         }
 
-        [Authorize]
         public JsonResult LlistaAssignatures(int idCarrera)
         {
             if (!IsAdmin)
@@ -417,7 +472,6 @@ namespace HotNotes.Controllers
             }
         }
 
-        [Authorize]
         [HttpDelete]
         public JsonResult EliminarDocument(int id)
         {
@@ -445,6 +499,62 @@ namespace HotNotes.Controllers
                 cmd.ExecuteNonQuery();
 
                 return Json("OK");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Configuracio(string message = "")
+        {
+            if (!IsAdmin)
+            {
+                return RedirectToAction("Login");
+            }
+
+            int idAdmin = int.Parse(HttpContext.Request.Cookies.Get("AdminID").Value);
+
+            Log.Info("Carregar configuracio de l'administrador " + idAdmin);
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT Id, Username, Password FROM Administradors WHERE Id = @Id", connection);
+                cmd.Parameters.AddWithValue("@Id", idAdmin);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ViewBag.Id = idAdmin;
+                    ViewBag.Username = reader.GetString(reader.GetOrdinal("Username"));
+                    ViewBag.Password = reader.GetString(reader.GetOrdinal("Password"));
+                    ViewBag.Message = message;
+                }
+                else
+                {
+                    Log.Warn("ID d'administrador inexistent");
+                    ViewBag.Error = Lang.GetString(base.lang, "Usuari_no_existeix");
+                }
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Configuracio(int Id, string PasswordEnc)
+        {
+            if (!IsAdmin)
+            {
+                return RedirectToAction("Login");
+            }
+
+            Log.Info("Actualitzant dades de l'administrador: " + Id);
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd = new MySqlCommand("UPDATE Administradors SET Password = @Password WHERE Id = @Id", connection);
+                cmd.Parameters.AddWithValue("@Id", Id);
+                cmd.Parameters.AddWithValue("@Password", PasswordEnc);
+
+                cmd.ExecuteNonQuery();
+
+                return RedirectToAction("Configuracio", new { message = "Dades_actualitzades"});
             }
         }
     }

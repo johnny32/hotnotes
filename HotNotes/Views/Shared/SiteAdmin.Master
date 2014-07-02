@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar-top">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="margin-right: 1em;">
                         <li class="active"><a href="<%: Url.Action("Index", "Admin") %>"><%: Lang.GetString(lang, "Inici") %></a></li>
                     </ul>
                     <%: Html.Partial("_LangPartial") %>
