@@ -43,10 +43,9 @@
 
                 <div class="collapse navbar-collapse" id="navbar-top">
                     <ul class="nav navbar-nav">
-                        <li><a href="<%: Url.Action("Index", "Home") %>"><%: Lang.GetString(lang, "Inici") %></a></li>
-                        <li><a href="<%: Url.Action("Pujar", "Document") %>"><%: Lang.GetString(lang, "Pujar_Document") %></a></li>
-                        <li><a href="<%: Url.Action("About", "Home") %>"><%: Lang.GetString(lang, "Sobre_HotNotes") %></a></li>
-                        <li><a href="<%: Url.Action("Contact", "Home") %>"><%: Lang.GetString(lang, "Contacta") %></a></li>
+                        <li <%= ViewBag.TopNavbar == null ? "class='active'" : "" %>><a href="<%: Url.Action("Index", "Home") %>"><%: Lang.GetString(lang, "Inici") %></a></li>
+                        <li <%= ViewBag.TopNavbar == "Pujar" ? "class='active'" : "" %>><a href="<%: Url.Action("Pujar", "Document") %>"><%: Lang.GetString(lang, "Pujar_Document") %></a></li>
+                        <li <%= ViewBag.TopNavbar == "Sobre" ? "class='active'" : "" %>><a href="<%: Url.Action("About", "Home") %>"><%: Lang.GetString(lang, "Sobre_HotNotes") %></a></li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search" style="margin-left: 1.5em;" action="<%: Url.Action("Cercar", "Document") %>" method="post">
                         <div class="form-group">

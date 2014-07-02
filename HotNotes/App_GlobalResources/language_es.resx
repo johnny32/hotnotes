@@ -609,6 +609,9 @@
   <data name="Desar" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="Descripcio_HotNotes" xml:space="preserve">
+    <value>HotNotes es una red social para estudiantes universitarios, que permite compartir todo tipo de material académico (tales como apuntes, prácticas, papers o enlaces a otros sitios web) entre los estudiantes. Proporciona una clasificación basada en asignaturas, carreras y universidades, con tal de ayudar a la organización y la búsqueda de estos documentos.&lt;br/&gt;Además, los usuarios pueden seguir a otros usuarios con el fin de suscribirse al contenido que estos aportan a la plataforma.&lt;br/&gt;Para cualquier duda, sugerencia y/o comentario, por favor enviad un correo electrónico a &lt;a href="mailto:jonathan.clara.marquez@gmail.com"&gt;jonathan.clara.marquez@gmail.com&lt;/a&gt;. ¡Muchas gracias!</value>
+  </data>
   <data name="Document_eliminat" xml:space="preserve">
     <value>Documento eliminado correctamente.</value>
   </data>

@@ -439,6 +439,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a HotNotes és una xarxa social per a estudiants universitaris, que permet compartir tot tipus de material acadèmic (tals com apunts, pràctiques, papers o enllaços a altres llocs web) entre els estudiants. Proporciona una classificació basada en assignatures, carreres i universitats, per tal d&apos;ajudar a la organització i la cerca d&apos;aquests documents.&lt;br/&gt;A més, els usuaris poden seguir a altres usuaris per tal de subscriure&apos;s al contingut que aquests aporten a la plataforma.&lt;br/&gt;Per qualsevol dubte, suggeriment [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string Descripcio_HotNotes {
+            get {
+                return ResourceManager.GetString("Descripcio_HotNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a HotNotes és una xarxa social orientada a compartir material acadèmic, tals com apunts, pràctiques, examens corregits i altres, amb la resta de la comunitat universitària. Per més informació, visita la nostra secció [[LINKABOUT]]..
         /// </summary>
         internal static string Descripcio_portada {

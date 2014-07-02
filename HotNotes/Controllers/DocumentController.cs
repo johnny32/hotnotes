@@ -224,6 +224,7 @@ namespace HotNotes.Controllers
         public ActionResult Pujar()
         {
             Log.Info("Pujar nou document");
+            ViewBag.TopNavbar = "Pujar";
             return View(GetLlistaAssignatures());
         }
 
@@ -235,6 +236,7 @@ namespace HotNotes.Controllers
             TipusDocument TipusDocument = (TipusDocument)Enum.Parse(typeof(TipusDocument), Tipus);
             string MimeType = "";
             string KeyAmazon = "";
+            ViewBag.TopNavbar = "Pujar";
 
             if (Fitxer == null && Ruta == null)
             {

@@ -762,6 +762,7 @@
     <Content Include="Views\Admin\ModerarDocumentsCarrera.aspx" />
     <Content Include="Views\Document\Cercar.aspx" />
     <Content Include="Views\Document\Filtrar.aspx" />
+    <Content Include="Views\Home\About.aspx" />
     <Content Include="Views\Shared\_LoginAdminPartial.aspx" />
     <Content Include="Views\Usuari\Activate.aspx" />
     <Content Include="Views\Usuari\Configuracio.aspx" />
