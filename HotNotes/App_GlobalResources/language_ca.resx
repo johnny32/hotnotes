@@ -624,4 +624,7 @@
   <data name="Num_docs" xml:space="preserve">
     <value>Núm. docs</value>
   </data>
+  <data name="Veure_link" xml:space="preserve">
+    <value>Veure enllaç extern</value>
+  </data>
 </root>

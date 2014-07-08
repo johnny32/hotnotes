@@ -203,10 +203,16 @@
 %>
 <div id="infoLeft" style="float: left;">
 <%
-    if (Model.Tipus != TipusDocument.LinkYoutube && Model.MimeType != "application/pdf")
+    if (Model.Tipus == TipusDocument.LinkExtern)
+    {
+%>
+    <a href="<%: Model.Ruta %>" target="_blank" style="font-size: medium; color: white;" class="btn btn-primary"><%: Lang.GetString(ViewBag.Lang, "Veure_link") %></a><br />
+<%        
+    }
+    else if (Model.Tipus != TipusDocument.LinkYoutube)
     { 
 %>
-    <a href="<%: Url.Action("Descarregar", "Document", new { Id = Model.Id }) %>" target="_blank" style="font-size: medium;" class="btn btn-primary"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
+    <a href="<%: Url.Action("Descarregar", "Document", new { Id = Model.Id }) %>" target="_blank" style="font-size: medium; color: white;" class="btn btn-primary"><%: Lang.GetString(ViewBag.Lang, "Descarregar_document") %></a><br />
 <%
     } 
 %>

@@ -1573,6 +1573,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Veure enllaç extern.
+        /// </summary>
+        internal static string Veure_link {
+            get {
+                return ResourceManager.GetString("Veure_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Veure perfil.
         /// </summary>
         internal static string Veure_perfil {
