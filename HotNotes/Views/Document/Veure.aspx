@@ -249,7 +249,7 @@
 </div>
 
 <form id="afegirComentari" action="#">
-    <textarea name="comentari" rows="5" style="width: 98%; margin-bottom: 1em;" placeholder="<%: Lang.GetString(ViewBag.Lang, "Escriu_un_comentari") %>"></textarea>
+    <textarea name="comentari" rows="5" maxlength="5000" style="width: 98%; margin-bottom: 1em;" placeholder="<%: Lang.GetString(ViewBag.Lang, "Escriu_un_comentari") %>"></textarea>
     <button type="button" onclick="enviarComentari(); carregarComentaris();" class="btn btn-primary" style="float: right;"><%: Lang.GetString(ViewBag.Lang, "Enviar") %></button>
 </form>
 
