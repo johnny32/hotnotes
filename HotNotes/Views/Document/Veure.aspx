@@ -194,12 +194,6 @@
 </div>
 <%
     }
-    else if (Model.MimeType == "application/pdf")
-    {
-%>
-<iframe src="http://docs.google.com/gview?url=<%: Model.Ruta %>&embedded=true" style="width:718px; height:700px;" frameborder="0"></iframe>
-<%
-    }
 %>
 <div id="infoLeft" style="float: left;">
 <%
