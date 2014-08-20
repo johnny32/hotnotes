@@ -114,37 +114,6 @@ namespace HotNotes.Controllers
                         Cognoms = reader.GetString(reader.GetOrdinal("Cognoms"))
                     };
 
-                    //Carregar PDFs a la variable Ruta per a poder-los mostrar incrustats
-                    if (d.MimeType == "application/pdf" && d.KeyAmazon != null)
-                    {
-                        using (IAmazonS3 client = new AmazonS3Client(AmazonEndPoint))
-                        {
-                            GetObjectRequest getRequest = new GetObjectRequest();
-                            getRequest.BucketName = "hotnotes";
-                            getRequest.Key = d.KeyAmazon;
-
-                            using (GetObjectResponse response = client.GetObject(getRequest))
-                            {
-                                MemoryStream ms = new MemoryStream();
-                                response.ResponseStream.CopyTo(ms);
-
-                                char[] separator = new char[1];
-                                separator[0] = '.';
-                                string[] parts = response.Key.Split(separator);
-                                string extensio = parts[parts.Length - 1];
-
-                                string tmpPath = Path.Combine(Path.GetTempPath(), d.Nom + "." + extensio);
-
-                                using (FileStream stream = new FileStream(tmpPath, FileMode.Create, FileAccess.Write))
-                                {
-                                    stream.Write(ms.ToArray(), 0, ms.ToArray().Length);
-                                }
-
-                                d.Ruta = tmpPath;
-                            }
-                        }
-                    }
-
                     return View(d);
                 }
                 else
